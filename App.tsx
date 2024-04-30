@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -20,14 +20,15 @@ function App(): React.JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           options={{headerShown: false}}
-         name="Home" 
-         component={HomeScreen}
-         />
+          name="Home"
+          component={HomeScreen}
+        />
         <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>

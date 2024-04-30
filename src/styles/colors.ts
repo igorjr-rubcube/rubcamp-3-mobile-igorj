@@ -14,6 +14,11 @@ class Colors {
     primary: '#1d1c3e',
     secondary: '#6b7ae5',
   };
+
+  static readonly icons = {
+    default: '#1d1c3e',
+    alert: '#ffc700',
+  };
 }
 
 export default Colors;
