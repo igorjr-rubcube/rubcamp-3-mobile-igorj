@@ -1,7 +1,7 @@
 import React from 'react';
 import {Screen, Logo, Message, Title} from './DefaultScreen.styles';
 
-const logo = require('../assets/rubbank-logo.png');
+const logo = require('../../assets/rubbank-logo.png');
 
 type DefaultScreenProps = {
   successError: boolean;

@@ -7,11 +7,11 @@ import {
   Message,
   Screen,
   Title,
-} from './HomeScreen.styles';
+} from './WelcomeScreen.styles';
 
-const logo = require('../assets/rubbank-logo.png');
+const logo = require('../../assets/rubbank-logo.png');
 
-function HomeScreen({navigation}: any) {
+function WelcomeScreen({navigation}: any) {
   return (
     <Screen>
       <ContainerImage>
@@ -26,4 +26,4 @@ function HomeScreen({navigation}: any) {
   );
 }
 
-export default HomeScreen;
+export default WelcomeScreen;

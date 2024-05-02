@@ -11,15 +11,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import SplashScreen from 'react-native-splash-screen';
-import HomeScreen from './src/home/HomeScreen';
-import LoginScreen from './src/login/LoginScreen';
-
-const Stack = createNativeStackNavigator();
+import WelcomeScreen from './src/flow/welcome/WelcomeScreen';
+import LoginScreen from './src/flow/login/LoginScreen';
 
 function App(): React.JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
+  
+  const Stack = createNativeStackNavigator();
 
   return (
     <NavigationContainer>
@@ -27,9 +27,12 @@ function App(): React.JSX.Element {
         <Stack.Screen
           options={{headerShown: false}}
           name="Home"
-          component={HomeScreen}
+          component={WelcomeScreen}
         />
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen 
+        options={{headerTitle: '', headerTransparent: true}}
+        name="Login" 
+        component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

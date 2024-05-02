@@ -18,11 +18,12 @@ import EyeSlashIcon from './EyeSlashIcon';
 import {Keyboard} from 'react-native';
 import DefaultModal from '../default/DefaultModal';
 import AlertIcon from '../default/AlertIcon';
-import Colors from '../styles/colors';
+import Colors from '../../styles/colors';
+import { login } from './api/login';
 
-const logo = require('../assets/rubbank-logo.png');
+const logo = require('../../assets/rubbank-logo.png');
 
-function LoginScreen() {
+function LoginScreen({navigation}: any) {
   const [keyboardShow, setKeyboardShow] = useState(false);
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -49,12 +50,16 @@ function LoginScreen() {
     setModalVisible(false);
   }, []);
 
+  const [cpf, setCpf] = useState('');
+  const [password, setPassword] = useState('');
+  const [token, setToken] = useState('');
+
   return (
     <Screen>
       <DefaultModal
         visible={modalVisible}
         setVisible={setModalVisible}
-        title="Atençao"
+        title="Atenção"
         message="Usuário e/ou senha inválidos"
         buttonLabel="TENTAR DE NOVO"
         icon={<AlertIcon fill={Colors.icons.alert} />}
@@ -67,11 +72,16 @@ function LoginScreen() {
       <Form>
         <Label>CPF</Label>
         <Field>
-          <Input placeholder="Insira seu CPF aqui" />
+          <Input 
+          value={cpf} 
+          onChangeText={setCpf}
+          placeholder="Insira seu CPF aqui" />
         </Field>
         <Label>Senha</Label>
         <Field>
           <Input
+            value={password}
+            onChangeText={setPassword}
             placeholder="Insira sua senha"
             secureTextEntry={passwordVisible}
           />
@@ -82,8 +92,14 @@ function LoginScreen() {
         <Link>Esqueci a sua senha?</Link>
         <Container flexDirection="row" flexSize={2}>
           <Button
-            onPress={() => {
-              setModalVisible(true);
+            onPress={async () => {
+              const response = await login(cpf, password);
+              if (response && response.code === 200) {
+                setToken(response.data.token);
+                navigation.navigate('Home');
+              } else if (response && response.code === 401) {
+                setModalVisible(true);
+              }
             }}>
             <ButtonText>CONFIRMAR</ButtonText>
           </Button>
