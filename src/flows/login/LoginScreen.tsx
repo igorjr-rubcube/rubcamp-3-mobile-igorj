@@ -5,21 +5,17 @@ import {
   Message,
   Title,
   Form,
-  Label,
-  Input,
-  Field,
   Link,
   Container,
-  Button,
-  ButtonText,
-  IconContainer,
 } from './LoginScreen.styles';
-import EyeSlashIcon from './EyeSlashIcon';
-import {Keyboard} from 'react-native';
-import DefaultModal from '../default/DefaultModal';
-import AlertIcon from '../default/AlertIcon';
 import Colors from '../../styles/colors';
-import { login } from './api/login';
+import EyeSlashIcon from '../../components/icons/EyeSlashIcon';
+import DefaultModal from '../../components/DefaultModal/DefaultModal';
+import AlertIcon from '../../components/icons/AlertIcon';
+import TextInputField from '../../components/TextInputField/TextInputField';
+import Button from '../../components/Button/Button';
+import {Keyboard} from 'react-native';
+import {login} from './api/login';
 
 const logo = require('../../assets/rubbank-logo.png');
 
@@ -54,6 +50,23 @@ function LoginScreen({navigation}: any) {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 
+  const validateForm = () => {
+    return cpf.length > 0 && password.length > 0;
+  };
+
+  const handleLogin = async () => {
+    const response = await login(cpf, password);
+    if (response && response.code === 200) {
+      setToken(response.data.token);
+      navigation.navigate('Welcome');
+    } else if (
+      response &&
+      (response.code === 401 || response.code === 400)
+    ) {
+      setModalVisible(true);
+    }
+  }
+
   return (
     <Screen>
       <DefaultModal
@@ -70,39 +83,25 @@ function LoginScreen({navigation}: any) {
         <Message>Para acessar digite seu documento e senha</Message>
       </Container>
       <Form>
-        <Label>CPF</Label>
-        <Field>
-          <Input 
-          value={cpf} 
-          onChangeText={setCpf}
-          placeholder="Insira seu CPF aqui" />
-        </Field>
-        <Label>Senha</Label>
-        <Field>
-          <Input
-            value={password}
-            onChangeText={setPassword}
-            placeholder="Insira sua senha"
-            secureTextEntry={passwordVisible}
-          />
-          <IconContainer onPressIn={() => setPasswordVisible(!passwordVisible)}>
-            <EyeSlashIcon fill={Colors.icons.default} />
-          </IconContainer>
-        </Field>
+        <TextInputField
+          value={cpf}
+          onChangeFunction={setCpf}
+          label="CPF"
+          placeholder="Insira seu CPF aqui"
+        />
+        <TextInputField 
+          value={password}
+          onChangeFunction={setPassword}
+          label="Senha"
+          placeholder="Insira sua senha"
+          secureText={passwordVisible}
+          secureTextFunction={setPasswordVisible}
+          icon={<EyeSlashIcon fill={Colors.icons.default} />}
+          iconFunction={setPasswordVisible}
+        />
         <Link>Esqueci a sua senha?</Link>
         <Container flexDirection="row" flexSize={2}>
-          <Button
-            onPress={async () => {
-              const response = await login(cpf, password);
-              if (response && response.code === 200) {
-                setToken(response.data.token);
-                navigation.navigate('Home');
-              } else if (response && response.code === 401) {
-                setModalVisible(true);
-              }
-            }}>
-            <ButtonText>CONFIRMAR</ButtonText>
-          </Button>
+          <Button onPress={handleLogin} disabled={!validateForm()} text={'CONFIRMAR'} />
         </Container>
       </Form>
       {!keyboardShow && <Link>Criar nova conta</Link>}
