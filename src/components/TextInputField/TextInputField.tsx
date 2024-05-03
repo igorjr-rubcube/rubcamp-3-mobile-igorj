@@ -12,6 +12,7 @@ type TextInputFieldProps = {
   icon?: JSX.Element;
   iconFunction?: any;
   mask?: Mask;
+  inputMode?: any;
 };
 
 function TextInputField({
@@ -24,6 +25,7 @@ function TextInputField({
   icon,
   iconFunction,
   mask,
+  inputMode,
 }: TextInputFieldProps) {
   return (
     <>
@@ -35,6 +37,7 @@ function TextInputField({
           placeholder={placeholder}
           secureTextEntry={secureText || false}
           mask={mask}
+          inputMode={inputMode}
         />
         {icon && iconFunction && (
           <IconContainer onPressIn={() => iconFunction(secureTextFunction)}>

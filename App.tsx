@@ -13,7 +13,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen';
 import WelcomeScreen from './src/flows/welcome/WelcomeScreen';
 import LoginScreen from './src/flows/login/LoginScreen';
-import SuccessScreen, { SuccessScreenProps } from './src/flows/success/SuccessScreen';
+import SuccessScreen, {
+  SuccessScreenProps,
+} from './src/flows/success/SuccessScreen';
 import Button from './src/components/Button/Button';
 
 function App(): React.JSX.Element {
@@ -44,11 +46,14 @@ function App(): React.JSX.Element {
               navigation,
               title: 'Login efetuado com sucesso',
               message: 'Seja bem-vindo ao RubBank!',
-              button: Button({text: 'VOLTAR', onPress: () => navigation.navigate('Welcome')})
+              button: Button({
+                text: 'VOLTAR',
+                onPress: () => navigation.navigate('Welcome'),
+              }),
             };
             return <SuccessScreen {...props} />;
           }}
-          </Stack.Screen>
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
