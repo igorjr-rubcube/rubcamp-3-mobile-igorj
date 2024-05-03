@@ -33,4 +33,5 @@ export const Title = styled.Text`
 export const Message = styled.Text`
   font-size: 16px;
   color: ${Colors.text.primary};
+  margin-bottom: 10px;
 `;

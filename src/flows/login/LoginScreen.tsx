@@ -18,6 +18,7 @@ import {Keyboard} from 'react-native';
 import {login} from './api/login';
 
 const logo = require('../../assets/rubbank-logo.png');
+const cpfMask = [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/];
 
 function LoginScreen({navigation}: any) {
   const [keyboardShow, setKeyboardShow] = useState(false);
@@ -88,6 +89,7 @@ function LoginScreen({navigation}: any) {
           onChangeFunction={setCpf}
           label="CPF"
           placeholder="Insira seu CPF aqui"
+          mask={cpfMask}
         />
         <TextInputField 
           value={password}

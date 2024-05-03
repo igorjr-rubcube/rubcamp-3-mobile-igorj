@@ -10,6 +10,7 @@ type TextInputFieldProps = {
   secureTextFunction?: any;
   icon?: JSX.Element;
   iconFunction?: any;
+  mask?: RegExp[];
 };
 
 function TextInputField({
@@ -21,6 +22,7 @@ function TextInputField({
   secureTextFunction,
   icon,
   iconFunction,
+  mask,
 }: TextInputFieldProps) {
   return (
     <>
@@ -31,6 +33,7 @@ function TextInputField({
           onChangeText={onChangeFunction}
           placeholder={placeholder}
           secureTextEntry={secureText || false}
+          mask={mask}
         />
         {icon && iconFunction && (
           <IconContainer onPressIn={() => iconFunction(secureTextFunction)}>

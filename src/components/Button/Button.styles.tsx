@@ -1,11 +1,11 @@
 import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
 
-// FIXME - change size of button
 export const DefaultButton = styled.TouchableOpacity<{color?: string}>`
   flex: 2;
   align-self: flex-end;
   width: 100%;
+  max-height: 55px;
   padding: 16px;
   border-radius: 50px;
   background-color: ${props => props.color || Colors.button.primary};

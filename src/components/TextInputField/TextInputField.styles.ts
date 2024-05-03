@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
+import MaskInput from 'react-native-mask-input';
 
 export const Field = styled.View`
   margin-bottom: 16px;
@@ -18,7 +19,7 @@ export const Label = styled.Text`
   margin-bottom: 12px;
 `;
 
-export const Input = styled.TextInput`
+export const Input = styled(MaskInput)`
   flex: 1;
   font-size: 18px;
   padding: 0 0 8px 0;
