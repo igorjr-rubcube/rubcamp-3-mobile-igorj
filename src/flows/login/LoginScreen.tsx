@@ -59,7 +59,7 @@ function LoginScreen({navigation}: any) {
     const response = await login(cpf, password);
     if (response && response.code === 200) {
       setToken(response.data.token);
-      navigation.navigate('Welcome');
+      navigation.navigate('Success');
     } else if (
       response &&
       (response.code === 401 || response.code === 400)

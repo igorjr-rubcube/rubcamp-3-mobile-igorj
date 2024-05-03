@@ -13,6 +13,7 @@ class Colors {
   static readonly button = {
     primary: '#1d1c3e',
     secondary: '#6b7ae5',
+    disabled: '#dcdcdc',
   };
 
   static readonly icons = {

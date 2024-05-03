@@ -1,3 +1,4 @@
+import Colors from '../../styles/colors';
 import {DefaultButton, ButtonText} from './Button.styles';
 
 type ButtonProps = {
@@ -10,7 +11,7 @@ type ButtonProps = {
 function Button({onPress, text, disabled, color}: ButtonProps) {
   return (
     <DefaultButton 
-    color={disabled ? '#ccc' : (color|| undefined)} // TODO - change disabled color
+    color={disabled ? Colors.button.disabled : (color|| undefined)}
     onPress={onPress} 
     disabled={disabled}>
       <ButtonText>{text}</ButtonText>

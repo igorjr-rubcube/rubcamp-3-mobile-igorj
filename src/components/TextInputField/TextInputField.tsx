@@ -1,5 +1,6 @@
 import React from 'react';
 import {Field, Input, Label, IconContainer} from './TextInputField.styles';
+import { Mask } from 'react-native-mask-input';
 
 type TextInputFieldProps = {
   value: any;
@@ -10,7 +11,7 @@ type TextInputFieldProps = {
   secureTextFunction?: any;
   icon?: JSX.Element;
   iconFunction?: any;
-  mask?: RegExp[];
+  mask?: Mask;
 };
 
 function TextInputField({

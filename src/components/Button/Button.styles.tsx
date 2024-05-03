@@ -6,6 +6,7 @@ export const DefaultButton = styled.TouchableOpacity<{color?: string}>`
   align-self: flex-end;
   width: 100%;
   max-height: 55px;
+  max-width: 350px;
   padding: 16px;
   border-radius: 50px;
   background-color: ${props => props.color || Colors.button.primary};
