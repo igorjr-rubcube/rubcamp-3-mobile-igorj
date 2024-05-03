@@ -13,7 +13,9 @@
     "@react-native-community/cli": "^13.6.6",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
+    "@reduxjs/toolkit": "^2.2.3",
     "@types/axios": "^0.14.0",
+    "@types/redux": "^3.6.0",
     "axios": "^1.6.8",
     "react": "^18.3.1",
     "react-native": "^0.74.0",
@@ -24,6 +26,7 @@
     "react-native-screens": "^3.31.1",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^15.2.0",
+    "react-redux": "^9.1.2",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {

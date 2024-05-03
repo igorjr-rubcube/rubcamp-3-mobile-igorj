@@ -17,7 +17,10 @@ import Button from '../../components/Button/Button';
 import {Keyboard} from 'react-native';
 import {login} from './api/login';
 import EyeIcon from '../../components/icons/EyeIcon';
-import LoadingScreen from '../loading/LoadingScreen';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../redux/store';
+import {setLoading} from '../../redux/slices/LoadingSlice';
+import { setToken } from '../../redux/slices/TokenSlice';
 
 const logo = require('../../assets/rubbank-logo.png');
 const cpfMask = [
@@ -66,28 +69,27 @@ function LoginScreen({navigation}: any) {
 
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState('');
-  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const validateForm = () => {
     return cpf.length == 14 && password.length > 8;
   };
 
   const handleLogin = async () => {
-    setLoading(true);
+    dispatch(setLoading(true));
     const response = await login(cpf, password);
     if (response && response.code === 200) {
-      setToken(response.data.token);
+      const token = response.data.token;
+      dispatch(setToken(token));
       navigation.navigate('Success');
     } else if (response && (response.code === 401 || response.code === 400)) {
       setLoading(false);
-      setModalVisible(true);
+      dispatch(setLoading(false));
     }
   };
 
-  return loading ? (
-    <LoadingScreen />
-  ) : (
+  return (
     <Screen>
       <DefaultModal
         visible={modalVisible}

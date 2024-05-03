@@ -1,10 +1,5 @@
-import axios, {AxiosError, AxiosResponse} from 'axios';
-import {REACT_APP_API_URL} from '@env';
-
-const api = axios.create({
-  baseURL: REACT_APP_API_URL,
-});
-
+import {AxiosError, AxiosResponse} from 'axios';
+import api from '../../../axios/api';
 type LoginResponse = {
   code: number;
   data: any;
