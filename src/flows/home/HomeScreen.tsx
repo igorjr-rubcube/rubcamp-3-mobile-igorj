@@ -9,10 +9,7 @@ import ReceiptIcon from '../../components/icons/ReceiptIcon';
 import TransferIcon from '../../components/icons/TransferIcon';
 import Colors from '../../styles/colors';
 import {
-  BackgroundBottom,
-  BottomContainer,
   Image,
-  Screen,
   BalanceText,
   TabButton,
   IconButton,
@@ -20,7 +17,6 @@ import {
   TabRow,
   Title,
   TopBar,
-  TopContainer,
   RightWrapper,
   Balance,
   IconButtonTopBar,
@@ -30,11 +26,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
 import {getBalance} from './api/home';
 import {setBalance} from '../../redux/slices/BalanceSlice';
+import { BackgroundBottom, BottomContainer, TopContainer } from '../../components/DefaultScreen/DefaultScreen.styles';
+import { Background } from '../../components/DefaultScreen/DefaultScreen';
 
 const logo = require('../../assets/rubbank-logo-white.png');
 const background = require('../../assets/background.png');
 
-function HomeScreen() {
+function HomeScreen({navigation}: any) {
   const [showBalance, setShowBalance] = useState(true);
   const token = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.userId.userId);
@@ -55,7 +53,7 @@ function HomeScreen() {
     return () => {};
   }, []);
   return (
-    <Screen source={background}>
+    <Background>
       <TopContainer>
         <TopBar>
           <Image source={logo} />
@@ -111,7 +109,7 @@ function HomeScreen() {
             </TabButton>
           </TabRow>
           <TabRow>
-            <TabButton>
+            <TabButton onPress={() => navigation.navigate("Profile")}>
               <IconButton>
                 <ProfileIcon fill={Colors.icons.default} />
               </IconButton>
@@ -120,7 +118,7 @@ function HomeScreen() {
           </TabRow>
         </BackgroundBottom>
       </BottomContainer>
-    </Screen>
+    </Background>
   );
 }
 

@@ -17,6 +17,7 @@ import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 import LoadingScreen from './src/flows/loading/LoadingScreen';
 import HomeScreen from './src/flows/home/HomeScreen';
+import ProfileScreen from './src/flows/profile/ProfileScreen';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -44,6 +45,11 @@ function App(): React.JSX.Element {
             options={{headerShown: false}}
             name="Home"
             component={HomeScreen}
+          />
+          <Stack.Screen
+            options={{headerTitle: '', headerTransparent: true}}
+            name="Profile"
+            component={ProfileScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>
