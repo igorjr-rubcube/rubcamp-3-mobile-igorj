@@ -31,11 +31,16 @@ import {RootState} from '../../redux/store';
 import {getBalance} from './api/home';
 import {setBalance} from '../../redux/slices/BalanceSlice';
 
+const logo = require('../../assets/rubbank-logo-white.png');
+const background = require('../../assets/background.png');
+
 function HomeScreen() {
   const [showBalance, setShowBalance] = useState(true);
   const token = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.userId.userId);
-  const accountId = useSelector((state: RootState) => state.accountId.accountId);
+  const accountId = useSelector(
+    (state: RootState) => state.accountId.accountId,
+  );
   const balance = useSelector((state: RootState) => state.balance.balance);
   const dispatch = useDispatch();
 
@@ -47,14 +52,13 @@ function HomeScreen() {
       }
     };
     fetchData();
-    return () => {
-    };
+    return () => {};
   }, []);
   return (
-    <Screen>
+    <Screen source={background}>
       <TopContainer>
         <TopBar>
-          <Image source={require('../../assets/rubbank-logo-white.png')} />
+          <Image source={logo} />
           <RightWrapper>
             <IconButtonTopBar>
               <NotificationIcon fill={Colors.icons.light} />
@@ -72,10 +76,13 @@ function HomeScreen() {
           <Balance>
             {showBalance ? (
               <BalanceText>
-                RC {balance && balance === 0 ? balance?.toString().replace('.', ',') : '0.00'}
+                RC{' '}
+                {balance && balance === 0
+                  ? balance?.toString().replace('.', ',')
+                  : '0.00'}
               </BalanceText>
             ) : (
-              <BalanceText>_____________________</BalanceText>
+              <BalanceText>__________________</BalanceText>
             )}
             <IconButton onPress={() => setShowBalance(prev => !prev)}>
               {showBalance ? (

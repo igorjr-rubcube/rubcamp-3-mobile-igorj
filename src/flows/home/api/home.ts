@@ -11,7 +11,6 @@ export const getBalance = async (
   id: string,
   idAccount: string,
 ): Promise<BalanceResponse | undefined | null> => {
-  console.log('getBalance');
   return await api
     .get(`/users/${id}/accounts/${idAccount}/balance`, {
       headers: {
@@ -24,7 +23,6 @@ export const getBalance = async (
         code: response.status,
         data: response.data as object,
       };
-      console.log(responseObject);
       return responseObject;
     })
     .catch((error: AxiosError) => {
@@ -34,7 +32,6 @@ export const getBalance = async (
           code: error.response.status,
           data: error.response.data as object,
         };
-        console.log(responseObject);
         return responseObject;
       }
     });

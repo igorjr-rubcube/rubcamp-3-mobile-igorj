@@ -1,15 +1,15 @@
 import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
 
-export const Screen = styled.View`
+export const Screen = styled.ImageBackground`
   flex: 1;
 `;
 
 export const TopContainer = styled.View`
   flex: 1;
-  background-color: ${Colors.background.secondary};
   padding: 20px 25px;
   justify-content: space-between;
+  background-color: transparent;
 `;
 
 export const BottomContainer = styled.View`
@@ -87,8 +87,9 @@ export const TabButton = styled.TouchableOpacity`
   justify-content: space-between;
   align-items: flex-start;
   padding: 12px 10px;
+  background-color: ${Colors.background.primary};
   border-radius: 10px;
-  border: 1px solid ${Colors.border.primary};
+  elevation: 5;
 `;
 
 export const TabButtonText = styled.Text`

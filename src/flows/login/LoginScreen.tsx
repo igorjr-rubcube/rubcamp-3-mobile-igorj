@@ -94,7 +94,7 @@ function LoginScreen({navigation}: any) {
       navigation.navigate('Home');
       dispatch(setLoading(false));
     } else if (loginResponse && (loginResponse.code === 401 || loginResponse.code === 400)) {
-      setLoading(false);
+      setModalVisible(true);
       dispatch(setLoading(false));
     }
   };

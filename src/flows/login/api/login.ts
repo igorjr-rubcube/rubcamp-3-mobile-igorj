@@ -15,7 +15,6 @@ export const login = async (
         code: response.status,
         data: response.data as object,
       };
-      console.log(responseObject);
       return responseObject;
     })
     .catch((error: AxiosError) => {
@@ -25,7 +24,6 @@ export const login = async (
           code: error.response.status,
           data: error.response.data as object,
         };
-        console.log(responseObject);
         return responseObject;
       }
     });
@@ -50,7 +48,6 @@ export const getAccounts = async (
         code: response.status,
         data: response.data as object,
       };
-      console.log(responseObject);
       return responseObject;
     })
     .catch((error: AxiosError) => {
@@ -60,7 +57,6 @@ export const getAccounts = async (
           code: error.response.status,
           data: error.response.data as object,
         };
-        console.log(responseObject);
         return responseObject;
       }
     });
