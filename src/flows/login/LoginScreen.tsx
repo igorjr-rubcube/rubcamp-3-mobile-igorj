@@ -15,12 +15,14 @@ import AlertIcon from '../../components/icons/AlertIcon';
 import TextInputField from '../../components/TextInputField/TextInputField';
 import Button from '../../components/Button/Button';
 import {Keyboard} from 'react-native';
-import {login} from './api/login';
+import {getAccounts, getUserId, login} from './api/login';
 import EyeIcon from '../../components/icons/EyeIcon';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
 import {setLoading} from '../../redux/slices/LoadingSlice';
-import { setToken } from '../../redux/slices/TokenSlice';
+import {setToken} from '../../redux/slices/TokenSlice';
+import {setUserId} from '../../redux/slices/UserIdSlice';
+import {setAccountId} from '../../redux/slices/AccountIdSlice';
 
 const logo = require('../../assets/rubbank-logo.png');
 const cpfMask = [
@@ -78,12 +80,20 @@ function LoginScreen({navigation}: any) {
 
   const handleLogin = async () => {
     dispatch(setLoading(true));
-    const response = await login(cpf, password);
-    if (response && response.code === 200) {
-      const token = response.data.token;
+    const loginResponse = await login(cpf, password);
+    if (loginResponse && loginResponse.code === 200) {
+      const token = loginResponse.data.token;
       dispatch(setToken(token));
-      navigation.navigate('Success');
-    } else if (response && (response.code === 401 || response.code === 400)) {
+      const id = getUserId(token);
+      dispatch(setUserId(id));
+      const accountsResponse = await getAccounts(token, id);
+      if (accountsResponse && accountsResponse.code === 200) {
+        const accountId = accountsResponse.data[0].id;
+        dispatch(setAccountId(accountId));
+      }
+      navigation.navigate('Home');
+      dispatch(setLoading(false));
+    } else if (loginResponse && (loginResponse.code === 401 || loginResponse.code === 400)) {
       setLoading(false);
       dispatch(setLoading(false));
     }

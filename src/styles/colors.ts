@@ -18,7 +18,12 @@ class Colors {
 
   static readonly icons = {
     default: '#1d1c3e',
+    light: '#ffffff',
     alert: '#ffc700',
+  };
+
+  static readonly border = {
+    primary: '#dcdcdc',
   };
 }
 
