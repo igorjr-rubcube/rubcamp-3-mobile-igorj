@@ -8,6 +8,7 @@ export type DefaultResponse = {
 
 const api = axios.create({
   baseURL: REACT_APP_API_URL,
+  timeout: 10000,
 });
 
 export default api;

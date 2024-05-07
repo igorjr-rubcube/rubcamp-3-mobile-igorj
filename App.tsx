@@ -19,7 +19,7 @@ import LoadingScreen from './src/flows/loading/LoadingScreen';
 import HomeScreen from './src/flows/home/HomeScreen';
 import ProfileScreen from './src/flows/profile/ProfileScreen';
 import Colors from './src/styles/colors';
-import {StatusBar, Text} from 'react-native';
+import ChangeAppPasswordScreen from './src/flows/profile/changeAppPassword/ChangeAppPasswordScreen';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -60,12 +60,17 @@ function App(): React.JSX.Element {
               headerTransparent: true,
               headerTintColor: Colors.white,
               headerTitleStyle: {
-                fontSize: 28,
+                fontSize: 24,
                 fontWeight: 'regular',
                 fontFamily: 'Roboto',
               },
             }}>
             <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen
+              options={{headerTitle: 'Alterar senha do App'}}
+              name="ChangeAppPassword"
+              component={ChangeAppPasswordScreen}
+            />
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>

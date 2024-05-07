@@ -10,7 +10,7 @@ export const ModalBackground = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: ${Colors.greyTransparent};
+  background-color: ${Colors.darkTransparent};
 `;
 
 export const ModalContainer = styled.View`
