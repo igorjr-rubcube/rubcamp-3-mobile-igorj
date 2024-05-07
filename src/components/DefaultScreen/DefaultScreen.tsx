@@ -12,14 +12,36 @@ export function Background({children}: {children: ReactNode}) {
   return <Screen source={background}>{children}</Screen>;
 }
 
-export function TopView({children}: {children: ReactNode}) {
-  return <TopContainer>{children}</TopContainer>;
+export function TopView({
+  children,
+  flexSize,
+}: {
+  children: ReactNode;
+  flexSize: number;
+}) {
+  return <TopContainer flexSize={flexSize}>{children}</TopContainer>;
 }
-// TODO - Make the flex size be passed as a prop
-export function BottomView({children}: {children: ReactNode}) {
+
+export function BottomView({
+  children,
+  flexSize,
+}: {
+  children: ReactNode;
+  flexSize: number;
+}) {
   return (
-    <BottomContainer>
+    <BottomContainer flexSize={flexSize}>
       <BackgroundBottom>{children}</BackgroundBottom>
     </BottomContainer>
+  );
+}
+
+export function DefaultScreen({children}: {children: ReactNode}) {
+  return (
+    <Background>
+      <BottomContainer flexSize={1}>
+        <BackgroundBottom>{children}</BackgroundBottom>
+      </BottomContainer>
+    </Background>
   );
 }

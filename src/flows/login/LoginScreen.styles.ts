@@ -4,7 +4,7 @@ import Colors from '../../styles/colors';
 export const Screen = styled.View`
   align-items: center;
   justify-content: flex-start;
-  background-color: ${Colors.background.primary};
+  background-color: ${Colors.light};
   padding: 10%;
   height: 100%;
 `;
@@ -29,12 +29,12 @@ export const Container = styled.View<{
 export const Title = styled.Text`
   font-size: 32px;
   font-weight: 500;
-  color: ${Colors.text.primary};
+  color: ${Colors.darkblue};
 `;
 
 export const Message = styled.Text`
   font-size: 16px;
-  color: ${Colors.text.primary};
+  color: ${Colors.darkblue};
 `;
 
 export const Form = styled.View`
@@ -46,5 +46,5 @@ export const Form = styled.View`
 export const Link = styled.Text`
   font-size: 16px;
   font-weight: bold;
-  color: ${Colors.text.tertiary};
+  color: ${Colors.lightpurple};
 `;

@@ -28,7 +28,7 @@ function SuccessScreen({
     <Screen>
       <Container>
         <IconContainer>
-          <CheckIcon fill={Colors.icons.default} />
+          <CheckIcon fill={Colors.default} />
         </IconContainer>
         <Title>{title}</Title>
         <Message>{message}</Message>

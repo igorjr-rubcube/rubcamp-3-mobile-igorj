@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
 
-export const DefaultButton = styled.TouchableOpacity<{color?: string}>`
+export const DefaultButton = styled.TouchableOpacity<{color?: string, borderColor?: string}>`
   flex: 2;
   align-self: flex-end;
   width: 100%;
@@ -9,12 +9,14 @@ export const DefaultButton = styled.TouchableOpacity<{color?: string}>`
   max-width: 350px;
   padding: 16px;
   border-radius: 50px;
-  background-color: ${props => props.color || Colors.button.primary};
-  align-items: center;
   margin-bottom: 20px;
+  align-items: center;
+  background-color: ${props => props.color || Colors.darkblue};
+  border: ${props => props.borderColor ? "1.5px solid " + props.borderColor : "none"};
 `;
 
-export const ButtonText = styled.Text`
+export const ButtonText = styled.Text<{textColor?: string}>`
   font-size: 16px;
-  color: ${Colors.text.secondary};
+  font-weight: 500;
+  color: ${props => props.textColor || Colors.white};
 `;

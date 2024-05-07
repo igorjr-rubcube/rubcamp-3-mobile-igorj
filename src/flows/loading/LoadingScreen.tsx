@@ -15,7 +15,7 @@ function LoadingScreen() {
         <Screen>
           <Container>
             <Logo source={logo} />
-            <ActivityIndicator size={50} color={Colors.button.secondary} />
+            <ActivityIndicator size={50} color={Colors.default} />
           </Container>
         </Screen>
       ) : null}

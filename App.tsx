@@ -18,6 +18,8 @@ import {store} from './src/redux/store';
 import LoadingScreen from './src/flows/loading/LoadingScreen';
 import HomeScreen from './src/flows/home/HomeScreen';
 import ProfileScreen from './src/flows/profile/ProfileScreen';
+import Colors from './src/styles/colors';
+import {StatusBar, Text} from 'react-native';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -30,14 +32,19 @@ function App(): React.JSX.Element {
     <Provider store={store}>
       <LoadingScreen />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            orientation: 'portrait',
+            headerTransparent: true,
+            statusBarColor: Colors.transparent,
+          }}>
           <Stack.Screen
-            options={{headerTitle: '', headerTransparent: true}}
+            options={{headerTitle: ''}}
             name="Welcome"
             component={WelcomeScreen}
           />
           <Stack.Screen
-            options={{headerTitle: '', headerTransparent: true}}
+            options={{headerTitle: ''}}
             name="Login"
             component={LoginScreen}
           />
@@ -46,11 +53,20 @@ function App(): React.JSX.Element {
             name="Home"
             component={HomeScreen}
           />
-          <Stack.Screen
-            options={{headerTitle: '', headerTransparent: true}}
-            name="Profile"
-            component={ProfileScreen}
-          />
+          <Stack.Group
+            screenOptions={{
+              headerTitle: 'Perfil',
+              headerTitleAlign: 'center',
+              headerTransparent: true,
+              headerTintColor: Colors.white,
+              headerTitleStyle: {
+                fontSize: 28,
+                fontWeight: 'regular',
+                fontFamily: 'Roboto',
+              },
+            }}>
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+          </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

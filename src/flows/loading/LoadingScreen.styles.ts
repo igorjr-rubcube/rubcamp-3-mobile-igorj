@@ -4,7 +4,7 @@ import Colors from '../../styles/colors';
 export const Screen = styled.View`
   align-items: center;
   justify-content: flex-start;
-  background-color: ${Colors.background.primary};
+  background-color: ${Colors.light};
   padding: 10%;
   height: 100%;
 `;

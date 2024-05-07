@@ -24,7 +24,7 @@ export const RightWrapper = styled.View`
 
 export const Title = styled.Text`
   font-size: 18px;
-  color: ${Colors.text.secondary};
+  color: ${Colors.white};
 `;
 
 export const BalanceWrapper = styled.View`
@@ -39,7 +39,7 @@ export const Balance = styled.View`
 
 export const BalanceText = styled.Text`
   font-size: 24px;
-  color: ${Colors.text.secondary};
+  color: ${Colors.white};
 `;
 
 export const BalanceHidden = styled.View``;
@@ -62,12 +62,12 @@ export const TabButton = styled.TouchableOpacity`
   justify-content: space-between;
   align-items: flex-start;
   padding: 12px 10px;
-  background-color: ${Colors.background.primary};
+  background-color: ${Colors.light};
   border-radius: 10px;
   elevation: 5;
 `;
 
 export const TabButtonText = styled.Text`
   font-size: 18px;
-  color: ${Colors.text.primary};
+  color: ${Colors.darkblue};
 `;

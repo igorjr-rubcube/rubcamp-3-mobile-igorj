@@ -17,8 +17,7 @@ import Button from '../../components/Button/Button';
 import {Keyboard} from 'react-native';
 import {getAccounts, getUserId, login} from './api/login';
 import EyeIcon from '../../components/icons/EyeIcon';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
+import {useDispatch} from 'react-redux';
 import {setLoading} from '../../redux/slices/LoadingSlice';
 import {setToken} from '../../redux/slices/TokenSlice';
 import {setUserId} from '../../redux/slices/UserIdSlice';
@@ -107,7 +106,7 @@ function LoginScreen({navigation}: any) {
         title="Atenção"
         message="Usuário e/ou senha inválidos"
         buttonLabel="TENTAR DE NOVO"
-        icon={<AlertIcon fill={Colors.icons.alert} />}
+        icon={<AlertIcon fill={Colors.alert} />}
       />
       <Logo source={logo} />
       <Container flexSize={1}>
@@ -132,9 +131,9 @@ function LoginScreen({navigation}: any) {
           secureTextFunction={setPasswordVisible}
           icon={
             passwordVisible ? (
-              <EyeSlashIcon fill={Colors.icons.default} />
+              <EyeSlashIcon fill={Colors.grey} />
             ) : (
-              <EyeIcon fill={Colors.icons.default} />
+              <EyeIcon fill={Colors.grey} />
             )
           }
           iconFunction={() => setPasswordVisible(!passwordVisible)}

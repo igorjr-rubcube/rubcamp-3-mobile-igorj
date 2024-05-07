@@ -22,15 +22,17 @@ import {
   IconButtonTopBar,
   BalanceWrapper,
 } from './HomeScreen.styles';
+import {
+  Background,
+  BottomView,
+  TopView,
+} from '../../components/DefaultScreen/DefaultScreen';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
 import {getBalance} from './api/home';
 import {setBalance} from '../../redux/slices/BalanceSlice';
-import { BackgroundBottom, BottomContainer, TopContainer } from '../../components/DefaultScreen/DefaultScreen.styles';
-import { Background } from '../../components/DefaultScreen/DefaultScreen';
 
 const logo = require('../../assets/rubbank-logo-white.png');
-const background = require('../../assets/background.png');
 
 function HomeScreen({navigation}: any) {
   const [showBalance, setShowBalance] = useState(true);
@@ -54,18 +56,18 @@ function HomeScreen({navigation}: any) {
   }, []);
   return (
     <Background>
-      <TopContainer>
+      <TopView flexSize={1}>
         <TopBar>
           <Image source={logo} />
           <RightWrapper>
             <IconButtonTopBar>
-              <NotificationIcon fill={Colors.icons.light} />
+              <NotificationIcon fill={Colors.light} />
             </IconButtonTopBar>
             <IconButtonTopBar>
-              <HelpIcon fill={Colors.icons.light} />
+              <HelpIcon fill={Colors.light} />
             </IconButtonTopBar>
             <IconButtonTopBar>
-              <MenuIcon fill={Colors.icons.light} />
+              <MenuIcon fill={Colors.light} />
             </IconButtonTopBar>
           </RightWrapper>
         </TopBar>
@@ -84,40 +86,38 @@ function HomeScreen({navigation}: any) {
             )}
             <IconButton onPress={() => setShowBalance(prev => !prev)}>
               {showBalance ? (
-                <EyeIcon fill={Colors.icons.light} />
+                <EyeIcon fill={Colors.light} />
               ) : (
-                <EyeSlashIcon fill={Colors.icons.light} />
+                <EyeSlashIcon fill={Colors.light} />
               )}
             </IconButton>
           </Balance>
         </BalanceWrapper>
-      </TopContainer>
-      <BottomContainer>
-        <BackgroundBottom>
-          <TabRow>
-            <TabButton>
-              <IconButton>
-                <TransferIcon fill={Colors.icons.default} />
-              </IconButton>
-              <TabButtonText>Transferir</TabButtonText>
-            </TabButton>
-            <TabButton>
-              <IconButton>
-                <ReceiptIcon fill={Colors.icons.default} />
-              </IconButton>
-              <TabButtonText>Extrato</TabButtonText>
-            </TabButton>
-          </TabRow>
-          <TabRow>
-            <TabButton onPress={() => navigation.navigate("Profile")}>
-              <IconButton>
-                <ProfileIcon fill={Colors.icons.default} />
-              </IconButton>
-              <TabButtonText>Perfil</TabButtonText>
-            </TabButton>
-          </TabRow>
-        </BackgroundBottom>
-      </BottomContainer>
+      </TopView>
+      <BottomView flexSize={6}>
+        <TabRow>
+          <TabButton>
+            <IconButton>
+              <TransferIcon fill={Colors.darkblue} />
+            </IconButton>
+            <TabButtonText>Transferir</TabButtonText>
+          </TabButton>
+          <TabButton>
+            <IconButton>
+              <ReceiptIcon fill={Colors.darkblue} />
+            </IconButton>
+            <TabButtonText>Extrato</TabButtonText>
+          </TabButton>
+        </TabRow>
+        <TabRow>
+          <TabButton onPress={() => navigation.navigate('Profile')}>
+            <IconButton>
+              <ProfileIcon fill={Colors.darkblue} />
+            </IconButton>
+            <TabButtonText>Perfil</TabButtonText>
+          </TabButton>
+        </TabRow>
+      </BottomView>
     </Background>
   );
 }

@@ -6,15 +6,25 @@ type ButtonProps = {
   text: string;
   disabled?: boolean;
   color?: string;
+  borderColor?: string;
+  textColor?: string;
 };
 
-function Button({onPress, text, disabled, color}: ButtonProps) {
+function Button({
+  onPress,
+  text,
+  disabled,
+  color,
+  borderColor,
+  textColor,
+}: ButtonProps) {
   return (
-    <DefaultButton 
-    color={disabled ? Colors.button.disabled : (color|| undefined)}
-    onPress={onPress} 
-    disabled={disabled}>
-      <ButtonText>{text}</ButtonText>
+    <DefaultButton
+      color={disabled ? Colors.disabled : color || undefined}
+      onPress={onPress}
+      disabled={disabled}
+      borderColor={borderColor}>
+      <ButtonText textColor={textColor}>{text}</ButtonText>
     </DefaultButton>
   );
 }

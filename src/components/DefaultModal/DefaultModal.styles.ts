@@ -10,13 +10,13 @@ export const ModalBackground = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${Colors.greyTransparent};
 `;
 
 export const ModalContainer = styled.View`
   justify-content: center;
   align-items: center;
-  background-color: ${Colors.background.primary};
+  background-color: ${Colors.light};
   border-radius: 12px;
   width: 80%;
   height: 35%;
@@ -32,7 +32,7 @@ export const CloseButton = styled.TouchableOpacity`
 export const CloseButtonText = styled.Text`
   font-family: monospace;
   font-size: 28px;
-  color: ${Colors.text.primary};
+  color: ${Colors.darkblue};
 `;
 
 export const CenterContainer = styled.View`
@@ -50,17 +50,17 @@ export const ModalIcon = styled.View`
 export const ModalTitle = styled.Text`
   font-size: 24px;
   font-weight: bold;
-  color: ${Colors.text.primary};
+  color: ${Colors.darkblue};
 `;
 
 export const ModalMessage = styled.Text`
   font-size: 18px;
   text-align: center;
-  color: ${Colors.text.primary};
+  color: ${Colors.darkblue};
 `;
 
 export const ConfirmButton = styled.TouchableOpacity`
-  background-color: ${Colors.background.secondary};
+  background-color: ${Colors.darkblue};
   border-radius: 50px;
   padding: 16px 48px;
   margin-top: 16px;
@@ -69,5 +69,5 @@ export const ConfirmButton = styled.TouchableOpacity`
 export const ConfirmButtonText = styled.Text`
   font-size: 16px;
   font-weight: bold;
-  color: ${Colors.text.secondary};
+  color: ${Colors.white};
 `;
