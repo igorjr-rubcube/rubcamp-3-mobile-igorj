@@ -41,7 +41,19 @@ const cpfMask = [
   /\d/,
 ];
 
-function LoginScreen({navigation}: any) {
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../navigation/RootStack';
+
+type LoginScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Login'
+>;
+
+type Props = {
+  navigation: LoginScreenNavigationProp;
+};
+
+function LoginScreen({navigation}: Props) {
   const [keyboardShow, setKeyboardShow] = useState(false);
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(

@@ -31,7 +31,6 @@ import {
   Title,
   TopBar,
 } from './HomeScreen.styles';
-
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStack';
 
@@ -41,7 +40,7 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
-const logo = require('../assets/rubbank-logo.png');
+const logo = require('../assets/rubbank-logo-white.png');
 
 function HomeScreen({navigation}: Props) {
   const [showBalance, setShowBalance] = useState(true);

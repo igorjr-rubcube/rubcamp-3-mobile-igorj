@@ -28,6 +28,7 @@ export const getBalance = async (
     .catch((error: AxiosError) => {
       console.log(error);
       if (error.response) {
+      console.log(error.response.data);
         const responseObject = {
           code: error.response.status,
           data: error.response.data as object,

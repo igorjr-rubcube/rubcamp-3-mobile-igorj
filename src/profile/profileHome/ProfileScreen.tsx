@@ -22,8 +22,19 @@ import {
   ProfilePicText,
   ProfilePicture,
 } from './ProfileScreen.styles';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../navigation/RootStack';
 
-function ProfileScreen({navigation}: any) {
+type ProfileScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Home'
+>;
+
+type Props = {
+  navigation: ProfileScreenNavigationProp;
+};
+
+function ProfileScreen({navigation}: Props) {
   const userInfo = useSelector((state: RootState) => state.userInfo);
   let profilePicText = userInfo?.fullName
     .split(' ')
@@ -83,7 +94,8 @@ function ProfileScreen({navigation}: any) {
               </MenuItemTouchable>
             </MenuItem>
             <MenuItem>
-              <MenuItemTouchable>
+              <MenuItemTouchable
+                onPress={() => navigation.navigate('ChangeTransactionalPassword')}>
                 <MenuItemText>Alterar senha transacional</MenuItemText>
                 <MenuItemIcon>
                   <RightArrowIcon fill={Colors.grey} />

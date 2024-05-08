@@ -22,16 +22,20 @@ import {
   SubtitleWrapper,
   Title,
   TopWrapper,
-} from './ChangeAppPasswordScreen.styles';
+} from './ChangePassword.styles';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../navigation/RootStack';
 
-function ChangeAppPasswordScreen({navigation}: any) {
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'ChangeAppPassword'>;
+};
+
+function ChangeAppPasswordScreen({navigation}: Props) {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [modalSafePasswordVisible, setModalSafePasswordVisible] =
-    useState(false);
-  const [modalWrongPasswordVisible, setModalWrongPasswordVisible] =
-    useState(false);
+  const [modalSafePasswordVisible, setModalSafePasswordVisible] = useState(false);
+  const [modalWrongPasswordVisible, setModalWrongPasswordVisible] = useState(false);
 
   const dispatch = useDispatch();
   const id = useSelector((state: RootState) => state.userId.userId);

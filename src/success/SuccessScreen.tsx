@@ -8,17 +8,17 @@ import {
   Screen,
   Title,
 } from './SuccessScreen.styles';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../navigation/RootStack';
 
-const logo = require('../assets/rubbank-logo.png');
-
-export type SuccessScreenProps = {
-  title: string;
-  message: string;
-  button: any;
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'Success'>;
+  route: RouteProp<RootStackParamList, 'Success'>;
 };
 
-function SuccessScreen({route, navigation}: any) {
-  const {title, message, button, navigateTo} = route.params;
+function SuccessScreen({navigation, route}: Props) {
+  const {title, message, navigateTo} = route.params;
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate(navigateTo);
@@ -33,7 +33,6 @@ function SuccessScreen({route, navigation}: any) {
         <Title>{title}</Title>
         <Message>{message}</Message>
       </Container>
-      {button}
     </Screen>
   );
 }

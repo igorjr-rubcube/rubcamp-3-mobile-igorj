@@ -1,12 +1,13 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import HomeScreen from '../home/HomeScreen';
 import LoginScreen from '../login/LoginScreen';
-import ChangeAppPasswordScreen from '../profile/changeAppPassword/ChangeAppPasswordScreen';
+import ChangeAppPasswordScreen from '../profile/changePassword/ChangeAppPasswordScreen';
 import ProfileScreen from '../profile/profileHome/ProfileScreen';
 import SuccessScreen from '../success/SuccessScreen';
 import WelcomeScreen from '../welcome/WelcomeScreen';
+import ChangeTransactionalPasswordScreen from '../profile/changePassword/ChangeTransactionalPasswordScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -14,10 +15,11 @@ export type RootStackParamList = {
   Home: undefined;
   Profile: undefined;
   ChangeAppPassword: undefined;
-  Success: {title: string; message: string; navigateTo: string};
+  ChangeTransactionalPassword: undefined;
+  Success: {title: string; message: string; navigateTo: 'Home' | 'Profile'};
 };
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
   return (
@@ -62,13 +64,18 @@ function RootStack() {
             component={ChangeAppPasswordScreen}
           />
           <Stack.Screen
+            options={{headerTitle: 'Alterar senha do transacional'}}
+            name="ChangeTransactionalPassword"
+            component={ChangeTransactionalPasswordScreen}
+          />
+          <Stack.Screen
             name="Success"
             component={SuccessScreen}
             options={{headerShown: false}}
             initialParams={{
               title: '',
               message: '',
-              navigateTo: '',
+              navigateTo: 'Home',
             }}
           />
         </Stack.Group>
