@@ -1,40 +1,49 @@
 import {useEffect, useState} from 'react';
-import EyeIcon from '../../components/icons/EyeIcon';
-import EyeSlashIcon from '../../components/icons/EyeSlashIcon';
-import HelpIcon from '../../components/icons/HelpIcon';
-import MenuIcon from '../../components/icons/MenuIcon';
-import NotificationIcon from '../../components/icons/NotificationIcon';
-import ProfileIcon from '../../components/icons/ProfileIcon';
-import ReceiptIcon from '../../components/icons/ReceiptIcon';
-import TransferIcon from '../../components/icons/TransferIcon';
-import Colors from '../../styles/colors';
-import {
-  Image,
-  BalanceText,
-  TabButton,
-  IconButton,
-  TabButtonText,
-  TabRow,
-  Title,
-  TopBar,
-  RightWrapper,
-  Balance,
-  IconButtonTopBar,
-  BalanceWrapper,
-} from './HomeScreen.styles';
+import {useDispatch, useSelector} from 'react-redux';
+import {getBalance} from '../api/home';
 import {
   Background,
   BottomView,
   TopView,
-} from '../../components/DefaultScreen/DefaultScreen';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
-import {getBalance} from './api/home';
-import {setBalance} from '../../redux/slices/BalanceSlice';
+} from '../components/DefaultScreen/DefaultScreen';
+import EyeIcon from '../components/icons/EyeIcon';
+import EyeSlashIcon from '../components/icons/EyeSlashIcon';
+import HelpIcon from '../components/icons/HelpIcon';
+import MenuIcon from '../components/icons/MenuIcon';
+import NotificationIcon from '../components/icons/NotificationIcon';
+import ProfileIcon from '../components/icons/ProfileIcon';
+import ReceiptIcon from '../components/icons/ReceiptIcon';
+import TransferIcon from '../components/icons/TransferIcon';
+import {setBalance} from '../redux/slices/BalanceSlice';
+import {RootState} from '../redux/store';
+import Colors from '../styles/colors';
+import {
+  Balance,
+  BalanceText,
+  BalanceWrapper,
+  IconButton,
+  IconButtonTopBar,
+  Image,
+  RightWrapper,
+  TabButton,
+  TabButtonText,
+  TabRow,
+  Title,
+  TopBar,
+} from './HomeScreen.styles';
 
-const logo = require('../../assets/rubbank-logo-white.png');
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../navigation/RootStack';
 
-function HomeScreen({navigation}: any) {
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+
+type Props = {
+  navigation: HomeScreenNavigationProp;
+};
+
+const logo = require('../assets/rubbank-logo.png');
+
+function HomeScreen({navigation}: Props) {
   const [showBalance, setShowBalance] = useState(true);
   const token = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.userId.userId);

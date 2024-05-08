@@ -1,6 +1,7 @@
 import React from 'react';
-import {Field, Input, Label, IconContainer} from './TextInputField.styles';
-import { Mask } from 'react-native-mask-input';
+import {Mask} from 'react-native-mask-input';
+import Colors from '../../styles/colors';
+import {Field, IconContainer, Input, Label} from './TextInputField.styles';
 
 type TextInputFieldProps = {
   value: any;
@@ -38,6 +39,7 @@ function TextInputField({
           secureTextEntry={secureText || false}
           mask={mask}
           inputMode={inputMode}
+          placeholderTextColor={Colors.grey}
         />
         {icon && iconFunction && (
           <IconContainer onPressIn={() => iconFunction(secureTextFunction)}>

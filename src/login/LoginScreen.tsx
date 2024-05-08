@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Keyboard } from 'react-native';
-import { useDispatch } from 'react-redux';
-import Button from '../../components/Button/Button';
-import DefaultModal from '../../components/DefaultModal/DefaultModal';
-import TextInputField from '../../components/TextInputField/TextInputField';
-import AlertIcon from '../../components/icons/AlertIcon';
-import EyeIcon from '../../components/icons/EyeIcon';
-import EyeSlashIcon from '../../components/icons/EyeSlashIcon';
-import { setAccountId } from '../../redux/slices/AccountIdSlice';
-import { setLoading } from '../../redux/slices/LoadingSlice';
-import { setToken } from '../../redux/slices/TokenSlice';
-import { setUserId } from '../../redux/slices/UserIdSlice';
-import Colors from '../../styles/colors';
+import React, {useEffect, useState} from 'react';
+import {Keyboard} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {getAccounts, getUserId, login} from '../api/login';
+import Button from '../components/Button/Button';
+import DefaultModal from '../components/DefaultModal/DefaultModal';
+import TextInputField from '../components/TextInputField/TextInputField';
+import AlertIcon from '../components/icons/AlertIcon';
+import EyeIcon from '../components/icons/EyeIcon';
+import EyeSlashIcon from '../components/icons/EyeSlashIcon';
+import {setAccountId} from '../redux/slices/AccountIdSlice';
+import {setLoading} from '../redux/slices/LoadingSlice';
+import {setToken} from '../redux/slices/TokenSlice';
+import {setUserId} from '../redux/slices/UserIdSlice';
+import Colors from '../styles/colors';
 import {
   Container,
   Form,
@@ -21,10 +22,8 @@ import {
   Screen,
   Title,
 } from './LoginScreen.styles';
-import { getAccounts, getUserId, login } from './api/login';
 
-
-const logo = require('../../assets/rubbank-logo.png');
+const logo = require('../assets/rubbank-logo.png');
 const cpfMask = [
   /\d/,
   /\d/,
@@ -99,6 +98,8 @@ function LoginScreen({navigation}: any) {
       (loginResponse.code === 401 || loginResponse.code === 400)
     ) {
       setModalVisible(true);
+      dispatch(setLoading(false));
+    } else if (!loginResponse) {
       dispatch(setLoading(false));
     }
   };

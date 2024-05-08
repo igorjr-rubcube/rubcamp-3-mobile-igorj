@@ -1,29 +1,29 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import CheckIcon from '../components/icons/CheckIcon';
+import Colors from '../styles/colors';
 import {
-  Screen,
+  Container,
   IconContainer,
   Message,
+  Screen,
   Title,
-  Container,
 } from './SuccessScreen.styles';
-import CheckIcon from '../../components/icons/CheckIcon';
-import Colors from '../../styles/colors';
 
-const logo = require('../../assets/rubbank-logo.png');
+const logo = require('../assets/rubbank-logo.png');
 
 export type SuccessScreenProps = {
-  navigation: any;
   title: string;
   message: string;
-  button?: any;
+  button: any;
 };
 
-function SuccessScreen({
-  navigation,
-  title,
-  message,
-  button,
-}: SuccessScreenProps) {
+function SuccessScreen({route, navigation}: any) {
+  const {title, message, button, navigateTo} = route.params;
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate(navigateTo);
+    }, 2500);
+  }, []);
   return (
     <Screen>
       <Container>

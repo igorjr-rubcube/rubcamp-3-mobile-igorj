@@ -1,7 +1,15 @@
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getUserInfo} from '../../api/profile';
+import Button from '../../components/Button/Button';
 import {
   Background,
   BottomView,
 } from '../../components/DefaultScreen/DefaultScreen';
+import RightArrowIcon from '../../components/icons/RightArrowIcon';
+import {UserInfoState, setUserInfo} from '../../redux/slices/UserInfoSlice';
+import {RootState} from '../../redux/store';
+import Colors from '../../styles/colors';
 import {
   Container,
   CpfText,
@@ -14,16 +22,6 @@ import {
   ProfilePicText,
   ProfilePicture,
 } from './ProfileScreen.styles';
-import Button from '../../components/Button/Button';
-import Colors from '../../styles/colors';
-import RightArrowIcon from '../../components/icons/RightArrowIcon';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
-import {useEffect} from 'react';
-import {UserInfoState, setUserInfo} from '../../redux/slices/UserInfoSlice';
-import {getUserInfo} from './api/profile';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import ChangeAppPasswordScreen from './changeAppPassword/ChangeAppPasswordScreen';
 
 function ProfileScreen({navigation}: any) {
   const userInfo = useSelector((state: RootState) => state.userInfo);
@@ -76,7 +74,8 @@ function ProfileScreen({navigation}: any) {
           />
           <MenuContainer>
             <MenuItem>
-              <MenuItemTouchable onPress={() => navigation.navigate("ChangeAppPassword")}>
+              <MenuItemTouchable
+                onPress={() => navigation.navigate('ChangeAppPassword')}>
                 <MenuItemText>Alterar senha do App</MenuItemText>
                 <MenuItemIcon>
                   <RightArrowIcon />
@@ -105,19 +104,5 @@ function ProfileScreen({navigation}: any) {
     </Background>
   );
 }
-
-// function ProfileScreen({navigation}: any) {
-//   const Stack = createNativeStackNavigator();
-//   return (
-//     <Stack.Navigator
-//       screenOptions={{
-//         orientation: 'portrait',
-//         headerTransparent: true,
-//         statusBarColor: Colors.transparent,
-//       }}>
-      
-//     </Stack.Navigator>
-//   );
-// }
 
 export default ProfileScreen;

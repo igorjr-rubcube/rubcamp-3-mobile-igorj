@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import Colors from '../../styles/colors';
+import Colors from '../styles/colors';
 
 export const Screen = styled.View`
   align-items: center;
@@ -9,26 +9,29 @@ export const Screen = styled.View`
   height: 100%;
 `;
 
-export const IconContainer = styled.View`
-  height: 100px;
-  width: 100px;
-  margin-bottom: 32px;
+export const Logo = styled.Image`
+  width: 200px;
+  height: 50px;
+  resize-mode: contain;
+  flex-direction: row;
 `;
 
-export const Container = styled.View`
-  flex: 3;
-  width: 100%;
-  align-items: center;
+export const ContainerImage = styled.View`
+  flex: 5;
+  flex-direction: row;
+  align-items: flex-start;
   justify-content: center;
+  width: 100%;
 `;
 
 export const Title = styled.Text`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   color: ${Colors.darkblue};
 `;
 
 export const Message = styled.Text`
-  font-size: 18px;
+  font-size: 16px;
   color: ${Colors.darkblue};
+  margin-bottom: 10px;
 `;

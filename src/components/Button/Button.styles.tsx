@@ -3,8 +3,8 @@ import Colors from '../../styles/colors';
 
 export const DefaultButton = styled.TouchableOpacity<{color?: string, borderColor?: string}>`
   flex: 2;
-  align-self: flex-end;
   width: 100%;
+  align-self: center;
   max-height: 55px;
   max-width: 350px;
   padding: 16px;

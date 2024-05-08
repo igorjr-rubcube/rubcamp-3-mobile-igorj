@@ -1,10 +1,10 @@
+import {ReactNode} from 'react';
 import {
   BackgroundBottom,
   BottomContainer,
   Screen,
   TopContainer,
 } from './DefaultScreen.styles';
-import {ReactNode} from 'react';
 
 const background = require('../../assets/background.png');
 

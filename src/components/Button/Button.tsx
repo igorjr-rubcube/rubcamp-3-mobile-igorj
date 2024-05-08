@@ -1,5 +1,5 @@
 import Colors from '../../styles/colors';
-import {DefaultButton, ButtonText} from './Button.styles';
+import {ButtonText, DefaultButton} from './Button.styles';
 
 type ButtonProps = {
   onPress: any;

@@ -1,5 +1,5 @@
 import {AxiosError, AxiosResponse} from 'axios';
-import api, {DefaultResponse} from '../../../axios/api';
+import api, {DefaultResponse} from '../axios/api';
 
 export const login = async (
   cpf: string,
@@ -20,6 +20,7 @@ export const login = async (
     .catch((error: AxiosError) => {
       console.log(error);
       if (error.response) {
+        console.log(error.response);
         const responseObject = {
           code: error.response.status,
           data: error.response.data as object,
