@@ -1,25 +1,16 @@
 import {AxiosError, AxiosResponse} from 'axios';
 import api, {DefaultResponse} from '../axios/api';
 
-export const changeAppPassword = async (
+export const getAddress = async (
   token: string,
   id: string,
-  oldPassword: string,
-  newPassword: string,
 ): Promise<DefaultResponse | undefined | null> => {
   return await api
-    .put(
-      `/users/${id}/change-password`,
-      {
-        oldPassword: oldPassword,
-        newPassword: newPassword,
+    .get(`/users/${id}/address`, {
+      headers: {
+        authorization: token,
       },
-      {
-        headers: {
-          authorization: token,
-        },
-      },
-    )
+    })
     .then((response: AxiosResponse) => {
       const responseObject = {
         code: response.status,

@@ -5,6 +5,7 @@ import userIdReducer from './slices/UserIdSlice';
 import balanceReducer from './slices/BalanceSlice';
 import accountIdReducer from './slices/AccountIdSlice';
 import userDataReducer from './slices/UserInfoSlice';
+import addressReducer from './slices/AddressSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     accountId: accountIdReducer,
     balance: balanceReducer,
     userInfo: userDataReducer,
+    address: addressReducer,
   },
 });
 

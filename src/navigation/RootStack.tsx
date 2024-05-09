@@ -1,6 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import HomeScreen from '../home/HomeScreen';
 import LoginScreen from '../login/LoginScreen';
 import ChangeAppPasswordScreen from '../profile/changePassword/ChangeAppPasswordScreen';
@@ -8,6 +7,8 @@ import ProfileScreen from '../profile/profileHome/ProfileScreen';
 import SuccessScreen from '../success/SuccessScreen';
 import WelcomeScreen from '../welcome/WelcomeScreen';
 import ChangeTransactionalPasswordScreen from '../profile/changePassword/ChangeTransactionalPasswordScreen';
+import ChangeAddressScreen from '../profile/changeAddress/ChangeAddressScreen';
+import Colors from '../styles/colors';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -16,6 +17,7 @@ export type RootStackParamList = {
   Profile: undefined;
   ChangeAppPassword: undefined;
   ChangeTransactionalPassword: undefined;
+  ChangeAddress: undefined;
   Success: {title: string; message: string; navigateTo: 'Home' | 'Profile'};
 };
 
@@ -67,6 +69,11 @@ function RootStack() {
             options={{headerTitle: 'Alterar senha do transacional'}}
             name="ChangeTransactionalPassword"
             component={ChangeTransactionalPasswordScreen}
+          />
+          <Stack.Screen
+            options={{headerTitle: 'Alterar endereço'}}
+            name='ChangeAddress'
+            component={ChangeAddressScreen}
           />
           <Stack.Screen
             name="Success"

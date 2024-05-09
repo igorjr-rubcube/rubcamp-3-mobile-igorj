@@ -14,6 +14,9 @@ type TextInputFieldProps = {
   iconFunction?: any;
   mask?: Mask;
   inputMode?: any;
+  maxLength?: number;
+  disabled?: boolean;
+  onBlur?: any;
 };
 
 function TextInputField({
@@ -27,6 +30,9 @@ function TextInputField({
   iconFunction,
   mask,
   inputMode,
+  maxLength,
+  disabled,
+  onBlur,
 }: TextInputFieldProps) {
   return (
     <>
@@ -40,6 +46,10 @@ function TextInputField({
           mask={mask}
           inputMode={inputMode}
           placeholderTextColor={Colors.grey}
+          maxLength={maxLength}
+          editable={!disabled}
+          disabled={disabled || false}
+          onBlur={onBlur}
         />
         {icon && iconFunction && (
           <IconContainer onPressIn={() => iconFunction(secureTextFunction)}>

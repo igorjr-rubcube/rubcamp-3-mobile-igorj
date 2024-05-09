@@ -100,7 +100,10 @@ function ProfileScreen({navigation}: Props) {
               </MenuItemTouchable>
             </MenuItem>
             <MenuItem>
-              <MenuItemTouchable>
+              <MenuItemTouchable
+                onPress={() =>
+                  navigation.navigate('ChangeAddress')
+                }>
                 <MenuItemText>Alterar endereço</MenuItemText>
                 <MenuItemIcon>
                   <RightArrowIcon />

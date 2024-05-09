@@ -24,7 +24,7 @@ import {RootState} from '../../redux/store';
 import {setLoading} from '../../redux/slices/LoadingSlice';
 import {RootStackParamList} from '../../navigation/RootStack';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {changeTransactionalPassword} from '../../api/changeTransactionalPassword';
+import {changeTransactionalPassword} from '../../api/password';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ChangeAppPassword'>;

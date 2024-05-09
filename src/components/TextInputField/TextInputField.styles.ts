@@ -19,11 +19,11 @@ export const Label = styled.Text`
   margin-bottom: 12px;
 `;
 
-export const Input = styled(MaskInput)`
+export const Input = styled(MaskInput)<{disabled: boolean}>`
   flex: 1;
   font-size: 18px;
   padding: 0 0 8px 0;
-  color: ${Colors.darkblue};
+  color: ${props => props.disabled ? Colors.disabledText : Colors.darkblue};
 `;
 
 export const IconContainer = styled.TouchableOpacity`
