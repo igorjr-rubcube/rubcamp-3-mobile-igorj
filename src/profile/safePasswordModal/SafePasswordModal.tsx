@@ -1,7 +1,7 @@
-import Button from '../../../components/Button/Button';
-import CheckIconAlt from '../../../components/icons/CheckIconAlt';
-import XIcon from '../../../components/icons/XIcon';
-import Colors from '../../../styles/colors';
+import Button from '../../components/Button/Button';
+import CheckIconAlt from '../../components/icons/CheckIconAlt';
+import XIcon from '../../components/icons/XIcon';
+import Colors from '../../styles/colors';
 import {
   CloseButton,
   ModalBackground,

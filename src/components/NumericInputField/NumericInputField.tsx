@@ -1,5 +1,4 @@
-import React, {createRef, useEffect} from 'react';
-import {Mask} from 'react-native-mask-input';
+import React, { createRef, useEffect } from 'react';
 import Colors from '../../styles/colors';
 import {
   Container,
@@ -21,7 +20,6 @@ type NumericInputFieldProps = {
   inputMode?: any;
 };
 
-// FIXME - Fix change focus to next input
 const SingleInput = React.forwardRef<typeof Input, any>((props, ref) => {
   return <Input ref={ref} {...props} />;
 });
@@ -35,12 +33,14 @@ function NumericInputField({
   icon,
   iconFunction,
 }: NumericInputFieldProps) {
-  const inputRefs = createRef<any>();
+  const inputRefs = values.map(() => createRef<any>());
+
   const handleFocus = (index: number) => {
-    if (inputRefs.current[index + 1]) {
-      inputRefs.current[index + 1].focus();
+    if (inputRefs[index + 1]?.current) {
+      inputRefs[index + 1].current.focus();
     }
   };
+
   return (
     <>
       <Label>{label}</Label>
@@ -51,10 +51,10 @@ function NumericInputField({
               <SingleInput
                 key={index}
                 value={input}
-                // ref={ref => (inputRefs.current[index] = ref)}
+                ref={inputRefs[index]}
                 onChangeText={(text: string) => {
                   onChangeFunction(text, index);
-                  // handleFocus(index);
+                  handleFocus(index);
                 }}
                 secureTextEntry={secureText || false}
                 inputMode="numeric"

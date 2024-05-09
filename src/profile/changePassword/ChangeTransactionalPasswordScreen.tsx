@@ -74,6 +74,20 @@ function ChangeTransactionalPassword() {
                   placeholder="Digite sua senha atual"
                   secureText={true}
                 />
+                <NumericInputField
+                  inputs={currentPassword}
+                  onChangeFunction={setCurrentPasswordAt}
+                  label="Nova senha"
+                  placeholder="Digite sua nova senha"
+                  secureText={true}
+                />
+                <NumericInputField
+                  inputs={currentPassword}
+                  onChangeFunction={setCurrentPasswordAt}
+                  label="Confirme a nova senha"
+                  placeholder="Digite sua nova senha novamente"
+                  secureText={true}
+                />
               </Form>
             </TopWrapper>
             <Button
