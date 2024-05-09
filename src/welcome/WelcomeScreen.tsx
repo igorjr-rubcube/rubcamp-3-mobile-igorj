@@ -11,13 +11,8 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStack';
 
-type WelcomeScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Welcome'
->;
-
 type Props = {
-  navigation: WelcomeScreenNavigationProp;
+  navigation: StackNavigationProp<RootStackParamList, 'Welcome'>;
 };
 
 const logo = require('../assets/rubbank-logo.png');

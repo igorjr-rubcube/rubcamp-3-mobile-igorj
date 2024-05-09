@@ -1,23 +1,11 @@
-import React, { createRef, useEffect } from 'react';
-import Colors from '../../styles/colors';
-import {
-  Container,
-  Field,
-  IconContainer,
-  Input,
-  Label,
-} from './NumericInputField.styles';
+import React, {createRef, useState} from 'react';
+import {Container, Field, Input, Label} from './NumericInputField.styles';
 
 type NumericInputFieldProps = {
-  inputs: string[];
   onChangeFunction: any;
+  size: number;
   label: string;
-  placeholder: string;
   secureText?: boolean;
-  secureTextFunction?: any;
-  icon?: JSX.Element;
-  iconFunction?: any;
-  inputMode?: any;
 };
 
 const SingleInput = React.forwardRef<typeof Input, any>((props, ref) => {
@@ -25,50 +13,64 @@ const SingleInput = React.forwardRef<typeof Input, any>((props, ref) => {
 });
 
 function NumericInputField({
-  inputs: values,
   onChangeFunction,
+  size,
   label,
   secureText,
-  secureTextFunction,
-  icon,
-  iconFunction,
 }: NumericInputFieldProps) {
-  const inputRefs = values.map(() => createRef<any>());
+  const state = [...Array(size).keys()].map(() => '');
+  const [inputs, setInputs] = useState(state);
 
-  const handleFocus = (index: number) => {
-    if (inputRefs[index + 1]?.current) {
+  const inputRefs = inputs.map(() => createRef<any>());
+
+  const handleFocus = (index: number, text: string) => {
+    if (text === '') {
+      if (inputRefs[index - 1]?.current) {
+        inputRefs[index - 1].current.focus();
+      }
+    } else if (inputRefs[index + 1]?.current) {
       inputRefs[index + 1].current.focus();
     }
+  };
+
+  const updateInputs = (text: string, index: number) => {
+    const newPassword = [...inputs];
+    newPassword[index] = text;
+    setInputs(newPassword);
   };
 
   return (
     <>
       <Label>{label}</Label>
       <Container>
-        {values.map((input, index) => {
+        {inputs.map((input, index) => {
           return (
             <Field key={index}>
               <SingleInput
                 key={index}
                 value={input}
                 ref={inputRefs[index]}
-                onChangeText={(text: string) => {
-                  onChangeFunction(text, index);
-                  handleFocus(index);
-                }}
                 secureTextEntry={secureText || false}
                 inputMode="numeric"
                 maxLength={1}
+                onChangeText={(text: string) => {
+                  updateInputs(text, index);
+                  inputs.push(text);
+                  const newValue = inputs.join('').replace(/\D/g, '');
+                  onChangeFunction(newValue);
+                  handleFocus(index, text);
+                }}
+                onKeyPress={({nativeEvent}: any) => {
+                  if (nativeEvent.key === 'Backspace') {
+                    updateInputs('', index - 1);
+                    handleFocus(index, '');
+                  }
+                }}
               />
             </Field>
           );
         })}
       </Container>
-      {icon && iconFunction && (
-        <IconContainer onPressIn={() => iconFunction(secureTextFunction)}>
-          {icon}
-        </IconContainer>
-      )}
     </>
   );
 }

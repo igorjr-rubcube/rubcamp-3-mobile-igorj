@@ -37,6 +37,14 @@ function ChangeAppPasswordScreen({navigation}: Props) {
   const [modalSafePasswordVisible, setModalSafePasswordVisible] = useState(false);
   const [modalWrongPasswordVisible, setModalWrongPasswordVisible] = useState(false);
 
+  const isButtonDisabled = () => {
+    return (
+      currentPassword.length < 8 ||
+      newPassword.length < 8 ||
+      confirmPassword.length < 8
+    );
+  }
+
   const dispatch = useDispatch();
   const id = useSelector((state: RootState) => state.userId.userId);
   const token = useSelector((state: RootState) => state.token.token);
@@ -129,7 +137,7 @@ function ChangeAppPasswordScreen({navigation}: Props) {
             </TopWrapper>
             <Button
               onPress={handlePasswordChange}
-              disabled={false}
+              disabled={isButtonDisabled()}
               text={'CONFIRMAR'}
             />
           </Container>

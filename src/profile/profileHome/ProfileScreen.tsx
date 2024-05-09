@@ -25,13 +25,8 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/RootStack';
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Home'
->;
-
 type Props = {
-  navigation: ProfileScreenNavigationProp;
+  navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
 
 function ProfileScreen({navigation}: Props) {
@@ -95,7 +90,9 @@ function ProfileScreen({navigation}: Props) {
             </MenuItem>
             <MenuItem>
               <MenuItemTouchable
-                onPress={() => navigation.navigate('ChangeTransactionalPassword')}>
+                onPress={() =>
+                  navigation.navigate('ChangeTransactionalPassword')
+                }>
                 <MenuItemText>Alterar senha transacional</MenuItemText>
                 <MenuItemIcon>
                   <RightArrowIcon fill={Colors.grey} />

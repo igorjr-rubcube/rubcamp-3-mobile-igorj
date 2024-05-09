@@ -44,13 +44,8 @@ const cpfMask = [
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStack';
 
-type LoginScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Login'
->;
-
 type Props = {
-  navigation: LoginScreenNavigationProp;
+  navigation: StackNavigationProp<RootStackParamList, 'Login'>;
 };
 
 function LoginScreen({navigation}: Props) {
