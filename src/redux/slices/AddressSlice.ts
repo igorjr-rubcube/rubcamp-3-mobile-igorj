@@ -1,6 +1,6 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
-interface AddressState {
+export interface AddressState {
   cep: string;
   number: string;
   complement: string;

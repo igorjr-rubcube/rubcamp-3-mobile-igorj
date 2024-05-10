@@ -19,11 +19,12 @@ import {
   RightWrapper,
   TopWrapper,
 } from './ChangeAddressScreen.styles';
-import cep, { CEP } from 'cep-promise';
-import {getAddress} from '../../api/address';
+import cep, {CEP} from 'cep-promise';
+import {getAddress, updateAddress} from '../../api/address';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
-import { setAddress } from '../../redux/slices/AddressSlice';
+import {setAddress} from '../../redux/slices/AddressSlice';
+import {setLoading} from '../../redux/slices/LoadingSlice';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ChangeAddress'>;
@@ -32,6 +33,19 @@ type Props = {
 const cepMask = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
 
 function ChangeAddressScreen({navigation}: Props) {
+  const token = useSelector((state: RootState) => state.token.token);
+  const id = useSelector((state: RootState) => state.userId.userId);
+  const addressState = useSelector((state: RootState) => state.address);
+  const dispatch = useDispatch();
+
+  const [cepState, setCepState] = useState(addressState.cep);
+  const [street, setStreet] = useState(addressState.street);
+  const [number, setNumber] = useState(addressState.number);
+  const [complement, setComplement] = useState(addressState.complement);
+  const [neighborhood, setNeighborhood] = useState(addressState.neighborhood);
+  const [city, setCity] = useState(addressState.city);
+  const [state, setState] = useState(addressState.state);
+
   const [modalInvalidFields, setModalInvalidFields] = useState(false);
 
   const fieldsDisabledInitialState = {
@@ -46,14 +60,6 @@ function ChangeAddressScreen({navigation}: Props) {
   const [fieldsEnabled, setFieldsEnabled] = useState(
     fieldsDisabledInitialState,
   );
-
-  const [cepState, setCepState] = useState('');
-  const [street, setStreet] = useState('');
-  const [number, setNumber] = useState('');
-  const [complement, setComplement] = useState('');
-  const [neighborhood, setNeighborhood] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
 
   const enableFields = (response: CEP) => {
     let newFields = {...fieldsEnabled};
@@ -81,7 +87,14 @@ function ChangeAddressScreen({navigation}: Props) {
   };
 
   const isButtonDisabled = () => {
-    return false;
+    return (
+      cepState === '' ||
+      street === '' ||
+      number === '' ||
+      neighborhood === '' ||
+      city === '' ||
+      state === ''
+    );
   };
 
   const updateCep = async (text: string) => {
@@ -104,33 +117,55 @@ function ChangeAddressScreen({navigation}: Props) {
     }
   };
 
-  const token = useSelector((state: RootState) => state.token.token);
-  const id = useSelector((state: RootState) => state.userId.userId);
-  const addressState = useSelector((state: RootState) => state.address);
-  const dispatch = useDispatch();
-
-  const handleAddressChange = async () => {};
+  const handleAddressChange = async () => {
+    const newAddress = {
+      cep: cepState,
+      street: street,
+      number: number,
+      complement: complement,
+      neighborhood: neighborhood,
+      city: city,
+      state: state,
+    };
+    dispatch(setLoading(true));
+    const updatedAddressResponse = await updateAddress(token, id, newAddress);
+    if (updatedAddressResponse && updatedAddressResponse.code === 204) {
+      navigation.navigate({
+        name: 'Success',
+        params: {
+          title: 'Alteração realizada',
+          message: 'Seu endereço foi atualizado com sucesso!',
+          navigateTo: 'Profile',
+        },
+      });
+      dispatch(setAddress(newAddress));
+      dispatch(setLoading(false));
+    } else {
+      setModalInvalidFields(true);
+      dispatch(setLoading(false));
+    }
+  };
 
   useEffect(() => {
-    if (addressState) {
-      
-    }
     const fetchData = async () => {
       const address = await getAddress(token, id);
-      setCepState(address?.data.cep);
       if (address && address.code === 200) {
-        setStreet(address.data.street);
-        setNumber(address.data.number);
-        setComplement(address.data.complement);
-        setNeighborhood(address.data.neighborhood);
-        setCity(address.data.city);
-        setState(address.data.state);
         dispatch(setAddress(address.data));
-        console.log('here');
       }
     };
     fetchData();
+    return () => {};
   }, []);
+
+  useEffect(() => {
+    setCepState(addressState.cep);
+    setStreet(addressState.street);
+    setNumber(addressState.number);
+    setComplement(addressState.complement);
+    setNeighborhood(addressState.neighborhood);
+    setCity(addressState.city);
+    setState(addressState.state);
+  }, [addressState]);
 
   return (
     <>
