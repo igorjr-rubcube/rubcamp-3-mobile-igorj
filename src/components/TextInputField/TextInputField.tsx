@@ -16,7 +16,11 @@ type TextInputFieldProps = {
   inputMode?: any;
   maxLength?: number;
   disabled?: boolean;
+  editable?: boolean;
+  onFocus?: any;
   onBlur?: any;
+  textAlign?: any;
+  showInput?: boolean;
 };
 
 function TextInputField({
@@ -32,7 +36,11 @@ function TextInputField({
   inputMode,
   maxLength,
   disabled,
+  editable,
+  onFocus,
   onBlur,
+  textAlign,
+  showInput = true,
 }: TextInputFieldProps) {
   return (
     <>
@@ -47,9 +55,13 @@ function TextInputField({
           inputMode={inputMode}
           placeholderTextColor={Colors.grey}
           maxLength={maxLength}
-          editable={!disabled}
+          editable={editable || (!disabled || true)}
           disabled={disabled || false}
           onBlur={onBlur}
+          textAlign={textAlign || 'left'}
+          onFocus={onFocus}
+          onPress={onFocus}
+          showSoftInputOnFocus={showInput}
         />
         {icon && iconFunction && (
           <IconContainer onPressIn={() => iconFunction(secureTextFunction)}>

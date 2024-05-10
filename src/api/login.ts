@@ -1,5 +1,6 @@
 import {AxiosError, AxiosResponse} from 'axios';
 import api, {DefaultResponse} from '../axios/api';
+import { jwtDecode } from 'jwt-decode';
 
 export const login = async (
   cpf: string,
@@ -31,7 +32,8 @@ export const login = async (
 };
 
 export const getUserId = (token: string) => {
-  return JSON.parse(atob(token.split('.')[1])).id;
+  const decoded: any = jwtDecode(token);
+  return decoded.id as string;
 };
 
 export const getAccounts = async (

@@ -163,7 +163,7 @@ function LoginScreen({navigation}: Props) {
         />
       </ButtonContainer>
       {!keyboardShow && (
-        <LinkContainer onPress={() => navigation.navigate('InsertCep')}>
+        <LinkContainer onPress={() => navigation.navigate('InsertUserInfo')}>
           <Link>Criar nova conta</Link>
         </LinkContainer>
       )}

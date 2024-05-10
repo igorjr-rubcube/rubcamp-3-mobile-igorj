@@ -33,6 +33,7 @@ import {
 } from './HomeScreen.styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStack';
+import LogoutIcon from '../components/icons/LogoutIcon';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -60,6 +61,7 @@ function HomeScreen({navigation}: Props) {
     fetchData();
     return () => {};
   }, []);
+
   return (
     <Background>
       <TopView flexSize={1}>
@@ -73,7 +75,7 @@ function HomeScreen({navigation}: Props) {
               <HelpIcon fill={Colors.light} />
             </IconButtonTopBar>
             <IconButtonTopBar>
-              <MenuIcon fill={Colors.light} />
+              <LogoutIcon fill={Colors.light} />
             </IconButtonTopBar>
           </RightWrapper>
         </TopBar>
@@ -83,7 +85,7 @@ function HomeScreen({navigation}: Props) {
             {showBalance ? (
               <BalanceText>
                 RC{' '}
-                {balance && balance === 0
+                {balance && balance != 0
                   ? balance?.toString().replace('.', ',')
                   : '0.00'}
               </BalanceText>

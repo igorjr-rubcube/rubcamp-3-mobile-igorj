@@ -14,6 +14,8 @@ import {useState} from 'react';
 import Button from '../../components/Button/Button';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 
+const cepMask = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'InsertCep'>;
 };
@@ -25,17 +27,20 @@ function InsertCepScreen({navigation}: Props) {
     <Container>
       <Content>
         <TopWrapper>
-          <ProgressBar progress={0.5} />
+          <ProgressBar progress={0.4} />
           <Title>
             Agora informe o seu endereço. Qual é o seu
             <HighlightedText> CEP</HighlightedText>?
           </Title>
           <InputContainer>
             <TextInputField
-              value={undefined}
-              onChangeFunction={undefined}
+              value={cep}
+              onChangeFunction={setCep}
               label={''}
               placeholder={''}
+              textAlign={'center'}
+              mask={cepMask}
+              maxLength={9}
             />
           </InputContainer>
         </TopWrapper>

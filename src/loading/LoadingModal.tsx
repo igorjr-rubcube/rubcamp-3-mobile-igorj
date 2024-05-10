@@ -3,25 +3,25 @@ import {ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
 import Colors from '../styles/colors';
-import {Container, Logo, Screen} from './LoadingScreen.styles';
-import {Modal} from '../components/DatePicker/DatePickerModal.styles';
+import {Container, Modal, Screen, Spinner} from './LoadingScreen.styles';
 
 const logo = require('../assets/rubbank-logo.png');
 
-function LoadingScreen() {
+function LoadingModal() {
   const loading = useSelector((state: RootState) => state.loading.isLoading);
   return (
     <>
       {loading ? (
-          <Screen background={Colors.light}>
+        <Modal transparent={true}>
+          <Screen background={Colors.darkTransparent}>
             <Container>
-              <Logo source={logo} />
-              <ActivityIndicator size={50} color={Colors.default} />
+              <Spinner size={50} color={Colors.default} />
             </Container>
           </Screen>
+        </Modal>
       ) : null}
     </>
   );
 }
 
-export default LoadingScreen;
+export default LoadingModal;
