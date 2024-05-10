@@ -1,5 +1,5 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../home/HomeScreen';
 import LoginScreen from '../login/LoginScreen';
 import ChangeAppPasswordScreen from '../profile/changePassword/ChangeAppPasswordScreen';
@@ -9,6 +9,8 @@ import WelcomeScreen from '../welcome/WelcomeScreen';
 import ChangeTransactionalPasswordScreen from '../profile/changePassword/ChangeTransactionalPasswordScreen';
 import ChangeAddressScreen from '../profile/changeAddress/ChangeAddressScreen';
 import Colors from '../styles/colors';
+import InsertCepScreen from '../onboarding/cep/InsertCepScreen';
+import {ScrollView} from 'react-native';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -19,6 +21,7 @@ export type RootStackParamList = {
   ChangeTransactionalPassword: undefined;
   ChangeAddress: undefined;
   Success: {title: string; message: string; navigateTo: 'Home' | 'Profile'};
+  InsertCep: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -72,7 +75,7 @@ function RootStack() {
           />
           <Stack.Screen
             options={{headerTitle: 'Alterar endereço'}}
-            name='ChangeAddress'
+            name="ChangeAddress"
             component={ChangeAddressScreen}
           />
           <Stack.Screen
@@ -85,6 +88,13 @@ function RootStack() {
               navigateTo: 'Home',
             }}
           />
+        </Stack.Group>
+        <Stack.Group
+          screenOptions={{
+            headerShown: false,
+            presentation: 'modal',
+          }}>
+          <Stack.Screen name="InsertCep" component={InsertCepScreen} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

@@ -43,6 +43,19 @@ export const Form = styled.View`
   padding: 0;
 `;
 
+export const ButtonContainer = styled.View`
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const LinkContainer = styled.TouchableOpacity`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Link = styled.Text`
   font-size: 16px;
   font-weight: bold;

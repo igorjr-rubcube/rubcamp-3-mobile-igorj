@@ -4,7 +4,7 @@ class Colors {
   static readonly lightpurple = '#6b7ae5';
   static readonly grey = '#383838';
   static readonly light = '#f0f0f0';
-  static readonly lightGrey = '#AAABAB';
+  static readonly lightGrey = '#D2D2D2';
   static readonly disabledText = '#888888';
   static readonly black = '#000000';
   static readonly default = '#6b7ae5';

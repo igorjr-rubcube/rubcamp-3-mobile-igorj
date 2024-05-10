@@ -25,6 +25,7 @@ import {setLoading} from '../../redux/slices/LoadingSlice';
 import {RootStackParamList} from '../../navigation/RootStack';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {changeTransactionalPassword} from '../../api/password';
+import {ScrollView} from 'react-native';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ChangeAppPassword'>;
@@ -105,45 +106,49 @@ function ChangeTransactionalPassword({navigation}: Props) {
       />
       <Background>
         <BottomView flexSize={1}>
-          <Container>
-            <TopWrapper>
-              <Title>Digite qual será sua senha para realizar transações</Title>
-              <SubtitleWrapper
-                onPress={() => {
-                  setModalSafePasswordVisible(!modalSafePasswordVisible);
-                }}>
-                <SubtitleIcon>
-                  <InfoIcon fill={Colors.darkblue} />
-                </SubtitleIcon>
-                <Subtitle>Como criar uma senha segura</Subtitle>
-              </SubtitleWrapper>
-              <Form>
-                <NumericInputField
-                  onChangeFunction={setCurrentPassword}
-                  size={4}
-                  label="Digite sua senha atual"
-                  secureText={true}
-                />
-                <NumericInputField
-                  onChangeFunction={setNewPassword}
-                  size={4}
-                  label="Digite sua nova senha"
-                  secureText={true}
-                />
-                <NumericInputField
-                  onChangeFunction={setConfirmNewPassword}
-                  size={4}
-                  label="Confirme sua nova senha"
-                  secureText={true}
-                />
-              </Form>
-            </TopWrapper>
-            <Button
-              onPress={handlePasswordChange}
-              disabled={isButtonDisabled()}
-              text={'CONFIRMAR'}
-            />
-          </Container>
+          <ScrollView>
+            <Container>
+              <TopWrapper>
+                <Title>
+                  Digite qual será sua senha para realizar transações
+                </Title>
+                <SubtitleWrapper
+                  onPress={() => {
+                    setModalSafePasswordVisible(!modalSafePasswordVisible);
+                  }}>
+                  <SubtitleIcon>
+                    <InfoIcon fill={Colors.darkblue} />
+                  </SubtitleIcon>
+                  <Subtitle>Como criar uma senha segura</Subtitle>
+                </SubtitleWrapper>
+                <Form>
+                  <NumericInputField
+                    onChangeFunction={setCurrentPassword}
+                    size={4}
+                    label="Digite sua senha atual"
+                    secureText={true}
+                  />
+                  <NumericInputField
+                    onChangeFunction={setNewPassword}
+                    size={4}
+                    label="Digite sua nova senha"
+                    secureText={true}
+                  />
+                  <NumericInputField
+                    onChangeFunction={setConfirmNewPassword}
+                    size={4}
+                    label="Confirme sua nova senha"
+                    secureText={true}
+                  />
+                </Form>
+              </TopWrapper>
+              <Button
+                onPress={handlePasswordChange}
+                disabled={isButtonDisabled()}
+                text={'CONFIRMAR'}
+              />
+            </Container>
+          </ScrollView>
         </BottomView>
       </Background>
     </>

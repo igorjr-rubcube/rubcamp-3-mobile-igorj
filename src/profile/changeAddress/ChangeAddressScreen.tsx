@@ -25,6 +25,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
 import {setAddress} from '../../redux/slices/AddressSlice';
 import {setLoading} from '../../redux/slices/LoadingSlice';
+import {ScrollView} from 'react-native';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ChangeAddress'>;
@@ -180,86 +181,88 @@ function ChangeAddressScreen({navigation}: Props) {
       />
       <Background>
         <BottomView flexSize={1}>
-          <Container>
-            <Form>
-              <TopWrapper>
-                <Field>
-                  <TextInputField
-                    label="CEP"
-                    placeholder=""
-                    value={cepState}
-                    onChangeFunction={updateCep}
-                    maxLength={9}
-                    inputMode={'numeric'}
-                    mask={cepMask}
-                  />
-                </Field>
-                <Field>
-                  <TextInputField
-                    label="Endereço"
-                    placeholder=""
-                    value={street}
-                    onChangeFunction={setStreet}
-                    disabled={fieldsEnabled.street}
-                  />
-                </Field>
-                <HorizontalWrapper>
-                  <LeftWrapper flex={1}>
+          <ScrollView>
+            <Container>
+              <Form>
+                <TopWrapper>
+                  <Field>
                     <TextInputField
-                      label="Número"
+                      label="CEP"
                       placeholder=""
-                      value={number}
-                      onChangeFunction={setNumber}
-                      disabled={fieldsEnabled.number}
+                      value={cepState}
+                      onChangeFunction={updateCep}
+                      maxLength={9}
+                      inputMode={'numeric'}
+                      mask={cepMask}
                     />
-                  </LeftWrapper>
-                  <RightWrapper flex={1}>
+                  </Field>
+                  <Field>
                     <TextInputField
-                      label="Complemento"
+                      label="Endereço"
                       placeholder=""
-                      value={complement}
-                      onChangeFunction={setComplement}
-                      disabled={fieldsEnabled.complement}
+                      value={street}
+                      onChangeFunction={setStreet}
+                      disabled={fieldsEnabled.street}
                     />
-                  </RightWrapper>
-                </HorizontalWrapper>
-                <Field>
-                  <TextInputField
-                    label="Bairro"
-                    placeholder=""
-                    value={neighborhood}
-                    onChangeFunction={setNeighborhood}
-                    disabled={fieldsEnabled.neighborhood}
-                  />
-                </Field>
-                <HorizontalWrapper>
-                  <LeftWrapper flex={4}>
+                  </Field>
+                  <HorizontalWrapper>
+                    <LeftWrapper flex={1}>
+                      <TextInputField
+                        label="Número"
+                        placeholder=""
+                        value={number}
+                        onChangeFunction={setNumber}
+                        disabled={fieldsEnabled.number}
+                      />
+                    </LeftWrapper>
+                    <RightWrapper flex={1}>
+                      <TextInputField
+                        label="Complemento"
+                        placeholder=""
+                        value={complement}
+                        onChangeFunction={setComplement}
+                        disabled={fieldsEnabled.complement}
+                      />
+                    </RightWrapper>
+                  </HorizontalWrapper>
+                  <Field>
                     <TextInputField
-                      label="Cidade"
+                      label="Bairro"
                       placeholder=""
-                      value={city}
-                      onChangeFunction={setCity}
-                      disabled={fieldsEnabled.city}
+                      value={neighborhood}
+                      onChangeFunction={setNeighborhood}
+                      disabled={fieldsEnabled.neighborhood}
                     />
-                  </LeftWrapper>
-                  <RightWrapper flex={1}>
-                    <TextInputField
-                      label="UF"
-                      placeholder=""
-                      value={state}
-                      onChangeFunction={setState}
-                      disabled={fieldsEnabled.state}
-                    />
-                  </RightWrapper>
-                </HorizontalWrapper>
-              </TopWrapper>
-            </Form>
-            <Button
-              onPress={handleAddressChange}
-              disabled={isButtonDisabled()}
-              text={'CONFIRMAR'}
-            />
-          </Container>
+                  </Field>
+                  <HorizontalWrapper>
+                    <LeftWrapper flex={4}>
+                      <TextInputField
+                        label="Cidade"
+                        placeholder=""
+                        value={city}
+                        onChangeFunction={setCity}
+                        disabled={fieldsEnabled.city}
+                      />
+                    </LeftWrapper>
+                    <RightWrapper flex={1}>
+                      <TextInputField
+                        label="UF"
+                        placeholder=""
+                        value={state}
+                        onChangeFunction={setState}
+                        disabled={fieldsEnabled.state}
+                      />
+                    </RightWrapper>
+                  </HorizontalWrapper>
+                </TopWrapper>
+              </Form>
+              <Button
+                onPress={handleAddressChange}
+                disabled={isButtonDisabled()}
+                text={'CONFIRMAR'}
+              />
+            </Container>
+          </ScrollView>
         </BottomView>
       </Background>
     </>

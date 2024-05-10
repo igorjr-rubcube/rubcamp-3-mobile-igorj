@@ -25,6 +25,7 @@ import {
 } from './ChangePassword.styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/RootStack';
+import {ScrollView} from 'react-native';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ChangeAppPassword'>;
@@ -34,8 +35,10 @@ function ChangeAppPasswordScreen({navigation}: Props) {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [modalSafePasswordVisible, setModalSafePasswordVisible] = useState(false);
-  const [modalWrongPasswordVisible, setModalWrongPasswordVisible] = useState(false);
+  const [modalSafePasswordVisible, setModalSafePasswordVisible] =
+    useState(false);
+  const [modalWrongPasswordVisible, setModalWrongPasswordVisible] =
+    useState(false);
 
   const isButtonDisabled = () => {
     return (
@@ -43,7 +46,7 @@ function ChangeAppPasswordScreen({navigation}: Props) {
       newPassword.length < 8 ||
       confirmPassword.length < 8
     );
-  }
+  };
 
   const dispatch = useDispatch();
   const id = useSelector((state: RootState) => state.userId.userId);
@@ -97,50 +100,52 @@ function ChangeAppPasswordScreen({navigation}: Props) {
       />
       <Background>
         <BottomView flexSize={1}>
-          <Container>
-            <TopWrapper>
-              <Title>
-                Digite qual será sua senha para entrar no aplicativo
-              </Title>
-              <SubtitleWrapper
-                onPress={() => {
-                  setModalSafePasswordVisible(!modalSafePasswordVisible);
-                }}>
-                <SubtitleIcon>
-                  <InfoIcon fill={Colors.darkblue} />
-                </SubtitleIcon>
-                <Subtitle>Como criar uma senha segura</Subtitle>
-              </SubtitleWrapper>
-              <Form>
-                <TextInputField
-                  value={currentPassword}
-                  onChangeFunction={setCurrentPassword}
-                  label={'Digite sua senha atual'}
-                  placeholder={''}
-                  secureText={true}
-                />
-                <TextInputField
-                  value={newPassword}
-                  onChangeFunction={setNewPassword}
-                  label={'Digite sua nova senha'}
-                  placeholder={''}
-                  secureText={true}
-                />
-                <TextInputField
-                  value={confirmPassword}
-                  onChangeFunction={setConfirmPassword}
-                  label={'Confirme sua nova senha'}
-                  placeholder={''}
-                  secureText={true}
-                />
-              </Form>
-            </TopWrapper>
-            <Button
-              onPress={handlePasswordChange}
-              disabled={isButtonDisabled()}
-              text={'CONFIRMAR'}
-            />
-          </Container>
+          <ScrollView>
+            <Container>
+              <TopWrapper>
+                <Title>
+                  Digite qual será sua senha para entrar no aplicativo
+                </Title>
+                <SubtitleWrapper
+                  onPress={() => {
+                    setModalSafePasswordVisible(!modalSafePasswordVisible);
+                  }}>
+                  <SubtitleIcon>
+                    <InfoIcon fill={Colors.darkblue} />
+                  </SubtitleIcon>
+                  <Subtitle>Como criar uma senha segura</Subtitle>
+                </SubtitleWrapper>
+                <Form>
+                  <TextInputField
+                    value={currentPassword}
+                    onChangeFunction={setCurrentPassword}
+                    label={'Digite sua senha atual'}
+                    placeholder={''}
+                    secureText={true}
+                  />
+                  <TextInputField
+                    value={newPassword}
+                    onChangeFunction={setNewPassword}
+                    label={'Digite sua nova senha'}
+                    placeholder={''}
+                    secureText={true}
+                  />
+                  <TextInputField
+                    value={confirmPassword}
+                    onChangeFunction={setConfirmPassword}
+                    label={'Confirme sua nova senha'}
+                    placeholder={''}
+                    secureText={true}
+                  />
+                </Form>
+              </TopWrapper>
+              <Button
+                onPress={handlePasswordChange}
+                disabled={isButtonDisabled()}
+                text={'CONFIRMAR'}
+              />
+            </Container>
+          </ScrollView>
         </BottomView>
       </Background>
     </>

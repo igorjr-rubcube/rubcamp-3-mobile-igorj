@@ -9,7 +9,6 @@ export const DefaultButton = styled.TouchableOpacity<{color?: string, borderColo
   max-width: 350px;
   padding: 16px;
   border-radius: 50px;
-  margin-bottom: 20px;
   align-items: center;
   background-color: ${props => props.color || Colors.darkblue};
   border: ${props => props.borderColor ? "1.5px solid " + props.borderColor : "none"};

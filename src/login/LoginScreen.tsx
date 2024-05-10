@@ -14,9 +14,11 @@ import {setToken} from '../redux/slices/TokenSlice';
 import {setUserId} from '../redux/slices/UserIdSlice';
 import Colors from '../styles/colors';
 import {
+  ButtonContainer,
   Container,
   Form,
   Link,
+  LinkContainer,
   Logo,
   Message,
   Screen,
@@ -152,15 +154,19 @@ function LoginScreen({navigation}: Props) {
           iconFunction={() => setPasswordVisible(!passwordVisible)}
         />
         <Link>Esqueci a sua senha?</Link>
-        <Container flexDirection="row" flexSize={2}>
-          <Button
-            onPress={handleLogin}
-            disabled={!validateForm()}
-            text={'CONFIRMAR'}
-          />
-        </Container>
       </Form>
-      {!keyboardShow && <Link>Criar nova conta</Link>}
+      <ButtonContainer>
+        <Button
+          onPress={handleLogin}
+          disabled={!validateForm()}
+          text={'CONFIRMAR'}
+        />
+      </ButtonContainer>
+      {!keyboardShow && (
+        <LinkContainer onPress={() => navigation.navigate('InsertCep')}>
+          <Link>Criar nova conta</Link>
+        </LinkContainer>
+      )}
     </Screen>
   );
 }
