@@ -11,10 +11,12 @@ import ChangeAddressScreen from '../profile/changeAddress/ChangeAddressScreen';
 import Colors from '../styles/colors';
 import InsertCepScreen from '../onboarding/cep/InsertCepScreen';
 import InsertUserInfoScreen from '../onboarding/userInfo/InsertUserInfoScreen';
+import SelectAccountScreen from '../selectAccount/SelectAccountScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
   Login: undefined;
+  SelectAccount: undefined;
   Home: undefined;
   Profile: undefined;
   ChangeAppPassword: undefined;
@@ -45,6 +47,11 @@ function RootStack() {
           options={{headerTitle: ''}}
           name="Login"
           component={LoginScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="SelectAccount"
+          component={SelectAccountScreen}
         />
         <Stack.Screen
           options={{headerShown: false}}
@@ -95,7 +102,10 @@ function RootStack() {
             headerShown: false,
             presentation: 'modal',
           }}>
-          <Stack.Screen name="InsertUserInfo" component={InsertUserInfoScreen} />
+          <Stack.Screen
+            name="InsertUserInfo"
+            component={InsertUserInfoScreen}
+          />
           <Stack.Screen name="InsertCep" component={InsertCepScreen} />
         </Stack.Group>
       </Stack.Navigator>

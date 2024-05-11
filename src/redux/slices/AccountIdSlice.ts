@@ -8,7 +8,7 @@ const initialState: AccountIdState = {
   accountId: '',
 };
 
-export const balanceSlice = createSlice({
+export const accountIdSlice = createSlice({
   name: 'accountId',
   initialState,
   reducers: {
@@ -18,6 +18,6 @@ export const balanceSlice = createSlice({
   },
 });
 
-export const {setAccountId: setAccountId} = balanceSlice.actions;
+export const {setAccountId: setAccountId} = accountIdSlice.actions;
 
-export default balanceSlice.reducer;
+export default accountIdSlice.reducer;

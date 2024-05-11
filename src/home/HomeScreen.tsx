@@ -34,6 +34,7 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStack';
 import LogoutIcon from '../components/icons/LogoutIcon';
+import {setLoading} from '../redux/slices/LoadingSlice';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -52,10 +53,12 @@ function HomeScreen({navigation}: Props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(setLoading(true));
     const fetchData = async () => {
       const balanceGet = await getBalance(token, userId, accountId);
       if (balanceGet) {
         dispatch(setBalance(balanceGet.data.balance));
+        dispatch(setLoading(false));
       }
     };
     fetchData();

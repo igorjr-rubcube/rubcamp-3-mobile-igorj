@@ -24,6 +24,7 @@ import {
 } from './ProfileScreen.styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/RootStack';
+import {setLoading} from '../../redux/slices/LoadingSlice';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -51,11 +52,13 @@ function ProfileScreen({navigation}: Props) {
   const id = useSelector((state: RootState) => state.userId.userId);
 
   useEffect(() => {
+    dispatch(setLoading(true));
     const fetchData = async () => {
       const userResponse = await getUserInfo(token, id);
       if (userResponse && userResponse.code === 200) {
         const userInfo = userResponse.data as UserInfoState;
         dispatch(setUserInfo(userInfo));
+        dispatch(setLoading(false));
       }
     };
     fetchData();
@@ -101,9 +104,7 @@ function ProfileScreen({navigation}: Props) {
             </MenuItem>
             <MenuItem>
               <MenuItemTouchable
-                onPress={() =>
-                  navigation.navigate('ChangeAddress')
-                }>
+                onPress={() => navigation.navigate('ChangeAddress')}>
                 <MenuItemText>Alterar endereço</MenuItemText>
                 <MenuItemIcon>
                   <RightArrowIcon />

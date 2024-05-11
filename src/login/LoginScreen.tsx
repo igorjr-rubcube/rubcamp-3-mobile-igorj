@@ -45,6 +45,7 @@ const cpfMask = [
 
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStack';
+import { setAccounts } from '../redux/slices/AccountsSlice';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Login'>;
@@ -96,11 +97,11 @@ function LoginScreen({navigation}: Props) {
 
       const accountsResponse = await getAccounts(token, id);
       if (accountsResponse && accountsResponse.code === 200) {
-        const accountId = accountsResponse.data[0].id;
-        dispatch(setAccountId(accountId));
+        const accounts = accountsResponse.data;
+        dispatch(setAccounts(accounts));
       }
 
-      navigation.navigate('Home');
+      navigation.navigate('SelectAccount');
       dispatch(setLoading(false));
     } else if (
       loginResponse &&

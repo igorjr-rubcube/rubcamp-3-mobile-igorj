@@ -9,10 +9,9 @@ import React, {useEffect} from 'react';
 
 import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
-import {store} from './src/redux/store';
-// import LoadingScreen from './src/loading/LoadingScreen';
-import RootStack from './src/navigation/RootStack';
 import LoadingModal from './src/loading/LoadingModal';
+import RootStack from './src/navigation/RootStack';
+import {store} from './src/redux/store';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -21,7 +20,6 @@ function App(): React.JSX.Element {
 
   return (
     <Provider store={store}>
-      {/* <LoadingScreen /> */}
       <LoadingModal />
       <RootStack />
     </Provider>

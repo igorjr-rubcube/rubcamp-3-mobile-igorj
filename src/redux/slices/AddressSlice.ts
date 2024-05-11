@@ -20,7 +20,7 @@ const initialState: AddressState = {
   state: '',
 };
 
-export const balanceSlice = createSlice({
+export const addressSlice = createSlice({
     name: 'address',
     initialState,
     reducers: {
@@ -36,6 +36,6 @@ export const balanceSlice = createSlice({
     },
 });
 
-export const {setAddress} = balanceSlice.actions;
+export const {setAddress} = addressSlice.actions;
 
-export default balanceSlice.reducer;
+export default addressSlice.reducer;
