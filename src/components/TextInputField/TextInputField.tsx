@@ -21,6 +21,7 @@ type TextInputFieldProps = {
   onBlur?: any;
   textAlign?: any;
   showInput?: boolean;
+  error?: boolean;
 };
 
 function TextInputField({
@@ -41,10 +42,11 @@ function TextInputField({
   onBlur,
   textAlign,
   showInput = true,
+  error = false,
 }: TextInputFieldProps) {
   return (
     <>
-      <Label>{label}</Label>
+      <Label error={error}>{label}</Label>
       <Field>
         <Input
           value={value}
@@ -53,15 +55,16 @@ function TextInputField({
           secureTextEntry={secureText || false}
           mask={mask}
           inputMode={inputMode}
-          placeholderTextColor={Colors.grey}
+          placeholderTextColor={error ? Colors.red : Colors.grey}
           maxLength={maxLength}
-          editable={editable || (!disabled || true)}
+          editable={editable || !disabled || true}
           disabled={disabled || false}
           onBlur={onBlur}
           textAlign={textAlign || 'left'}
           onFocus={onFocus}
           onPress={onFocus}
           showSoftInputOnFocus={showInput}
+          error={error}
         />
         {icon && iconFunction && (
           <IconContainer onPressIn={() => iconFunction(secureTextFunction)}>

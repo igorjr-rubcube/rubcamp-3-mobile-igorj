@@ -10,7 +10,7 @@ import ChangeTransactionalPasswordScreen from '../profile/changePassword/ChangeT
 import ChangeAddressScreen from '../profile/changeAddress/ChangeAddressScreen';
 import Colors from '../styles/colors';
 import InsertCepScreen from '../onboarding/cep/InsertCepScreen';
-import InsertUserInfoScreen from '../onboarding/userInfo/InsertUserInfoScreen';
+import InsertUserDataScreen from '../onboarding/userInfo/InsertUserDataScreen';
 import SelectAccountScreen from '../selectAccount/SelectAccountScreen';
 import AccountInfoScreen from '../profile/accountIfo/AccountInfoScreen';
 
@@ -25,7 +25,7 @@ export type RootStackParamList = {
   ChangeTransactionalPassword: undefined;
   ChangeAddress: undefined;
   Success: {title: string; message: string; navigateTo: 'Home' | 'Profile'};
-  InsertUserInfo: undefined;
+  InsertUserData: undefined;
   InsertCep: undefined;
 };
 
@@ -110,8 +110,8 @@ function RootStack() {
             presentation: 'modal',
           }}>
           <Stack.Screen
-            name="InsertUserInfo"
-            component={InsertUserInfoScreen}
+            name="InsertUserData"
+            component={InsertUserDataScreen}
           />
           <Stack.Screen name="InsertCep" component={InsertCepScreen} />
         </Stack.Group>

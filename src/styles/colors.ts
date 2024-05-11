@@ -10,6 +10,7 @@ class Colors {
   static readonly default = '#6b7ae5';
   static readonly disabled = '#dcdcdc';
   static readonly alert = '#ffc700';
+  static readonly red = '#ff0000';
   static readonly transparent = 'transparent';
   static readonly darkTransparent = 'rgba(0, 0, 0, 0.5)';
 }

@@ -13,17 +13,21 @@ export const Field = styled.View`
   height: 40px;
 `;
 
-export const Label = styled.Text`
+export const Label = styled.Text<{error: boolean}>`
   font-size: 16px;
-  color: ${Colors.darkblue};
+  color: ${props => (props.error ? Colors.red : Colors.darkblue)};
   margin-bottom: 12px;
 `;
 
-export const Input = styled(MaskInput)<{disabled: boolean}>`
+export const Input = styled(MaskInput)<{disabled: boolean; error: boolean}>`
   flex: 1;
   font-size: 18px;
   padding: 0 0 8px 0;
-  color: ${props => props.disabled ? Colors.disabledText : Colors.darkblue};
+  color: ${props => {
+    if (props.disabled) return Colors.disabledText;
+    if (props.error) return Colors.red;
+    return Colors.darkblue;
+  }};
 `;
 
 export const IconContainer = styled.TouchableOpacity`

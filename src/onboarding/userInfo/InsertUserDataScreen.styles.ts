@@ -6,6 +6,10 @@ export const Container = styled.View`
   background-color: ${Colors.white};
 `;
 
+export const Scroll = styled.ScrollView`
+  width: 100%;
+`;
+
 export const Content = styled.View`
   flex: 1;
   padding-left: 36px;
