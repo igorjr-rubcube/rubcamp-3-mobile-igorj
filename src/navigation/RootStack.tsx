@@ -12,6 +12,7 @@ import Colors from '../styles/colors';
 import InsertCepScreen from '../onboarding/cep/InsertCepScreen';
 import InsertUserInfoScreen from '../onboarding/userInfo/InsertUserInfoScreen';
 import SelectAccountScreen from '../selectAccount/SelectAccountScreen';
+import AccountInfoScreen from '../profile/accountIfo/AccountInfoScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -19,6 +20,7 @@ export type RootStackParamList = {
   SelectAccount: undefined;
   Home: undefined;
   Profile: undefined;
+  AccountInfo: undefined;
   ChangeAppPassword: undefined;
   ChangeTransactionalPassword: undefined;
   ChangeAddress: undefined;
@@ -71,6 +73,11 @@ function RootStack() {
             },
           }}>
           <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen
+            name="AccountInfo"
+            component={AccountInfoScreen}
+            options={{headerTitle: 'Dados bancários'}}
+          />
           <Stack.Screen
             options={{headerTitle: 'Alterar senha do App'}}
             name="ChangeAppPassword"

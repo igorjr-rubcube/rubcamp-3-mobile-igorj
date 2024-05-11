@@ -75,7 +75,7 @@ function ProfileScreen({navigation}: Props) {
           <ProfileName>{fullName}</ProfileName>
           <CpfText>CPF: {cpf}</CpfText>
           <Button
-            onPress={() => {}}
+            onPress={() => {navigation.navigate('AccountInfo')}}
             text="VER DADOS BANCÁRIOS"
             color="transparent"
             borderColor={Colors.grey}
