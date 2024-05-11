@@ -1,11 +1,17 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Dayjs} from 'dayjs';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {validateUserData} from '../../api/onboarding';
 import Button from '../../components/Button/Button';
 import DatePickerModal from '../../components/DatePicker/DatePickerModal';
+import DefaultModal from '../../components/DefaultModal/DefaultModal';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import TextInputField from '../../components/TextInputField/TextInputField';
+import AlertIcon from '../../components/icons/AlertIcon';
 import {RootStackParamList} from '../../navigation/RootStack';
+import {setLoading} from '../../redux/slices/LoadingSlice';
+import Colors from '../../styles/colors';
 import {
   ButtonContainer,
   Container,
@@ -15,12 +21,6 @@ import {
   Title,
   TopWrapper,
 } from './InsertUserDataScreen.styles';
-import {validateUserData} from '../../api/onboarding';
-import DefaultModal from '../../components/DefaultModal/DefaultModal';
-import AlertIcon from '../../components/icons/AlertIcon';
-import Colors from '../../styles/colors';
-import { useDispatch } from 'react-redux';
-import { setLoading } from '../../redux/slices/LoadingSlice';
 
 const cpfMask = [
   /\d/,
@@ -136,7 +136,7 @@ function InsertUserDataScreen({navigation}: Props) {
       phone: phone,
       birthdate: birthDate.toISOString(),
     };
-    
+
     dispatch(setLoading(true));
     const response = await validateUserData(userData);
     if (response) {
@@ -144,12 +144,35 @@ function InsertUserDataScreen({navigation}: Props) {
         navigation.navigate('InsertCep');
       } else if (response.code === 400) {
         handleError(response.data.message);
-        console.log(validationErrors);
       } else if (response.code === 409) {
         handleError(0);
       }
       dispatch(setLoading(false));
     }
+  };
+
+  const onChange = (
+    setFunction: typeof setFullName,
+    path: string,
+    value: string,
+  ) => {
+    setFunction(value);
+    const newValidationErrors = {...validationErrors};
+    switch (path) {
+      case 'fullName':
+        newValidationErrors.fullName = false;
+        break;
+      case 'email':
+        newValidationErrors.email = false;
+        break;
+      case 'cpf':
+        newValidationErrors.cpf = false;
+        break;
+      case 'phone':
+        newValidationErrors.phone = false;
+        break;
+    }
+    setValidationErrors(newValidationErrors);
   };
 
   return (
@@ -176,7 +199,9 @@ function InsertUserDataScreen({navigation}: Props) {
               <InputContainer>
                 <TextInputField
                   value={fullName}
-                  onChangeFunction={setFullName}
+                  onChangeFunction={(value: string) =>
+                    onChange(setFullName, 'fullName', value)
+                  }
                   label={'Nome completo*'}
                   placeholder={'Digite seu nome completo'}
                   error={validationErrors.fullName}
@@ -185,7 +210,9 @@ function InsertUserDataScreen({navigation}: Props) {
               <InputContainer>
                 <TextInputField
                   value={email}
-                  onChangeFunction={setEmail}
+                  onChangeFunction={(value: string) =>
+                    onChange(setEmail, 'email', value)
+                  }
                   label={'E-mail*'}
                   placeholder={'Digite seu e-mail'}
                   error={validationErrors.email}
@@ -194,7 +221,9 @@ function InsertUserDataScreen({navigation}: Props) {
               <InputContainer>
                 <TextInputField
                   value={cpf}
-                  onChangeFunction={setCpf}
+                  onChangeFunction={(value: string) =>
+                    onChange(setCpf, 'cpf', value)
+                  }
                   label={'CPF*'}
                   placeholder={'Digite seu CPF'}
                   mask={cpfMask}
@@ -205,7 +234,9 @@ function InsertUserDataScreen({navigation}: Props) {
               <InputContainer>
                 <TextInputField
                   value={phone}
-                  onChangeFunction={setPhone}
+                  onChangeFunction={(value: string) =>
+                    onChange(setPhone, 'phone', value)
+                  }
                   label={'Telefone*'}
                   placeholder={'Digite seu telefone'}
                   mask={phoneMask}
@@ -224,6 +255,10 @@ function InsertUserDataScreen({navigation}: Props) {
                   error={validationErrors.birthdate}
                   onFocus={() => {
                     setIsDatePickerVisible(true);
+                    setValidationErrors({
+                      ...validationErrors,
+                      birthdate: false,
+                    });
                   }}
                 />
               </InputContainer>
