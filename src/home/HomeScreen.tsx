@@ -35,6 +35,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStack';
 import LogoutIcon from '../components/icons/LogoutIcon';
 import {setLoading} from '../redux/slices/LoadingSlice';
+import {removeToken} from '../redux/slices/TokenSlice';
+import SwitchArrowsIcon from '../components/icons/SwitchArrowsIcon';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -65,6 +67,11 @@ function HomeScreen({navigation}: Props) {
     return () => {};
   }, []);
 
+  const handleLogout = () => {
+    dispatch(removeToken());
+    navigation.navigate('Welcome');
+  };
+
   return (
     <Background>
       <TopView flexSize={1}>
@@ -77,7 +84,7 @@ function HomeScreen({navigation}: Props) {
             <IconButtonTopBar>
               <HelpIcon fill={Colors.light} />
             </IconButtonTopBar>
-            <IconButtonTopBar>
+            <IconButtonTopBar onPress={handleLogout}>
               <LogoutIcon fill={Colors.light} />
             </IconButtonTopBar>
           </RightWrapper>
@@ -126,6 +133,12 @@ function HomeScreen({navigation}: Props) {
               <ProfileIcon fill={Colors.darkblue} />
             </IconButton>
             <TabButtonText>Perfil</TabButtonText>
+          </TabButton>
+          <TabButton onPress={() => navigation.navigate('SelectAccount')}>
+            <IconButton>
+              <SwitchArrowsIcon fill={Colors.darkblue} />
+            </IconButton>
+            <TabButtonText>Trocar de conta</TabButtonText>
           </TabButton>
         </TabRow>
       </BottomView>
