@@ -19,7 +19,7 @@ interface AddressData {
 }
 
 interface AccountData {
-  transactionalPassword: string;
+  transactionPassword: string;
   type: string;
 }
 
@@ -49,7 +49,7 @@ const initialState: OnboardingState = {
   },
   password: '',
   accountData: {
-    transactionalPassword: '',
+    transactionPassword: '',
     type: '',
   },
 };

@@ -13,7 +13,6 @@ import InfoIcon from '../../components/icons/InfoIcon';
 import {setLoading} from '../../redux/slices/LoadingSlice';
 import {RootState} from '../../redux/store';
 import Colors from '../../styles/colors';
-import SafePasswordModal from '../safePasswordModal/SafePasswordModal';
 import {
   Container,
   Form,
@@ -26,6 +25,7 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/RootStack';
 import {ScrollView} from 'react-native';
+import SafePasswordModal from '../../components/safePasswordModal/SafePasswordModal';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ChangeAppPassword'>;

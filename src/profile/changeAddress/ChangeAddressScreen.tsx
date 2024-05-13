@@ -148,11 +148,13 @@ function ChangeAddressScreen({navigation}: Props) {
   };
 
   useEffect(() => {
+    dispatch(setLoading(true));
     const fetchData = async () => {
       const address = await getAddress(token, id);
       if (address && address.code === 200) {
         dispatch(setAddress(address.data));
       }
+      dispatch(setLoading(false));
     };
     fetchData();
     return () => {};

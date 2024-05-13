@@ -10,9 +10,13 @@ import ChangeTransactionalPasswordScreen from '../profile/changePassword/ChangeT
 import ChangeAddressScreen from '../profile/changeAddress/ChangeAddressScreen';
 import Colors from '../styles/colors';
 import InsertCepScreen from '../onboarding/cep/InsertCepScreen';
-import InsertUserDataScreen from '../onboarding/userInfo/InsertUserDataScreen';
+import InsertUserDataScreen from '../onboarding/userData/InsertUserDataScreen';
 import SelectAccountScreen from '../selectAccount/SelectAccountScreen';
 import AccountInfoScreen from '../profile/accountIfo/AccountInfoScreen';
+import InsertAddressScreen from '../onboarding/address/InsertAddressScreen';
+import InsertAppPasswordScreen from '../onboarding/appPassword/InsertAppPasswordScreen';
+import InsertTransactionalPasswordScreen from '../onboarding/transactionalPassword/InsertTransactionalPasswordScreen';
+import AccountTypeScreen from '../onboarding/accountType/AccountTypeScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -24,9 +28,17 @@ export type RootStackParamList = {
   ChangeAppPassword: undefined;
   ChangeTransactionalPassword: undefined;
   ChangeAddress: undefined;
-  Success: {title: string; message: string; navigateTo: 'Home' | 'Profile'};
+  Success: {
+    title: string;
+    message: string;
+    navigateTo: 'Home' | 'Profile' | 'Login';
+  };
   InsertUserData: undefined;
   InsertCep: undefined;
+  InsertAddress: undefined;
+  InsertAppPassword: undefined;
+  InsertTransactionalPassword: undefined;
+  AccountType: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -114,6 +126,16 @@ function RootStack() {
             component={InsertUserDataScreen}
           />
           <Stack.Screen name="InsertCep" component={InsertCepScreen} />
+          <Stack.Screen name="InsertAddress" component={InsertAddressScreen} />
+          <Stack.Screen
+            name="InsertAppPassword"
+            component={InsertAppPasswordScreen}
+          />
+          <Stack.Screen
+            name="InsertTransactionalPassword"
+            component={InsertTransactionalPasswordScreen}
+          />
+          <Stack.Screen name="AccountType" component={AccountTypeScreen} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

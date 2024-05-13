@@ -22,7 +22,7 @@ export const Title = styled.Text`
   color: ${Colors.black};
   text-align: center;
   width: 300px;
-  margin-top: 96px;
+  margin-top: 18px;
 `;
 
 export const HighlightedText = styled.Text`
@@ -31,19 +31,23 @@ export const HighlightedText = styled.Text`
   color: ${Colors.black};
 `;
 
-export const InputContainer = styled.View`
-  width: 90%;
-  margin-top: 24px;
+export const HorizontalWrapper = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
-export const TopWrapper = styled.View`
-  width: 100%;
-  align-items: center;
+export const LeftWrapper = styled.View<{flex: number}>`
+  flex: ${props => props.flex};
+  margin-right: 10px;
 `;
 
-export const ButtonContainer = styled.View`
-  width: 90%;
-  height: 60px;
-  justify-content: center;
-  align-items: center;
+export const RightWrapper = styled.View<{flex: number}>`
+  flex: ${props => props.flex};
+  margin-left: 10px;
+`;
+
+export const Field = styled.View`
+  margin-bottom: 20px;
 `;

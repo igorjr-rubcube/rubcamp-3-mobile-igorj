@@ -26,9 +26,11 @@ export const Title = styled.Text`
   font-size: 20px;
   font-weight: bold;
   color: ${Colors.darkblue};
+  text-align: center;
 `;
 
 export const Message = styled.Text`
   font-size: 18px;
   color: ${Colors.darkblue};
+  text-align: center;
 `;

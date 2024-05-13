@@ -97,7 +97,7 @@ function HomeScreen({navigation}: Props) {
                 RC{' '}
                 {balance && balance != 0
                   ? balance?.toString().replace('.', ',')
-                  : '0.00'}
+                  : '0,00'}
               </BalanceText>
             ) : (
               <BalanceText>__________________</BalanceText>

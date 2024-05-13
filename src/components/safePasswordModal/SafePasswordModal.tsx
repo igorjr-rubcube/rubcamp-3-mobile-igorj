@@ -59,8 +59,8 @@ function SafePasswordModal({visible, setVisible}: SafePasswordModalProps) {
             </RuleText>
           </RuleContainer>
         </TopWrapper>
+        <Button onPress={() => setVisible(false)} text={'ENTENDI'} />
       </ModalBackground>
-      <Button onPress={() => setVisible(false)} text={'ENTENDI'} />
     </ModalView>
   );
 }

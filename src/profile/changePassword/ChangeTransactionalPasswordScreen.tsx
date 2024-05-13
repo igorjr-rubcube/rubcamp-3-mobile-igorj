@@ -8,7 +8,6 @@ import {
 import NumericInputField from '../../components/NumericInputField/NumericInputField';
 import AlertIcon from '../../components/icons/AlertIcon';
 import InfoIcon from '../../components/icons/InfoIcon';
-import SafePasswordModal from '../safePasswordModal/SafePasswordModal';
 import {
   Container,
   Form,
@@ -26,6 +25,7 @@ import {RootStackParamList} from '../../navigation/RootStack';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {changeTransactionalPassword} from '../../api/password';
 import {ScrollView} from 'react-native';
+import SafePasswordModal from '../../components/safePasswordModal/SafePasswordModal';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ChangeAppPassword'>;

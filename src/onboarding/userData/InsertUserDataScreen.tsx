@@ -11,6 +11,7 @@ import TextInputField from '../../components/TextInputField/TextInputField';
 import AlertIcon from '../../components/icons/AlertIcon';
 import {RootStackParamList} from '../../navigation/RootStack';
 import {setLoading} from '../../redux/slices/LoadingSlice';
+import {setUserData} from '../../redux/slices/OnboardingSlice';
 import Colors from '../../styles/colors';
 import {
   ButtonContainer,
@@ -141,6 +142,7 @@ function InsertUserDataScreen({navigation}: Props) {
     const response = await validateUserData(userData);
     if (response) {
       if (response.code === 204) {
+        dispatch(setUserData(userData));
         navigation.navigate('InsertCep');
       } else if (response.code === 400) {
         handleError(response.data.message);
@@ -194,7 +196,7 @@ function InsertUserDataScreen({navigation}: Props) {
         <Content>
           <Scroll>
             <TopWrapper>
-              <ProgressBar progress={0.2} />
+              <ProgressBar progress={0.14} />
               <Title>Preencha abaixo com seus dados pessoais.</Title>
               <InputContainer>
                 <TextInputField
@@ -251,7 +253,7 @@ function InsertUserDataScreen({navigation}: Props) {
                   label={'Data de nascimento*'}
                   placeholder={''}
                   showInput={false}
-                  editable={false}
+                  editable={true}
                   error={validationErrors.birthdate}
                   onFocus={() => {
                     setIsDatePickerVisible(true);

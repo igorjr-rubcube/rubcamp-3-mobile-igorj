@@ -12,6 +12,7 @@ export const ModalBackground = styled.View`
   justify-content: space-between;
   align-items: center;
   background-color: ${Colors.white};
+  padding-bottom: 24px;
 `;
 
 export const TopWrapper = styled.View`
@@ -32,7 +33,6 @@ export const Title = styled.Text`
 
 export const Subtitle = styled.Text`
   align-self: center;
-
   font-size: 18px;
   color: ${Colors.black};
   margin-bottom: 20px;

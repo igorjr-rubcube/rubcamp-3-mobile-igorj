@@ -29,15 +29,15 @@ function TextInputField({
   onChangeFunction,
   label,
   placeholder,
-  secureText,
+  secureText = false,
   secureTextFunction,
   icon,
   iconFunction,
   mask,
   inputMode,
   maxLength,
-  disabled,
-  editable,
+  disabled = false,
+  editable = true,
   onFocus,
   onBlur,
   textAlign,
@@ -52,13 +52,13 @@ function TextInputField({
           value={value}
           onChangeText={onChangeFunction}
           placeholder={placeholder}
-          secureTextEntry={secureText || false}
+          secureTextEntry={secureText}
           mask={mask}
           inputMode={inputMode}
           placeholderTextColor={error ? Colors.red : Colors.grey}
           maxLength={maxLength}
-          editable={editable || !disabled || true}
-          disabled={disabled || false}
+          editable={disabled ? false : editable}
+          disabled={disabled}
           onBlur={onBlur}
           textAlign={textAlign || 'left'}
           onFocus={onFocus}

@@ -36,6 +36,7 @@ function NumericInputField({
   const updateInputs = (text: string, index: number) => {
     const newPassword = [...inputs];
     newPassword[index] = text;
+    inputs[index] = text;
     setInputs(newPassword);
   };
 
@@ -55,7 +56,6 @@ function NumericInputField({
                 maxLength={1}
                 onChangeText={(text: string) => {
                   updateInputs(text, index);
-                  inputs.push(text);
                   const newValue = inputs.join('').replace(/\D/g, '');
                   onChangeFunction(newValue);
                   handleFocus(index, text);
