@@ -12,7 +12,7 @@ import Colors from '../../styles/colors';
 
 type Props = {
   visible: boolean;
-  setVisible: () => void;
+  setVisible: (visible: false) => void;
   onDateSelected: (date: Dayjs) => void;
 };
 
@@ -21,7 +21,7 @@ function DatePickerModal({visible, setVisible, onDateSelected}: Props) {
 
   const handleDateSelected = () => {
     onDateSelected(date);
-    setVisible();
+    setVisible(false);
   }
 
   return (

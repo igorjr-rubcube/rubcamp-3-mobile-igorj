@@ -36,7 +36,7 @@ import {RootStackParamList} from '../navigation/RootStack';
 import LogoutIcon from '../components/icons/LogoutIcon';
 import {setLoading} from '../redux/slices/LoadingSlice';
 import {removeToken} from '../redux/slices/TokenSlice';
-import SwitchAccount from '../components/icons/SwitchAccount';
+import AccountsIcon from '../components/icons/AccountsIcon';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -120,7 +120,7 @@ function HomeScreen({navigation}: Props) {
             </IconButton>
             <TabButtonText>Transferir</TabButtonText>
           </TabButton>
-          <TabButton>
+          <TabButton onPress={() => navigation.navigate('Statement')}>
             <IconButton>
               <ReceiptIcon fill={Colors.darkblue} />
             </IconButton>
@@ -136,7 +136,7 @@ function HomeScreen({navigation}: Props) {
           </TabButton>
           <TabButton onPress={() => navigation.navigate('SelectAccount')}>
             <IconButton>
-              <SwitchAccount fill={Colors.darkblue} />
+              <AccountsIcon fill={Colors.darkblue} />
             </IconButton>
             <TabButtonText>Trocar de conta</TabButtonText>
           </TabButton>

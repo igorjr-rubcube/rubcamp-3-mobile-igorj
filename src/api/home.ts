@@ -1,16 +1,11 @@
 import {AxiosError, AxiosResponse} from 'axios';
-import api from '../axios/api';
-
-type BalanceResponse = {
-  code: number;
-  data: any;
-};
+import api, { DefaultResponse } from '../axios/api';
 
 export const getBalance = async (
   token: string,
   id: string,
   idAccount: string,
-): Promise<BalanceResponse | undefined | null> => {
+): Promise<DefaultResponse | undefined | null> => {
   return await api
     .get(`/users/${id}/accounts/${idAccount}/balance`, {
       headers: {

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Mask} from 'react-native-mask-input';
 import Colors from '../../styles/colors';
 import {Field, IconContainer, Input, Label} from './TextInputField.styles';
+import {Keyboard} from 'react-native';
 
 type TextInputFieldProps = {
   value: any;

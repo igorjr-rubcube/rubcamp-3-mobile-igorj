@@ -2,27 +2,29 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../home/HomeScreen';
 import LoginScreen from '../login/LoginScreen';
-import ChangeAppPasswordScreen from '../profile/changePassword/ChangeAppPasswordScreen';
-import ProfileScreen from '../profile/profileHome/ProfileScreen';
-import SuccessScreen from '../success/SuccessScreen';
-import WelcomeScreen from '../welcome/WelcomeScreen';
-import ChangeTransactionalPasswordScreen from '../profile/changePassword/ChangeTransactionalPasswordScreen';
-import ChangeAddressScreen from '../profile/changeAddress/ChangeAddressScreen';
-import Colors from '../styles/colors';
-import InsertCepScreen from '../onboarding/cep/InsertCepScreen';
-import InsertUserDataScreen from '../onboarding/userData/InsertUserDataScreen';
-import SelectAccountScreen from '../selectAccount/SelectAccountScreen';
-import AccountInfoScreen from '../profile/accountIfo/AccountInfoScreen';
+import AccountTypeScreen from '../onboarding/accountType/AccountTypeScreen';
 import InsertAddressScreen from '../onboarding/address/InsertAddressScreen';
 import InsertAppPasswordScreen from '../onboarding/appPassword/InsertAppPasswordScreen';
+import InsertCepScreen from '../onboarding/cep/InsertCepScreen';
 import InsertTransactionalPasswordScreen from '../onboarding/transactionalPassword/InsertTransactionalPasswordScreen';
-import AccountTypeScreen from '../onboarding/accountType/AccountTypeScreen';
+import InsertUserDataScreen from '../onboarding/userData/InsertUserDataScreen';
+import AccountInfoScreen from '../profile/accountIfo/AccountInfoScreen';
+import ChangeAddressScreen from '../profile/changeAddress/ChangeAddressScreen';
+import ChangeAppPasswordScreen from '../profile/changePassword/ChangeAppPasswordScreen';
+import ChangeTransactionalPasswordScreen from '../profile/changePassword/ChangeTransactionalPasswordScreen';
+import ProfileScreen from '../profile/profileHome/ProfileScreen';
+import SelectAccountScreen from '../selectAccount/SelectAccountScreen';
+import StatementScreen from '../statement/statementHome/StatementScreen';
+import Colors from '../styles/colors';
+import SuccessScreen from '../success/SuccessScreen';
+import WelcomeScreen from '../welcome/WelcomeScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
   Login: undefined;
   SelectAccount: undefined;
   Home: undefined;
+  Statement: undefined;
   Profile: undefined;
   AccountInfo: undefined;
   ChangeAppPassword: undefined;
@@ -49,8 +51,17 @@ function RootStack() {
       <Stack.Navigator
         screenOptions={{
           orientation: 'portrait',
-          headerTransparent: true,
+          headerTitle: 'Perfil',
           statusBarColor: Colors.transparent,
+          navigationBarColor: Colors.darkblue,
+          headerTitleAlign: 'center',
+          headerTransparent: true,
+          headerTintColor: Colors.white,
+          headerTitleStyle: {
+            fontSize: 24,
+            fontWeight: 'regular',
+            fontFamily: 'Roboto',
+          },
         }}>
         <Stack.Screen
           options={{headerTitle: ''}}
@@ -72,18 +83,14 @@ function RootStack() {
           name="Home"
           component={HomeScreen}
         />
-        <Stack.Group
-          screenOptions={{
-            headerTitle: 'Perfil',
-            headerTitleAlign: 'center',
-            headerTransparent: true,
-            headerTintColor: Colors.white,
-            headerTitleStyle: {
-              fontSize: 24,
-              fontWeight: 'regular',
-              fontFamily: 'Roboto',
-            },
-          }}>
+        <Stack.Screen
+          options={{
+            headerTitle: 'Extrato',
+          }}
+          name="Statement"
+          component={StatementScreen}
+        />
+        <Stack.Group>
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen
             name="AccountInfo"

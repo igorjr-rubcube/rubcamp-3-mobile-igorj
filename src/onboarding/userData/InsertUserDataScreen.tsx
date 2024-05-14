@@ -189,7 +189,7 @@ function InsertUserDataScreen({navigation}: Props) {
       />
       <DatePickerModal
         visible={isDatePickerVisible}
-        setVisible={() => setIsDatePickerVisible(false)}
+        setVisible={setIsDatePickerVisible}
         onDateSelected={(date: Dayjs) => setBirthDate(date.toDate())}
       />
       <Container>
