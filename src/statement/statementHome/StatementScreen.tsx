@@ -77,10 +77,9 @@ function StatementScreen({navigation}: Props) {
   const [finalDate, setFinalDate] = useState(
     dayjs().subtract(periods[0], 'day'),
   );
-
   const [skip, setSkip] = useState(0);
   const [take, setTake] = useState(10);
-
+  
   const balance = useSelector((state: RootState) => state.balance.balance);
   const token = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.userId.userId);
@@ -90,8 +89,9 @@ function StatementScreen({navigation}: Props) {
   const account = useSelector(
     (state: RootState) => state.accounts.accounts,
   ).find(account => account.id === accountId);
+  const [selectedTransfer, setSelectedTransfer] = useState<string>('');
   const dispatch = useDispatch();
-
+  
   interface TransferType {
     id: string;
     date: string;
@@ -221,7 +221,8 @@ function StatementScreen({navigation}: Props) {
     return () => {};
   }, [selectedTab, order, initialDate, finalDate, period]);
 
-  const handleDetailedTransfer = (index: number) => () => {
+  const handleDetailedTransfer = (id: string) => () => {
+    setSelectedTransfer(id);
     openDetailedTransferModal();
   }
 
@@ -237,7 +238,7 @@ function StatementScreen({navigation}: Props) {
         finalDate={finalDate}
         setFinalDate={setFinalDate}
       />
-      <DetailedTransferModal visible={detailedTransferModalVisible} setVisible={setDetailedTransferModalVisible} />
+      <DetailedTransferModal visible={detailedTransferModalVisible} setVisible={setDetailedTransferModalVisible} transferId={selectedTransfer}/>
       <Background>
         <TopView flexSize={1}>
           <Wrapper>
@@ -298,7 +299,7 @@ function StatementScreen({navigation}: Props) {
                       })}
                     </DateText>
                     {statement[date].map((transfer: any, index: number) => (
-                      <Transfer key={index} onPress={handleDetailedTransfer(index)}>
+                      <Transfer key={index} onPress={handleDetailedTransfer(transfer.id)}>
                         <LeftWrapper>
                           <TransferIcon>
                             <RubbankIcon />

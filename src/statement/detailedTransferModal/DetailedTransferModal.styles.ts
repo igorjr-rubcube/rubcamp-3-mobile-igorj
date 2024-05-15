@@ -97,7 +97,8 @@ export const FromToTitle = styled.Text`
   color: ${Colors.darkblue};
   border-bottom-width: 1px;
   border-bottom-color: ${Colors.darkblue};
-  margin-bottom: 10px;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
 `;
 
 export const FromToText = styled.Text`

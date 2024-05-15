@@ -68,8 +68,6 @@ function AccountTypeScreen({navigation}: Props) {
       account: accountData,
     };
     dispatch(setLoading(true));
-    console.log('Body');
-    console.log(body);
     const response = await createUser(body);
     if (response) {
       if (response.code === 201) {
