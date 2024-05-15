@@ -1,7 +1,7 @@
 import {AxiosError, AxiosResponse} from 'axios';
 import api, {DefaultResponse} from '../axios/api';
 
-export interface getFilteredStatementParams {
+export interface GetFilteredStatementParams {
     order?: 'asc' | 'desc';
     operation?: 'in' | 'out' | 'both';
     status?: 'COMPLETED' | 'SCHEDULED' | 'FAILED';
@@ -15,7 +15,7 @@ export const getFilteredStatement = async (
   token: string,
   id: string,
   idAccount: string,
-    params: getFilteredStatementParams,
+    params: GetFilteredStatementParams,
 ): Promise<DefaultResponse | undefined | null> => {
   return await api
     .get(`/users/${id}/accounts/${idAccount}/statement`, {

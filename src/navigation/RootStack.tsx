@@ -8,7 +8,7 @@ import InsertAppPasswordScreen from '../onboarding/appPassword/InsertAppPassword
 import InsertCepScreen from '../onboarding/cep/InsertCepScreen';
 import InsertTransactionalPasswordScreen from '../onboarding/transactionalPassword/InsertTransactionalPasswordScreen';
 import InsertUserDataScreen from '../onboarding/userData/InsertUserDataScreen';
-import AccountInfoScreen from '../profile/accountIfo/AccountInfoScreen';
+import AccountInfoScreen from '../profile/accountInfo/AccountInfoScreen';
 import ChangeAddressScreen from '../profile/changeAddress/ChangeAddressScreen';
 import ChangeAppPasswordScreen from '../profile/changePassword/ChangeAppPasswordScreen';
 import ChangeTransactionalPasswordScreen from '../profile/changePassword/ChangeTransactionalPasswordScreen';

@@ -120,7 +120,7 @@ export const TextWrapper = styled.View`
 `;
 
 export const TransferTitle = styled.Text`
-  font-size: 18px;
+  font-size: 16px;
   color: ${Colors.black};
   font-weight: bold;
 `;
@@ -131,8 +131,35 @@ export const TransferSubtitle = styled.Text`
   color: ${Colors.lightGrey};
 `;
 
-export const TransferValue = styled.Text`
+export const TransferValue = styled.Text<{color: string}>`
   font-size: 18px;
   font-weight: bold;
-  color: ${Colors.green};
+  color: ${props => props.color};
+`;
+
+export const TransferEndText = styled.Text`
+  font-size: 14px;
+  color: ${Colors.grey};
+  text-align: center;
+  margin-top: 24px;
+`;
+
+export const TransferNull = styled.View`
+  height: 90%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TransferNullText = styled.Text`
+  width: 50%;
+  text-align: center;
+  font-size: 16px;
+  color: ${Colors.grey};
+`;
+
+export const TransferNullIcon = styled.View`
+  width: 60px;
+  height: 60px;
+  margin-top: 16px;
 `;

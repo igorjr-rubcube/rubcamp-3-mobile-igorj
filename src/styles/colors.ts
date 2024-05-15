@@ -10,6 +10,7 @@ class Colors {
   static readonly default = '#6b7ae5';
   static readonly disabled = '#dcdcdc';
   static readonly alert = '#ffc700';
+  static readonly yellow = '#ffc700';
   static readonly red = '#ff0000';
   static readonly green = '#029D29';
   static readonly orange = '#F1580C';

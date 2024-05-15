@@ -66,9 +66,9 @@ function FilterModal({visible, setVisible, setPeriod, setOrder, initialDate, set
   }
 
   const handleContinue = () => {
-    setVisible(false);
     setPeriod(periodSelected.findIndex((value) => value));
     setOrder(orderSelected.findIndex((value) => value));    
+    setVisible(false);
   }
 
   const handleClean = () => {
@@ -76,6 +76,7 @@ function FilterModal({visible, setVisible, setPeriod, setOrder, initialDate, set
     setOrderSelected([false, false]);
     setInitialDate(dayjs());
     setFinalDate(dayjs());
+    setOrder(0);
   }
 
   return (

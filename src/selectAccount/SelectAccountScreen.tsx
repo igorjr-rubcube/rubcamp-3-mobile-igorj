@@ -48,7 +48,7 @@ function SelectAccountScreen({navigation}: Props) {
                 <AccountInfo>{account.branch}</AccountInfo>
               </AccountField>
               <AccountField>
-                <AccountLabel>NÚMERO DA CONTA: </AccountLabel>
+                <AccountLabel>Nº DA CONTA: </AccountLabel>
                 <AccountInfo>{account.number}</AccountInfo>
               </AccountField>
               <AccountField>

@@ -1,7 +1,11 @@
 import {StackNavigationProp} from '@react-navigation/stack';
+import dayjs from 'dayjs';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getBalance} from '../../api/home';
+import {
+  GetFilteredStatementParams,
+  getFilteredStatement,
+} from '../../api/statement';
 import {
   Background,
   TopView,
@@ -11,7 +15,6 @@ import EyeSlashIcon from '../../components/icons/EyeSlashIcon';
 import FilterIcon from '../../components/icons/FilterIcon';
 import RubbankIcon from '../../components/icons/RubbankIcon';
 import {RootStackParamList} from '../../navigation/RootStack';
-import {setBalance} from '../../redux/slices/BalanceSlice';
 import {setLoading} from '../../redux/slices/LoadingSlice';
 import {RootState} from '../../redux/store';
 import Colors from '../../styles/colors';
@@ -33,21 +36,23 @@ import {
   TextWrapper,
   Title,
   Transfer,
+  TransferEndText,
   TransferIcon,
+  TransferNull,
+  TransferNullIcon,
+  TransferNullText,
   TransferSubtitle,
   TransferTitle,
   TransferValue,
   TransfersContainer,
   Wrapper,
 } from './StatementScreen.styles';
-import dayjs from 'dayjs';
-import { getFilteredStatement, getFilteredStatementParams } from '../../api/statement';
+import AccountsIcon from '../../components/icons/AccountsIcon';
+import PigIcon from '../../components/icons/PigIcon';
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, 'Home'>;
+  navigation: StackNavigationProp<RootStackParamList, 'Statement'>;
 };
-
-const logo = require('../assets/rubbank-logo-white.png');
 
 function StatementScreen({navigation}: Props) {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
@@ -59,45 +64,118 @@ function StatementScreen({navigation}: Props) {
   const [selectedTab, setSelectedTab] = useState(0);
   const tabs = ['Tudo', 'Entrada', 'Saída', 'Futuro'];
   const periods = [15, 30, 60, 90];
-  const orders = [0, 1];
+  const orders = [1, 0];
   const [period, setPeriod] = useState(0);
   const [order, setOrder] = useState(0);
   const [initialDate, setInitialDate] = useState(dayjs());
-  const [finalDate, setFinalDate] = useState(dayjs().add(-periods[0], 'day'));
-  const [statement , setStatement] = useState([])
-
+  const [finalDate, setFinalDate] = useState(
+    dayjs().subtract(periods[0], 'day'),
+  );
 
   const [skip, setSkip] = useState(0);
   const [take, setTake] = useState(10);
 
-
   const balance = useSelector((state: RootState) => state.balance.balance);
   const token = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.userId.userId);
-  const accountId = useSelector((state: RootState) => state.accountId.accountId);
+  const accountId = useSelector(
+    (state: RootState) => state.accountId.accountId,
+  );
+  const account = useSelector(
+    (state: RootState) => state.accounts.accounts,
+  ).find(account => account.id === accountId);
   const dispatch = useDispatch();
+
+  interface TransferType {
+    id: string;
+    date: string;
+    amount: number;
+    status: string;
+    fromAccount: object;
+    toAccount: object;
+  }
+
+  interface StatementType {
+    [key: string]: TransferType[];
+  }
+  const [statement, setStatement] = useState<StatementType>({});
+  const groupByDate = (statementData: []) => {
+    const grouped: StatementType = {};
+    statementData.forEach((item: any) => {
+      const date = dayjs(item.date).format('YYYY-MM-DD');
+      if (!grouped[date]) {
+        grouped[date] = [];
+      }
+      grouped[date].push(item);
+    });
+    setStatement(grouped);
+  };
+
+  const status = {
+    COMPLETED: {
+      name: 'Confirmada',
+      color: Colors.green,
+    },
+    SCHEDULED: {
+      name: 'Agendada',
+      color: Colors.green,
+    },
+    FAILED: {
+      name: 'Falhou',
+      color: Colors.green,
+    },
+  };
+
+  const operation = {
+    in: {
+      name: 'Entrada',
+      color: Colors.green,
+    },
+    out: {
+      name: 'Saída',
+      color: Colors.red,
+    },
+    scheduled: {
+      name: 'Agendada',
+      color: Colors.yellow,
+    },
+  };
+
+  const tabOperation = {
+    0: 'both',
+    1: 'in',
+    2: 'out',
+  };
+
+  const fetchData = async (params: any) => {
+    const response = await getFilteredStatement(
+      token,
+      userId,
+      accountId,
+      params,
+    );
+    if (response) {
+      if (response.code === 200) {
+        groupByDate(response.data);
+      }
+    } else {
+      return;
+    }
+    dispatch(setLoading(false));
+  };
 
   useEffect(() => {
     dispatch(setLoading(true));
-    const params = {
+    const params: GetFilteredStatementParams = {
       order: order === 0 ? 'asc' : 'desc',
-      operation: selectedTab === 1 ? 'in' : selectedTab === 2 ? 'out' : 'both',
-      start: initialDate.format('YYYY-MM-DD'),
-      end: finalDate.format('YYYY-MM-DD'),
+      operation: tabOperation[selectedTab as keyof typeof tabOperation] as any,
+      status: selectedTab === 3 ? 'SCHEDULED' : 'COMPLETED',
+      start: finalDate.format('YYYY-MM-DD'),
+      end: initialDate.format('YYYY-MM-DD'),
       skip: skip,
       take: take,
-    } as getFilteredStatementParams;
-    const fetchData = async () => {
-      const response = await getFilteredStatement(token, userId, accountId, params);
-      if (response) {
-        setStatement(response.data);
-        
-      } else {
-        return;
-      }
-      dispatch(setLoading(false));
     };
-    fetchData();
+    fetchData(params);
     navigation.setOptions({
       headerRight: () => (
         <IconButton onPress={openFilterModal}>
@@ -107,6 +185,35 @@ function StatementScreen({navigation}: Props) {
     });
     return () => {};
   }, []);
+
+  useEffect(() => {
+    let start = initialDate;
+    let end = finalDate;
+    if (selectedTab === 3) {
+      if (period == -1) {
+        end = dayjs().add(periods[0], 'day');
+      } else {
+        end = dayjs().add(periods[period], 'day');
+      }
+      start = dayjs();
+    }
+    if (end.isBefore(start)) {
+      start = finalDate;
+      end = initialDate;
+    }
+    dispatch(setLoading(true));
+    const params: GetFilteredStatementParams = {
+      order: order === 0 ? 'asc' : 'desc',
+      operation: tabOperation[selectedTab as keyof typeof tabOperation] as any,
+      status: selectedTab === 3 ? 'SCHEDULED' : 'COMPLETED',
+      start: start.format('YYYY-MM-DD'),
+      end: end.format('YYYY-MM-DD'),
+      skip: skip,
+      take: take,
+    };
+    fetchData(params);
+    return () => {};
+  }, [selectedTab, order, initialDate, finalDate, period]);
 
   return (
     <>
@@ -159,25 +266,70 @@ function StatementScreen({navigation}: Props) {
                 </Tab>
               ))}
             </TabsWrapper>
+            {Object.keys(statement).length == 0 ? (
+              <TransferNull>
+                <TransferNullIcon>
+                  <PigIcon fill={Colors.lightGrey} />
+                </TransferNullIcon>
+                <TransferNullText>
+                  Você ainda não possui lançamentos.
+                </TransferNullText>
+              </TransferNull>
+            ) : null}
             <TransfersContainer>
-              <DateWrapper>
-                <DateText>11 de Agosto</DateText>
-                <Transfer>
-                  <LeftWrapper>
-                    <TransferIcon>
-                      <RubbankIcon fill={Colors.default} />
-                    </TransferIcon>
-                    <TextWrapper>
-                      <TransferTitle>Transferência Entre Contas</TransferTitle>
-                      <TransferSubtitle>Confirmada</TransferSubtitle>
-                      <TransferSubtitle>16:58</TransferSubtitle>
-                    </TextWrapper>
-                  </LeftWrapper>
-                  <RightWrapper>
-                    <TransferValue>RC 8,24</TransferValue>
-                  </RightWrapper>
-                </Transfer>
-              </DateWrapper>
+              {Object.keys(statement).length > 0 &&
+                Object.keys(statement).map((date, index) => (
+                  <DateWrapper key={index}>
+                    <DateText>
+                      {dayjs(date).toDate().toLocaleDateString('pt-BR', {
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </DateText>
+                    {statement[date].map((transfer: any, index: number) => (
+                      <Transfer key={index}>
+                        <LeftWrapper>
+                          <TransferIcon>
+                            <RubbankIcon />
+                          </TransferIcon>
+                          <TextWrapper>
+                            <TransferTitle>
+                              Transferência Entre Contas
+                            </TransferTitle>
+                            <TransferSubtitle>
+                              {
+                                status[transfer.status as keyof typeof status]
+                                  .name
+                              }
+                            </TransferSubtitle>
+                            <TransferSubtitle>
+                              {dayjs(transfer.date).format('HH:mm')}
+                            </TransferSubtitle>
+                          </TextWrapper>
+                        </LeftWrapper>
+                        <RightWrapper>
+                          <TransferValue
+                            color={
+                              transfer.status === 'SCHEDULED'
+                                ? operation.scheduled.color
+                                : account?.number ===
+                                  transfer.fromAccount.number
+                                ? operation.out.color
+                                : operation.in.color
+                            }>
+                            {transfer.amount
+                              .toLocaleString('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                              })
+                              .replace('R$', 'RC')}
+                          </TransferValue>
+                        </RightWrapper>
+                      </Transfer>
+                    ))}
+                  </DateWrapper>
+                ))}
+              <TransferEndText>Chegamos ao final da lista!</TransferEndText>
             </TransfersContainer>
           </Content>
         </Bottom>
