@@ -141,7 +141,10 @@ function DetailedTransferModal({ visible, setVisible, transferId }: defaultModal
               </DetailsRow>
               <DetailsRow>
                 <FromToText>CPF:</FromToText>
-                <FromToValue>{transfer.fromAccount.user.cpf}</FromToValue>
+                <FromToValue>{transfer.fromAccount.user.cpf.replace(
+                  /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                  '$1.$2.$3-$4'
+                )}</FromToValue>
               </DetailsRow>
             </FromToContainer>
             <FromToContainer>
@@ -164,7 +167,10 @@ function DetailedTransferModal({ visible, setVisible, transferId }: defaultModal
               </DetailsRow>
               <DetailsRow>
                 <FromToText>CPF:</FromToText>
-                <FromToValue>{transfer.toAccount.user.cpf}</FromToValue>
+                <FromToValue>{transfer.toAccount.user.cpf.replace(
+                  /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                  '$1.$2.$3-$4'
+                )}</FromToValue>
               </DetailsRow>
             </FromToContainer>
           </DetailsContainer>
