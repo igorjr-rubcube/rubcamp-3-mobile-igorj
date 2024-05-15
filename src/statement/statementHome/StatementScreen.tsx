@@ -47,8 +47,8 @@ import {
   TransfersContainer,
   Wrapper,
 } from './StatementScreen.styles';
-import AccountsIcon from '../../components/icons/AccountsIcon';
 import PigIcon from '../../components/icons/PigIcon';
+import DetailedTransferModal from '../detailedTransferModal/DetailedTransferModal';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Statement'>;
@@ -58,6 +58,12 @@ function StatementScreen({navigation}: Props) {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const openFilterModal = () => {
     setFilterModalVisible(true);
+  };
+
+  const [detailedTransferModalVisible, setDetailedTransferModalVisible] =
+    useState(false);
+  const openDetailedTransferModal = () => {
+    setDetailedTransferModalVisible(true);
   };
 
   const [showBalance, setShowBalance] = useState(true);
@@ -215,6 +221,10 @@ function StatementScreen({navigation}: Props) {
     return () => {};
   }, [selectedTab, order, initialDate, finalDate, period]);
 
+  const handleDetailedTransfer = (index: number) => () => {
+    openDetailedTransferModal();
+  }
+
   return (
     <>
       <FilterModal
@@ -227,6 +237,7 @@ function StatementScreen({navigation}: Props) {
         finalDate={finalDate}
         setFinalDate={setFinalDate}
       />
+      <DetailedTransferModal visible={detailedTransferModalVisible} setVisible={setDetailedTransferModalVisible} />
       <Background>
         <TopView flexSize={1}>
           <Wrapper>
@@ -287,7 +298,7 @@ function StatementScreen({navigation}: Props) {
                       })}
                     </DateText>
                     {statement[date].map((transfer: any, index: number) => (
-                      <Transfer key={index}>
+                      <Transfer key={index} onPress={handleDetailedTransfer(index)}>
                         <LeftWrapper>
                           <TransferIcon>
                             <RubbankIcon />
