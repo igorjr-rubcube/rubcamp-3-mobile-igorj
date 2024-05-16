@@ -1,9 +1,9 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootStackParamList} from '../navigation/RootStack';
-import {setAccountId} from '../redux/slices/AccountIdSlice';
-import {RootState} from '../redux/store';
+import {RootStackParamList} from '../../navigation/RootStack';
+import {setAccountId} from '../../redux/slices/AccountIdSlice';
+import {RootState} from '../../redux/store';
 import {
   AccountCard,
   AccountField,
@@ -14,6 +14,7 @@ import {
   Scroll,
   Title,
 } from './SelectAccountScreen.styles';
+import Button from '../../components/Button/Button';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'SelectAccount'>;
@@ -22,6 +23,9 @@ type Props = {
 function SelectAccountScreen({navigation}: Props) {
   const accounts = useSelector((state: RootState) => state.accounts);
   const dispatch = useDispatch();
+  const accountId = useSelector(
+    (state: RootState) => state.accountId.accountId,
+  );
 
   const handleSelectAccount = (accountIndex: number) => {
     dispatch(setAccountId(accounts.accounts[accountIndex].id));
@@ -67,6 +71,7 @@ function SelectAccountScreen({navigation}: Props) {
           ))}
         </Container>
       </Scroll>
+      <Button onPress={() => navigation.navigate('CreateNewAccount')} text={'CRIAR NOVA CONTA'} />
     </Screen>
   );
 }

@@ -13,16 +13,18 @@ import ChangeAddressScreen from '../profile/changeAddress/ChangeAddressScreen';
 import ChangeAppPasswordScreen from '../profile/changePassword/ChangeAppPasswordScreen';
 import ChangeTransactionalPasswordScreen from '../profile/changePassword/ChangeTransactionalPasswordScreen';
 import ProfileScreen from '../profile/profileHome/ProfileScreen';
-import SelectAccountScreen from '../selectAccount/SelectAccountScreen';
+import SelectAccountScreen from '../selectAccount/selectAccountScreen/SelectAccountScreen';
 import StatementScreen from '../statement/statementHome/StatementScreen';
 import Colors from '../styles/colors';
 import SuccessScreen from '../success/SuccessScreen';
 import WelcomeScreen from '../welcome/WelcomeScreen';
+import CreateNewAccountScreen from '../selectAccount/createNewAccount/CreateNewAccountScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
   Login: undefined;
   SelectAccount: undefined;
+  CreateNewAccount: undefined;
   Home: undefined;
   Statement: undefined;
   Profile: undefined;
@@ -33,7 +35,7 @@ export type RootStackParamList = {
   Success: {
     title: string;
     message: string;
-    navigateTo: 'Home' | 'Profile' | 'Login';
+    navigateTo: 'Home' | 'Profile' | 'Login' | 'SelectAccount';
   };
   InsertUserData: undefined;
   InsertCep: undefined;
@@ -73,11 +75,19 @@ function RootStack() {
           name="Login"
           component={LoginScreen}
         />
-        <Stack.Screen
-          options={{headerShown: false}}
-          name="SelectAccount"
-          component={SelectAccountScreen}
-        />
+
+        <Stack.Group>
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="SelectAccount"
+            component={SelectAccountScreen}
+          />
+          <Stack.Screen
+            options={{headerTitle: 'Criar nova conta', headerTintColor: Colors.darkblue}}
+            name="CreateNewAccount"
+            component={CreateNewAccountScreen}
+          />
+        </Stack.Group>
         <Stack.Screen
           options={{headerShown: false}}
           name="Home"

@@ -1,9 +1,10 @@
 import styled from 'styled-components/native';
-import Colors from '../styles/colors';
+import Colors from '../../styles/colors';
 
 export const Screen = styled.View`
+  height: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   background-color: ${Colors.light};
   padding: 10% 0;
 `;
@@ -17,6 +18,7 @@ export const Container = styled.View`
   justify-content: center;
   background-color: ${Colors.light};
   width: 100%;
+  height: 100%;
   padding: 0 40px;
 `;
 
@@ -47,7 +49,6 @@ export const AccountField = styled.View`
   align-items: center;
   justify-content: space-between;
 `;
-
 
 export const AccountLabel = styled.Text`
   font-size: 18px;

@@ -93,13 +93,13 @@ function InsertTransactionalPasswordScreen({navigation}: Props) {
             <NumericInputField
                     onChangeFunction={setNewPassword}
                     size={4}
-                    label="Digite sua nova senha"
+                    label="Digite sua senha"
                     secureText={true}
                   />
                   <NumericInputField
                     onChangeFunction={setConfirmPassword}
                     size={4}
-                    label="Confirme sua nova senha"
+                    label="Confirme sua senha"
                     secureText={true}
                   />
             </Form>
