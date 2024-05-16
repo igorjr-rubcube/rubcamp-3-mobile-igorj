@@ -37,21 +37,18 @@ import TextInputField from '../../components/TextInputField/TextInputField';
 interface SafePasswordModalProps {
   visible: boolean;
   setVisible: (visible: boolean) => void;
-  setPeriod: (period: number) => void;
-  setOrder: (order: number) => void;
-  initialDate: Dayjs;
-  finalDate: Dayjs;
-  setInitialDate: (date: Dayjs) => void;
-  setFinalDate: (date: Dayjs) => void;
+  filterFunction: (period: number, initialDate: string, finalDate:string, order: string) => void;
 }
 
-function FilterModal({visible, setVisible, setPeriod, setOrder, initialDate, setInitialDate, finalDate, setFinalDate}: SafePasswordModalProps) {
+function FilterModal({visible, setVisible, filterFunction}: SafePasswordModalProps) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [modalDateInitialVisible, setModalDateInitialVisible] = useState(false);
   const [modalDateFinalVisible, setModalDateFinalVisible] = useState(false);
   const [periodSelected, setPeriodSelected] = useState([false, false, false, false]);
   const [orderSelected, setOrderSelected] = useState([false, false]);
 
+  const [initialDate, setInitialDate] = useState<Dayjs>(dayjs());
+  const [finalDate, setFinalDate] = useState<Dayjs>(dayjs());
 
   const handlePeriod = (index: number) => {
     const newPeriodSelected = [false, false, false, false];
@@ -65,9 +62,10 @@ function FilterModal({visible, setVisible, setPeriod, setOrder, initialDate, set
     setOrderSelected(newOrderSelected);
   }
 
-  const handleContinue = () => {
-    setPeriod(periodSelected.findIndex((value) => value));
-    setOrder(orderSelected.findIndex((value) => value));    
+  const handleContinue = () => {    
+    const period = periodSelected.findIndex((value) => value);
+    const order = orderSelected.findIndex((value) => value) === 0 ? 'asc' : 'desc';
+    filterFunction(period, initialDate.format('YYYY-MM-DD'), finalDate.format('YYYY-MM-DD'), order);
     setVisible(false);
   }
 
@@ -76,7 +74,6 @@ function FilterModal({visible, setVisible, setPeriod, setOrder, initialDate, set
     setOrderSelected([false, false]);
     setInitialDate(dayjs());
     setFinalDate(dayjs());
-    setOrder(0);
   }
 
   return (
