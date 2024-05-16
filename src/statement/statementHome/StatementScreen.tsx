@@ -1,7 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import dayjs from 'dayjs';
-import {useCallback, useEffect, useState} from 'react';
-import {ActivityIndicator, FlatList, RefreshControl} from 'react-native';
+import {useEffect, useState} from 'react';
+import {ActivityIndicator, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   GetFilteredStatementParams,
@@ -50,6 +50,7 @@ import {
   TransfersContainer,
   Wrapper,
 } from './StatementScreen.styles';
+import {Text} from 'react-native-svg';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Statement'>;
@@ -140,6 +141,8 @@ function StatementScreen({navigation}: Props) {
   const dispatch = useDispatch();
 
   const [statement, setStatement] = useState<TransferType[]>([]);
+  const [refreshEnd, setRefreshEnd] = useState(false);
+  const [bottomLoading, setBottomLoading] = useState(false);
 
   const fetchData = async (params: any) => {
     const response = await getFilteredStatement(
@@ -168,6 +171,9 @@ function StatementScreen({navigation}: Props) {
       if (response.code === 200) {
         const newStatement = [...statement, ...response.data];
         setStatement(newStatement);
+        if (response.data.length === 0) {
+          setRefreshEnd(true);
+        }
       }
     }
   };
@@ -178,6 +184,10 @@ function StatementScreen({navigation}: Props) {
   };
 
   const onListEnd = () => {
+    if (statement.length === 0 || refreshEnd) {
+      return;
+    }
+    setBottomLoading(true);
     setSkip(skip + take);
     const params: GetFilteredStatementParams = {
       order: order as any,
@@ -188,7 +198,7 @@ function StatementScreen({navigation}: Props) {
       skip: skip + take,
       take: take,
     };
-    refetchData(params);
+    refetchData(params).then(() => setBottomLoading(false));
   };
 
   const RenderTransfers = ({
@@ -254,6 +264,9 @@ function StatementScreen({navigation}: Props) {
   const handleChangeTab = (index: number) => {
     dispatch(setLoading(true));
     setSelectedTab(index);
+    setBottomLoading(false);
+    setRefreshEnd(false);
+    setStatement([]);
     setSkip(0);
     let start = dayjs(initialDate);
     let end = dayjs(finalDate);
@@ -292,6 +305,9 @@ function StatementScreen({navigation}: Props) {
     setFinalDate(dayjs(finalDate));
     setOrder(order);
     setSkip(0);
+    setBottomLoading(false);
+    setRefreshEnd(false);
+    setStatement([]);
     let start = dayjs(initialDate);
     let end = dayjs(finalDate);
 
@@ -330,31 +346,6 @@ function StatementScreen({navigation}: Props) {
   };
 
   useEffect(() => {
-    dispatch(setLoading(true));
-    const params: GetFilteredStatementParams = {
-      order: order as any,
-      operation: tabOperation[selectedTab as keyof typeof tabOperation] as any,
-      status: selectedTab === 3 ? 'SCHEDULED' : 'COMPLETED',
-      start: finalDate.format('YYYY-MM-DD'),
-      end: initialDate.format('YYYY-MM-DD'),
-      skip: skip,
-      take: take,
-    };
-    fetchData(params).then(() => dispatch(setLoading(false)));
-  }, [order]);
-
-  useEffect(() => {
-    dispatch(setLoading(true));
-    const params: GetFilteredStatementParams = {
-      order: order as any,
-      operation: tabOperation[selectedTab as keyof typeof tabOperation] as any,
-      status: selectedTab === 3 ? 'SCHEDULED' : 'COMPLETED',
-      start: finalDate.format('YYYY-MM-DD'),
-      end: initialDate.format('YYYY-MM-DD'),
-      skip: skip,
-      take: take,
-    };
-    fetchData(params).then(() => dispatch(setLoading(false)));
     navigation.setOptions({
       headerRight: () => (
         <IconButton onPress={() => setFilterModalVisible(true)}>
@@ -362,7 +353,18 @@ function StatementScreen({navigation}: Props) {
         </IconButton>
       ),
     });
+    setSelectedTab(0);
+    handleChangeTab(selectedTab);
+    dispatch(setLoading(true));
   }, []);
+
+  const Footer = () => {
+    return bottomLoading ? (
+      <ActivityIndicator color={Colors.default} />
+    ) : (
+      <TransferEndText>Chegamos ao final da lista!</TransferEndText>
+    );
+  };
 
   return (
     <>
@@ -384,10 +386,13 @@ function StatementScreen({navigation}: Props) {
                 <Title>Saldo disponível</Title>
                 {showBalance ? (
                   <BalanceText>
-                    RC{' '}
-                    {balance && balance != 0
-                      ? balance?.toString().replace('.', ',')
-                      : '0,00'}
+                    {balance &&
+                      parseFloat(balance as any)
+                        ?.toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })
+                        .replace('R$', 'RC')}
                   </BalanceText>
                 ) : (
                   <BalanceText>____________</BalanceText>
@@ -424,10 +429,14 @@ function StatementScreen({navigation}: Props) {
                 />
               )}
               keyExtractor={item => item.id}
-              onEndReached={onListEnd}
-              ListFooterComponent={
-                <TransferEndText>Chegamos ao final da lista!</TransferEndText>
-              }
+              onEndReached={({distanceFromEnd}) => {
+                if (distanceFromEnd < 0) {
+                  return;
+                }
+                onListEnd();
+              }}
+              onEndReachedThreshold={0.01}
+              ListFooterComponent={Footer}
               ListEmptyComponent={
                 <TransferNull>
                   <TransferNullIcon>

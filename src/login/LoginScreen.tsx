@@ -8,7 +8,6 @@ import TextInputField from '../components/TextInputField/TextInputField';
 import AlertIcon from '../components/icons/AlertIcon';
 import EyeIcon from '../components/icons/EyeIcon';
 import EyeSlashIcon from '../components/icons/EyeSlashIcon';
-import {setAccountId} from '../redux/slices/AccountIdSlice';
 import {setLoading} from '../redux/slices/LoadingSlice';
 import {setToken} from '../redux/slices/TokenSlice';
 import {setUserId} from '../redux/slices/UserIdSlice';
@@ -45,7 +44,7 @@ const cpfMask = [
 
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStack';
-import { setAccounts } from '../redux/slices/AccountsSlice';
+import {setAccounts} from '../redux/slices/AccountsSlice';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Login'>;
@@ -74,6 +73,7 @@ function LoginScreen({navigation}: Props) {
 
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
@@ -88,30 +88,31 @@ function LoginScreen({navigation}: Props) {
     dispatch(setLoading(true));
     const loginResponse = await login(cpf, password);
 
-    if (loginResponse && loginResponse.code === 200) {
-      const token = loginResponse.data.token;
-      dispatch(setToken(token));
+    if (loginResponse) {
+      if (loginResponse.code === 200) {
+        const token = loginResponse.data.token;
+        dispatch(setToken(token));
 
-      const id = getUserId(token);
-      dispatch(setUserId(id));
+        const id = getUserId(token);
+        dispatch(setUserId(id));
 
-      const accountsResponse = await getAccounts(token, id);
-      if (accountsResponse && accountsResponse.code === 200) {
-        const accounts = accountsResponse.data;
-        dispatch(setAccounts(accounts));
+        const accountsResponse = await getAccounts(token, id);
+        if (accountsResponse && accountsResponse.code === 200) {
+          const accounts = accountsResponse.data;
+          dispatch(setAccounts(accounts));
+        }
+
+        navigation.navigate('SelectAccount');
+      } else if (loginResponse.code === 401) {
+        let message = `Sua conta pode ser bloqueada. Você tem ${loginResponse.data.triesLeft} tentativas restantes`;
+        setModalMessage(message);
+        setModalVisible(true);
+      } else {
+        setModalMessage('Usuário e/ou senha inválidos');
+        setModalVisible(true);
       }
-
-      navigation.navigate('SelectAccount');
-      dispatch(setLoading(false));
-    } else if (
-      loginResponse &&
-      (loginResponse.code === 401 || loginResponse.code === 400)
-    ) {
-      setModalVisible(true);
-      dispatch(setLoading(false));
-    } else if (!loginResponse) {
-      dispatch(setLoading(false));
     }
+    dispatch(setLoading(false));
   };
 
   return (
@@ -120,7 +121,7 @@ function LoginScreen({navigation}: Props) {
         visible={modalVisible}
         setVisible={setModalVisible}
         title="Atenção"
-        message="Usuário e/ou senha inválidos"
+        message={modalMessage}
         buttonLabel="TENTAR DE NOVO"
         icon={<AlertIcon fill={Colors.alert} />}
       />

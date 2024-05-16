@@ -31,6 +31,35 @@ export const login = async (
     });
 };
 
+export const logout = async (
+  token: string,
+): Promise<DefaultResponse | undefined | null> => {
+  return await api
+    .put('/login/logout', {
+      headers: {
+        authorization: token,
+      },
+    })
+    .then((response: AxiosResponse) => {
+      const responseObject = {
+        code: response.status,
+        data: response.data as object,
+      };
+      return responseObject;
+    })
+    .catch((error: AxiosError) => {
+      console.log(error);
+      if (error.response) {
+        console.log(error.response.data);
+        const responseObject = {
+          code: error.response.status,
+          data: error.response.data as object,
+        };
+        return responseObject;
+      }
+    });
+};
+
 export const getUserId = (token: string) => {
   const decoded: any = jwtDecode(token);
   return decoded.id as string;
@@ -56,7 +85,7 @@ export const getAccounts = async (
     .catch((error: AxiosError) => {
       console.log(error);
       if (error.response) {
-      console.log(error.response.data);
+        console.log(error.response.data);
         const responseObject = {
           code: error.response.status,
           data: error.response.data as object,

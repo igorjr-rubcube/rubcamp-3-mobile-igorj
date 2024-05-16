@@ -1,20 +1,27 @@
+import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect, useState} from 'react';
+import {RefreshControl, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBalance} from '../api/home';
+import {logout} from '../api/login';
 import {
   Background,
   BottomView,
   TopView,
 } from '../components/DefaultScreen/DefaultScreen';
+import AccountsIcon from '../components/icons/AccountsIcon';
 import EyeIcon from '../components/icons/EyeIcon';
 import EyeSlashIcon from '../components/icons/EyeSlashIcon';
 import HelpIcon from '../components/icons/HelpIcon';
-import MenuIcon from '../components/icons/MenuIcon';
+import LogoutIcon from '../components/icons/LogoutIcon';
 import NotificationIcon from '../components/icons/NotificationIcon';
 import ProfileIcon from '../components/icons/ProfileIcon';
 import ReceiptIcon from '../components/icons/ReceiptIcon';
 import TransferIcon from '../components/icons/TransferIcon';
+import {RootStackParamList} from '../navigation/RootStack';
 import {setBalance} from '../redux/slices/BalanceSlice';
+import {setLoading} from '../redux/slices/LoadingSlice';
+import {removeToken} from '../redux/slices/TokenSlice';
 import {RootState} from '../redux/store';
 import Colors from '../styles/colors';
 import {
@@ -31,12 +38,6 @@ import {
   Title,
   TopBar,
 } from './HomeScreen.styles';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../navigation/RootStack';
-import LogoutIcon from '../components/icons/LogoutIcon';
-import {setLoading} from '../redux/slices/LoadingSlice';
-import {removeToken} from '../redux/slices/TokenSlice';
-import AccountsIcon from '../components/icons/AccountsIcon';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -54,95 +55,113 @@ function HomeScreen({navigation}: Props) {
   const balance = useSelector((state: RootState) => state.balance.balance);
   const dispatch = useDispatch();
 
+  const fetchData = async () => {
+    const balanceGet = await getBalance(token, userId, accountId);
+    if (balanceGet) {
+      dispatch(setBalance(balanceGet.data.balance));
+    }
+  };
+
   useEffect(() => {
     dispatch(setLoading(true));
-    const fetchData = async () => {
-      const balanceGet = await getBalance(token, userId, accountId);
-      if (balanceGet) {
-        dispatch(setBalance(balanceGet.data.balance));
-        dispatch(setLoading(false));
-      }
-    };
-    fetchData();
+    fetchData().then(() => dispatch(setLoading(false)));
     return () => {};
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    dispatch(setLoading(true));
     dispatch(removeToken());
-    navigation.navigate('Welcome');
+    logout(token).then(() => {
+      dispatch(setLoading(false));
+      navigation.navigate('Welcome');
+    });
+  };
+
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = async () => {
+    setRefreshing(true);
+    fetchData().then(() => setRefreshing(false));
   };
 
   return (
-    <Background>
-      <TopView flexSize={1}>
-        <TopBar>
-          <Image source={logo} />
-          <RightWrapper>
-            <IconButtonTopBar>
-              <NotificationIcon fill={Colors.light} />
-            </IconButtonTopBar>
-            <IconButtonTopBar>
-              <HelpIcon fill={Colors.light} />
-            </IconButtonTopBar>
-            <IconButtonTopBar onPress={handleLogout}>
-              <LogoutIcon fill={Colors.light} />
-            </IconButtonTopBar>
-          </RightWrapper>
-        </TopBar>
-        <BalanceWrapper>
-          <Title>Seu saldo</Title>
-          <Balance>
-            {showBalance ? (
-              <BalanceText>
-                RC{' '}
-                {balance && balance != 0
-                  ? balance?.toString().replace('.', ',')
-                  : '0,00'}
-              </BalanceText>
-            ) : (
-              <BalanceText>__________________</BalanceText>
-            )}
-            <IconButton onPress={() => setShowBalance(prev => !prev)}>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
+      <Background>
+        <TopView flexSize={1}>
+          <TopBar>
+            <Image source={logo} />
+            <RightWrapper>
+              <IconButtonTopBar>
+                <NotificationIcon fill={Colors.light} />
+              </IconButtonTopBar>
+              <IconButtonTopBar>
+                <HelpIcon fill={Colors.light} />
+              </IconButtonTopBar>
+              <IconButtonTopBar onPress={handleLogout}>
+                <LogoutIcon fill={Colors.light} />
+              </IconButtonTopBar>
+            </RightWrapper>
+          </TopBar>
+          <BalanceWrapper>
+            <Title>Seu saldo</Title>
+            <Balance>
               {showBalance ? (
-                <EyeIcon fill={Colors.light} />
+                <BalanceText>
+                  {balance &&
+                    parseFloat(balance as any)
+                      ?.toLocaleString('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })
+                      .replace('R$', 'RC')}
+                </BalanceText>
               ) : (
-                <EyeSlashIcon fill={Colors.light} />
+                <BalanceText>__________________</BalanceText>
               )}
-            </IconButton>
-          </Balance>
-        </BalanceWrapper>
-      </TopView>
-      <BottomView flexSize={6}>
-        <TabRow>
-          <TabButton>
-            <IconButton>
-              <TransferIcon fill={Colors.darkblue} />
-            </IconButton>
-            <TabButtonText>Transferir</TabButtonText>
-          </TabButton>
-          <TabButton onPress={() => navigation.navigate('Statement')}>
-            <IconButton>
-              <ReceiptIcon fill={Colors.darkblue} />
-            </IconButton>
-            <TabButtonText>Extrato</TabButtonText>
-          </TabButton>
-        </TabRow>
-        <TabRow>
-          <TabButton onPress={() => navigation.navigate('Profile')}>
-            <IconButton>
-              <ProfileIcon fill={Colors.darkblue} />
-            </IconButton>
-            <TabButtonText>Perfil</TabButtonText>
-          </TabButton>
-          <TabButton onPress={() => navigation.navigate('SelectAccount')}>
-            <IconButton>
-              <AccountsIcon fill={Colors.darkblue} />
-            </IconButton>
-            <TabButtonText>Trocar de conta</TabButtonText>
-          </TabButton>
-        </TabRow>
-      </BottomView>
-    </Background>
+              <IconButton onPress={() => setShowBalance(prev => !prev)}>
+                {showBalance ? (
+                  <EyeIcon fill={Colors.light} />
+                ) : (
+                  <EyeSlashIcon fill={Colors.light} />
+                )}
+              </IconButton>
+            </Balance>
+          </BalanceWrapper>
+        </TopView>
+        <BottomView flexSize={6}>
+          <TabRow>
+            <TabButton>
+              <IconButton>
+                <TransferIcon fill={Colors.darkblue} />
+              </IconButton>
+              <TabButtonText>Transferir</TabButtonText>
+            </TabButton>
+            <TabButton onPress={() => navigation.navigate('Statement')}>
+              <IconButton>
+                <ReceiptIcon fill={Colors.darkblue} />
+              </IconButton>
+              <TabButtonText>Extrato</TabButtonText>
+            </TabButton>
+          </TabRow>
+          <TabRow>
+            <TabButton onPress={() => navigation.navigate('Profile')}>
+              <IconButton>
+                <ProfileIcon fill={Colors.darkblue} />
+              </IconButton>
+              <TabButtonText>Perfil</TabButtonText>
+            </TabButton>
+            <TabButton onPress={() => navigation.navigate('SelectAccount')}>
+              <IconButton>
+                <AccountsIcon fill={Colors.darkblue} />
+              </IconButton>
+              <TabButtonText>Trocar de conta</TabButtonText>
+            </TabButton>
+          </TabRow>
+        </BottomView>
+      </Background>
+    </ScrollView>
   );
 }
 
