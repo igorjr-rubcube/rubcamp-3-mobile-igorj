@@ -10,6 +10,11 @@ export const IconButtonTopBar = styled(IconButton)`
   margin-left: 12px;
 `;
 
+export const IconContainer = styled.View`
+  width: 25px;
+  height: 25px;
+`;
+
 export const TopBar = styled.View`
   flex-direction: row;
   justify-content: space-between;
@@ -27,8 +32,7 @@ export const Title = styled.Text`
   color: ${Colors.white};
 `;
 
-export const BalanceWrapper = styled.View`
-`;
+export const BalanceWrapper = styled.View``;
 
 export const Balance = styled.View`
   width: 100%;

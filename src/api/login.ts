@@ -1,6 +1,6 @@
 import {AxiosError, AxiosResponse} from 'axios';
 import api, {DefaultResponse} from '../axios/api';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 
 export const login = async (
   cpf: string,
@@ -35,7 +35,7 @@ export const logout = async (
   token: string,
 ): Promise<DefaultResponse | undefined | null> => {
   return await api
-    .put('/login/logout', {
+    .put('/login/logout', null, {
       headers: {
         authorization: token,
       },

@@ -1,5 +1,5 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import dayjs from 'dayjs';
+import dayjs, {Dayjs} from 'dayjs';
 import {useEffect, useState} from 'react';
 import {ActivityIndicator, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -50,7 +50,6 @@ import {
   TransfersContainer,
   Wrapper,
 } from './StatementScreen.styles';
-import {Text} from 'react-native-svg';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Statement'>;
@@ -268,25 +267,25 @@ function StatementScreen({navigation}: Props) {
     setRefreshEnd(false);
     setStatement([]);
     setSkip(0);
-    let start = dayjs(initialDate);
-    let end = dayjs(finalDate);
-    let periodIndex = period;
-    if (period == -1) {
-      periodIndex = 0;
-    }
-    if (index === 3) {
-      start = dayjs();
-      end = dayjs().add(periods[periodIndex], 'day');
-    } else {
-      start = dayjs(finalDate).subtract(periods[periodIndex], 'day');
-      end = dayjs(initialDate);
-    }
+    // let start = dayjs(initialDate);
+    // let end = dayjs(finalDate);
+    // let periodIndex = period;
+    // if (period == -1) {
+    //   periodIndex = 0;
+    // }
+    // if (index === 3) {
+    //   start = dayjs();
+    //   end = dayjs().add(periods[periodIndex], 'day');
+    // } else {
+    //   start = dayjs(finalDate).subtract(periods[periodIndex], 'day');
+    //   end = dayjs(initialDate);
+    // }
     const params: GetFilteredStatementParams = {
       order: order as any,
       operation: tabOperation[index as keyof typeof tabOperation] as any,
       status: index === 3 ? 'SCHEDULED' : 'COMPLETED',
-      start: start.format('YYYY-MM-DD'),
-      end: end.format('YYYY-MM-DD'),
+      start: '',
+      end: '',
       skip: 0,
       take: take,
     };
@@ -308,8 +307,8 @@ function StatementScreen({navigation}: Props) {
     setBottomLoading(false);
     setRefreshEnd(false);
     setStatement([]);
-    let start = dayjs(initialDate);
-    let end = dayjs(finalDate);
+    let start: Dayjs | '' = dayjs(initialDate);
+    let end: Dayjs | '' = dayjs(finalDate);
 
     let periodIndex = period;
     if (period == -1) {
@@ -317,8 +316,8 @@ function StatementScreen({navigation}: Props) {
     }
     if (start.isSame(end, 'day')) {
       if (selectedTab === 3) {
-        start = dayjs(initialDate);
-        end = dayjs(finalDate).add(periods[periodIndex], 'day');
+        start = '';
+        end = '';
       } else {
         start = dayjs(finalDate).subtract(periods[periodIndex], 'day');
         end = dayjs(initialDate);
@@ -337,8 +336,8 @@ function StatementScreen({navigation}: Props) {
       order: order as any,
       operation: tabOperation[selectedTab as keyof typeof tabOperation] as any,
       status: selectedTab === 3 ? 'SCHEDULED' : 'COMPLETED',
-      start: start.format('YYYY-MM-DD'),
-      end: end.format('YYYY-MM-DD'),
+      start: start === '' ? '' : start.format('YYYY-MM-DD'),
+      end: end === '' ? '' : end.format('YYYY-MM-DD'),
       skip: 0,
       take: take,
     };
@@ -429,12 +428,7 @@ function StatementScreen({navigation}: Props) {
                 />
               )}
               keyExtractor={item => item.id}
-              onEndReached={({distanceFromEnd}) => {
-                if (distanceFromEnd < 0) {
-                  return;
-                }
-                onListEnd();
-              }}
+              onEndReached={onListEnd}
               onEndReachedThreshold={0.01}
               ListFooterComponent={Footer}
               ListEmptyComponent={

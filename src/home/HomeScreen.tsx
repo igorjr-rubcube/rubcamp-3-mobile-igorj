@@ -30,6 +30,7 @@ import {
   BalanceWrapper,
   IconButton,
   IconButtonTopBar,
+  IconContainer,
   Image,
   RightWrapper,
   TabButton,
@@ -133,29 +134,29 @@ function HomeScreen({navigation}: Props) {
         <BottomView flexSize={6}>
           <TabRow>
             <TabButton>
-              <IconButton>
+              <IconContainer>
                 <TransferIcon fill={Colors.darkblue} />
-              </IconButton>
+              </IconContainer>
               <TabButtonText>Transferir</TabButtonText>
             </TabButton>
             <TabButton onPress={() => navigation.navigate('Statement')}>
-              <IconButton>
+              <IconContainer>
                 <ReceiptIcon fill={Colors.darkblue} />
-              </IconButton>
+              </IconContainer>
               <TabButtonText>Extrato</TabButtonText>
             </TabButton>
           </TabRow>
           <TabRow>
             <TabButton onPress={() => navigation.navigate('Profile')}>
-              <IconButton>
+              <IconContainer>
                 <ProfileIcon fill={Colors.darkblue} />
-              </IconButton>
+              </IconContainer>
               <TabButtonText>Perfil</TabButtonText>
             </TabButton>
             <TabButton onPress={() => navigation.navigate('SelectAccount')}>
-              <IconButton>
+              <IconContainer>
                 <AccountsIcon fill={Colors.darkblue} />
-              </IconButton>
+              </IconContainer>
               <TabButtonText>Trocar de conta</TabButtonText>
             </TabButton>
           </TabRow>

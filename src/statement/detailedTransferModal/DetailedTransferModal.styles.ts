@@ -19,7 +19,7 @@ export const ModalContainer = styled.View`
   background-color: ${Colors.light};
   border-radius: 12px;
   width: 85%;
-  height: 85%;
+  height: 90%;
   align-items: center;
 `;
 
@@ -49,14 +49,42 @@ export const ModalTitle = styled.Text`
   color: ${Colors.darkblue};
 `;
 
+export const ButtonsContainer = styled.View`
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const ConfirmButton = styled.TouchableOpacity`
   background-color: ${Colors.darkblue};
   border-radius: 50px;
-  padding: 16px 48px;
+  padding: 16px 32px;
   margin-top: 16px;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ConfirmButtonText = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  color: ${Colors.white};
+`;
+
+export const CancelButton = styled.TouchableOpacity`
+  background-color: ${Colors.red};
+  border-radius: 50px;
+  margin-top: 16px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px;
+  width: 150px;
+  margin-right: 16px;
+`;
+
+export const CancelButtonText = styled.Text`
+  text-align: center;
   font-size: 16px;
   font-weight: bold;
   color: ${Colors.white};
@@ -110,4 +138,23 @@ export const FromToText = styled.Text`
 export const FromToValue = styled.Text`
   font-size: 16px;
   color: ${Colors.grey};
+`;
+
+export const ShareButton = styled.TouchableOpacity`
+  background-color: ${Colors.darkblue};
+  border-radius: 100px;
+  padding: 8px 8px;
+  margin-top: 14px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+`;
+
+export const IconContainer = styled.View`
+  height: 18px;
+  width: 18px;
+  align-items: center;
+  justify-content: center;
 `;

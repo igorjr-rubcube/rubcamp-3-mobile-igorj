@@ -1,7 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import dayjs from 'dayjs';
+import React, {useEffect, useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {cancelTransfer, getTransferById} from '../../api/transfer';
+import ShareIcon from '../../components/icons/ShareIcon';
+import {setLoading} from '../../redux/slices/LoadingSlice';
+import {RootState} from '../../redux/store';
+import Colors from '../../styles/colors';
 import {
-  CloseButton,
-  CloseButtonText,
+  ButtonsContainer,
+  CancelButton,
+  CancelButtonText,
   ConfirmButton,
   ConfirmButtonText,
   DetailsContainer,
@@ -12,16 +20,13 @@ import {
   FromToText,
   FromToTitle,
   FromToValue,
+  IconContainer,
   ModalBackground,
   ModalContainer,
   ModalTitle,
   ModalView,
+  ShareButton,
 } from './DetailedTransferModal.styles';
-import {getTransferById} from '../../api/transfer';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
-import dayjs from 'dayjs';
-import {setLoading} from '../../redux/slices/LoadingSlice';
 
 type defaultModalProps = {
   visible: boolean;
@@ -93,13 +98,24 @@ function DetailedTransferModal({
         if (response.code === 200) {
           setTransfer(response.data);
         }
-        console.log(response.data);
       }
       dispatch(setLoading(false));
     };
     fetchTransfer();
     return () => {};
   }, [transferId]);
+
+  const handleCancel = async () => {
+    dispatch(setLoading(true));
+    const response = await cancelTransfer(token, userId, accountId, transferId);
+    if (response) {
+      if (response.code === 204) {
+        setVisible(false);
+      }
+    }
+    dispatch(setLoading(false));
+  };
+
 
   return (
     <ModalView
@@ -109,112 +125,128 @@ function DetailedTransferModal({
       onRequestClose={setVisible}>
       <ModalBackground>
         <ModalContainer>
-          <CloseButton onPress={setVisible}>
-            <CloseButtonText>x</CloseButtonText>
-          </CloseButton>
-          {loading || (transferId && transfer.fromAccount && (
-            <>
-              <ModalTitle>Detalhes:</ModalTitle>
-              <DetailsContainer>
-                <DetailsRow>
-                  <DetailsTitle>Data:</DetailsTitle>
-                  <DetailsValue>
-                    {dayjs(transfer.date).toDate().toLocaleDateString('pt-BR', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: 'numeric',
-                    })}
-                  </DetailsValue>
-                </DetailsRow>
-                <DetailsRow>
-                  <DetailsTitle>Valor:</DetailsTitle>
-                  <DetailsValue>
-                    {parseFloat(transfer.amount)
-                      .toLocaleString('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL',
-                      })
-                      .replace('R$', 'RC')}
-                  </DetailsValue>
-                </DetailsRow>
-                <DetailsRow>
-                  <DetailsTitle>Status:</DetailsTitle>
-                  <DetailsValue>
-                    {status[transfer.status as keyof typeof status]}
-                  </DetailsValue>
-                </DetailsRow>
-                <DetailsRow>
-                  <DetailsTitle>Operação:</DetailsTitle>
-                  <DetailsValue>
-                    {transfer.operation === 'IN' ? 'Entrada' : 'Saída'}
-                  </DetailsValue>
-                </DetailsRow>
-                <FromToContainer>
-                  <FromToTitle>De:</FromToTitle>
+          <ShareButton onPress={undefined}>
+            <IconContainer>
+              <ShareIcon fill={Colors.white} />
+            </IconContainer>
+          </ShareButton>
+          {loading ||
+            (transferId && transfer.fromAccount && (
+              <>
+                <ModalTitle>Detalhes:</ModalTitle>
+                <DetailsContainer>
                   <DetailsRow>
-                    <FromToText>Banco:</FromToText>
-                    <FromToValue>{transfer.fromAccount.bankName}</FromToValue>
+                    <DetailsTitle>Data:</DetailsTitle>
+                    <DetailsValue>
+                      {dayjs(transfer.date)
+                        .toDate()
+                        .toLocaleDateString('pt-BR', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                        })}
+                    </DetailsValue>
                   </DetailsRow>
                   <DetailsRow>
-                    <FromToText>Agência:</FromToText>
-                    <FromToValue>{transfer.fromAccount.branch}</FromToValue>
+                    <DetailsTitle>Valor:</DetailsTitle>
+                    <DetailsValue>
+                      {parseFloat(transfer.amount)
+                        .toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })
+                        .replace('R$', 'RC')}
+                    </DetailsValue>
                   </DetailsRow>
                   <DetailsRow>
-                    <FromToText>Conta:</FromToText>
-                    <FromToValue>{transfer.fromAccount.number}</FromToValue>
+                    <DetailsTitle>Status:</DetailsTitle>
+                    <DetailsValue>
+                      {status[transfer.status as keyof typeof status]}
+                    </DetailsValue>
                   </DetailsRow>
                   <DetailsRow>
-                    <FromToText>Nome:</FromToText>
-                    <FromToValue>
-                      {transfer.fromAccount.user.fullName}
-                    </FromToValue>
+                    <DetailsTitle>Operação:</DetailsTitle>
+                    <DetailsValue>
+                      {transfer.operation === 'IN' ? 'Entrada' : 'Saída'}
+                    </DetailsValue>
                   </DetailsRow>
                   <DetailsRow>
-                    <FromToText>CPF:</FromToText>
-                    <FromToValue>
-                      {transfer.fromAccount.user.cpf.replace(
-                        /(\d{3})(\d{3})(\d{3})(\d{2})/,
-                        '$1.$2.$3-$4',
-                      )}
-                    </FromToValue>
+                    <DetailsTitle>Descrição:</DetailsTitle>
+                    <DetailsValue>{transfer.description || ''}</DetailsValue>
                   </DetailsRow>
-                </FromToContainer>
-                <FromToContainer>
-                  <FromToTitle>Para:</FromToTitle>
-                  <DetailsRow>
-                    <FromToText>Banco:</FromToText>
-                    <FromToValue>{transfer.toAccount.bankName}</FromToValue>
-                  </DetailsRow>
-                  <DetailsRow>
-                    <FromToText>Agência:</FromToText>
-                    <FromToValue>{transfer.toAccount.branch}</FromToValue>
-                  </DetailsRow>
-                  <DetailsRow>
-                    <FromToText>Conta:</FromToText>
-                    <FromToValue>{transfer.toAccount.number}</FromToValue>
-                  </DetailsRow>
-                  <DetailsRow>
-                    <FromToText>Nome:</FromToText>
-                    <FromToValue>
-                      {transfer.toAccount.user.fullName}
-                    </FromToValue>
-                  </DetailsRow>
-                  <DetailsRow>
-                    <FromToText>CPF:</FromToText>
-                    <FromToValue>
-                      {transfer.toAccount.user.cpf.replace(
-                        /(\d{3})(\d{3})(\d{3})(\d{2})/,
-                        '$1.$2.$3-$4',
-                      )}
-                    </FromToValue>
-                  </DetailsRow>
-                </FromToContainer>
-              </DetailsContainer>
-              <ConfirmButton onPress={setVisible}>
-                <ConfirmButtonText>FECHAR</ConfirmButtonText>
-              </ConfirmButton>
-            </>
-          ))}
+                  <FromToContainer>
+                    <FromToTitle>De:</FromToTitle>
+                    <DetailsRow>
+                      <FromToText>Banco:</FromToText>
+                      <FromToValue>{transfer.fromAccount.bankName}</FromToValue>
+                    </DetailsRow>
+                    <DetailsRow>
+                      <FromToText>Agência:</FromToText>
+                      <FromToValue>{transfer.fromAccount.branch}</FromToValue>
+                    </DetailsRow>
+                    <DetailsRow>
+                      <FromToText>Conta:</FromToText>
+                      <FromToValue>{transfer.fromAccount.number}</FromToValue>
+                    </DetailsRow>
+                    <DetailsRow>
+                      <FromToText>Nome:</FromToText>
+                      <FromToValue>
+                        {transfer.fromAccount.user.fullName}
+                      </FromToValue>
+                    </DetailsRow>
+                    <DetailsRow>
+                      <FromToText>CPF:</FromToText>
+                      <FromToValue>
+                        {transfer.fromAccount.user.cpf.replace(
+                          /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                          '$1.$2.$3-$4',
+                        )}
+                      </FromToValue>
+                    </DetailsRow>
+                  </FromToContainer>
+                  <FromToContainer>
+                    <FromToTitle>Para:</FromToTitle>
+                    <DetailsRow>
+                      <FromToText>Banco:</FromToText>
+                      <FromToValue>{transfer.toAccount.bankName}</FromToValue>
+                    </DetailsRow>
+                    <DetailsRow>
+                      <FromToText>Agência:</FromToText>
+                      <FromToValue>{transfer.toAccount.branch}</FromToValue>
+                    </DetailsRow>
+                    <DetailsRow>
+                      <FromToText>Conta:</FromToText>
+                      <FromToValue>{transfer.toAccount.number}</FromToValue>
+                    </DetailsRow>
+                    <DetailsRow>
+                      <FromToText>Nome:</FromToText>
+                      <FromToValue>
+                        {transfer.toAccount.user.fullName}
+                      </FromToValue>
+                    </DetailsRow>
+                    <DetailsRow>
+                      <FromToText>CPF:</FromToText>
+                      <FromToValue>
+                        {transfer.toAccount.user.cpf.replace(
+                          /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                          '$1.$2.$3-$4',
+                        )}
+                      </FromToValue>
+                    </DetailsRow>
+                  </FromToContainer>
+                </DetailsContainer>
+                <ButtonsContainer>
+                  {transfer.status === 'SCHEDULED' && (
+                    <CancelButton onPress={handleCancel}>
+                      <CancelButtonText>CANCELAR</CancelButtonText>
+                    </CancelButton>
+                  )}
+                  <ConfirmButton onPress={setVisible}>
+                    <ConfirmButtonText>FECHAR</ConfirmButtonText>
+                  </ConfirmButton>
+                </ButtonsContainer>
+              </>
+            ))}
         </ModalContainer>
       </ModalBackground>
     </ModalView>

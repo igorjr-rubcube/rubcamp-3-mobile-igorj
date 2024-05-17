@@ -19,6 +19,7 @@ import Colors from '../styles/colors';
 import SuccessScreen from '../success/SuccessScreen';
 import WelcomeScreen from '../welcome/WelcomeScreen';
 import CreateNewAccountScreen from '../selectAccount/createNewAccount/CreateNewAccountScreen';
+import TransferPdf from '../statement/transferPdf/TransferPdf';
 
 export type RootStackParamList = {
   Welcome: undefined;
