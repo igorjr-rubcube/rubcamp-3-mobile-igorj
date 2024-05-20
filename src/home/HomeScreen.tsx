@@ -133,7 +133,7 @@ function HomeScreen({navigation}: Props) {
         </TopView>
         <BottomView flexSize={6}>
           <TabRow>
-            <TabButton>
+            <TabButton onPress={() => navigation.navigate('CreateTransfer')}>
               <IconContainer>
                 <TransferIcon fill={Colors.darkblue} />
               </IconContainer>

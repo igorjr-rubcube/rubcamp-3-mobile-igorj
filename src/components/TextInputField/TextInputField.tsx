@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {Mask} from 'react-native-mask-input';
 import Colors from '../../styles/colors';
 import {Field, IconContainer, Input, Label} from './TextInputField.styles';
@@ -20,9 +20,12 @@ type TextInputFieldProps = {
   editable?: boolean;
   onFocus?: any;
   onBlur?: any;
+  fontSize?: number;
   textAlign?: any;
   showInput?: boolean;
   error?: boolean;
+  fixedPlaceholder?: string;
+  type?: string;
 };
 
 function TextInputField({
@@ -41,14 +44,22 @@ function TextInputField({
   editable = true,
   onFocus,
   onBlur,
+  fontSize,
   textAlign,
   showInput = true,
   error = false,
+  fixedPlaceholder,
 }: TextInputFieldProps) {
   return (
     <>
       <Label error={error}>{label}</Label>
-      <Field>
+      <Field
+        style={
+          fontSize && fontSize > 16
+            ? {height: 'auto', alignItems: 'center'}
+            : undefined
+        }>
+        {fixedPlaceholder && <Label error={error} style={{paddingTop: 10, paddingRight: 10}}>{fixedPlaceholder}</Label>}
         <Input
           value={value}
           onChangeText={onChangeFunction}
@@ -66,6 +77,7 @@ function TextInputField({
           onPress={onFocus}
           showSoftInputOnFocus={showInput}
           error={error}
+          style={{fontSize: fontSize || 18}}
         />
         {icon && iconFunction && (
           <IconContainer onPressIn={() => iconFunction(secureTextFunction)}>

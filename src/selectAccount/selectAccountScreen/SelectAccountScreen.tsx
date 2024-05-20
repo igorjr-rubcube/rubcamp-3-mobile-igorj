@@ -53,7 +53,7 @@ function SelectAccountScreen({navigation}: Props) {
               </AccountField>
               <AccountField>
                 <AccountLabel>Nº DA CONTA: </AccountLabel>
-                <AccountInfo>{account.number}</AccountInfo>
+                <AccountInfo>{account.number.replace(/(\d{5})(\d{3})/, '$1-$2')}</AccountInfo>
               </AccountField>
               <AccountField>
                 <AccountLabel>BANCO: </AccountLabel>

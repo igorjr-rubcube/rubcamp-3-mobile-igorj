@@ -8,6 +8,7 @@ import userDataReducer from './slices/UserInfoSlice';
 import addressReducer from './slices/AddressSlice';
 import accountsReducer from './slices/AccountsSlice';
 import onboardingReducer from './slices/OnboardingSlice';
+import transferReducer from './slices/TransferSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     address: addressReducer,
     accounts: accountsReducer,
     onboarding: onboardingReducer,
+    transfer: transferReducer,
   },
 });
 

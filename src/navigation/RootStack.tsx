@@ -19,7 +19,10 @@ import Colors from '../styles/colors';
 import SuccessScreen from '../success/SuccessScreen';
 import WelcomeScreen from '../welcome/WelcomeScreen';
 import CreateNewAccountScreen from '../selectAccount/createNewAccount/CreateNewAccountScreen';
-import TransferPdf from '../statement/transferPdf/TransferPdf';
+import CreateTransferScreen from '../createTransfer/createTransferHome/CreateTransferScreen';
+import SelectAccountToTransferScreen from '../createTransfer/selectAccount/SelectAccountToTransferScreen';
+import InsertAmountScreen from '../createTransfer/insertAmount/InsertAmountScreen';
+import { Text } from 'react-native';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -28,6 +31,20 @@ export type RootStackParamList = {
   CreateNewAccount: undefined;
   Home: undefined;
   Statement: undefined;
+  CreateTransfer: undefined;
+  SelectAccountToTransfer: {
+    cpf: string;
+    accounts: Array<{
+      number: string;
+      branch: number;
+      bankName: string;
+      user: {
+        fullName: string;
+        cpf: string;
+      };
+    }>;
+  };
+  InsertAmount: undefined;
   Profile: undefined;
   AccountInfo: undefined;
   ChangeAppPassword: undefined;
@@ -76,7 +93,6 @@ function RootStack() {
           name="Login"
           component={LoginScreen}
         />
-
         <Stack.Group>
           <Stack.Screen
             options={{headerShown: false}}
@@ -84,7 +100,10 @@ function RootStack() {
             component={SelectAccountScreen}
           />
           <Stack.Screen
-            options={{headerTitle: 'Criar nova conta', headerTintColor: Colors.darkblue}}
+            options={{
+              headerTitle: 'Criar nova conta',
+              headerTintColor: Colors.darkblue,
+            }}
             name="CreateNewAccount"
             component={CreateNewAccountScreen}
           />
@@ -102,6 +121,22 @@ function RootStack() {
           component={StatementScreen}
         />
         <Stack.Group>
+          <Stack.Group screenOptions={{headerTitle: 'Transferência'}}>
+            <Stack.Screen
+              name="CreateTransfer"
+              component={CreateTransferScreen}
+            />
+            <Stack.Screen
+              options={{
+                headerTitle: 'Selecione a conta destino',
+                headerTintColor: Colors.darkblue,
+              }}
+              name="SelectAccountToTransfer"
+              component={SelectAccountToTransferScreen}
+              initialParams={{cpf: '', accounts: []}}
+            />
+            <Stack.Screen name="InsertAmount" component={InsertAmountScreen} />
+          </Stack.Group>
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen
             name="AccountInfo"

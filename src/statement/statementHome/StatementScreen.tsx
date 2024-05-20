@@ -267,19 +267,6 @@ function StatementScreen({navigation}: Props) {
     setRefreshEnd(false);
     setStatement([]);
     setSkip(0);
-    // let start = dayjs(initialDate);
-    // let end = dayjs(finalDate);
-    // let periodIndex = period;
-    // if (period == -1) {
-    //   periodIndex = 0;
-    // }
-    // if (index === 3) {
-    //   start = dayjs();
-    //   end = dayjs().add(periods[periodIndex], 'day');
-    // } else {
-    //   start = dayjs(finalDate).subtract(periods[periodIndex], 'day');
-    //   end = dayjs(initialDate);
-    // }
     const params: GetFilteredStatementParams = {
       order: order as any,
       operation: tabOperation[index as keyof typeof tabOperation] as any,
