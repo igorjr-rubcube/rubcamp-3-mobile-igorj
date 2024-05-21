@@ -22,7 +22,8 @@ import CreateNewAccountScreen from '../selectAccount/createNewAccount/CreateNewA
 import CreateTransferScreen from '../createTransfer/createTransferHome/CreateTransferScreen';
 import SelectAccountToTransferScreen from '../createTransfer/selectAccount/SelectAccountToTransferScreen';
 import InsertAmountScreen from '../createTransfer/insertAmount/InsertAmountScreen';
-import { Text } from 'react-native';
+import {Text} from 'react-native';
+import InsertPasswordScreen from '../createTransfer/insertPassword/InsertPasswordScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -45,6 +46,7 @@ export type RootStackParamList = {
     }>;
   };
   InsertAmount: undefined;
+  InsertPassword: undefined;
   Profile: undefined;
   AccountInfo: undefined;
   ChangeAppPassword: undefined;
@@ -136,6 +138,10 @@ function RootStack() {
               initialParams={{cpf: '', accounts: []}}
             />
             <Stack.Screen name="InsertAmount" component={InsertAmountScreen} />
+            <Stack.Screen
+              name="InsertPassword"
+              component={InsertPasswordScreen}
+            />
           </Stack.Group>
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen

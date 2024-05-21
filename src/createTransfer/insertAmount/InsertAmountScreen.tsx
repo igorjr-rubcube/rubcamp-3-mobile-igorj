@@ -6,10 +6,17 @@ import {
   TopView,
 } from '../../components/DefaultScreen/DefaultScreen';
 
+import {ScrollView} from 'react-native';
+import {createNumberMask} from 'react-native-mask-input';
+import {getUserInfo} from '../../api/profile';
 import Button from '../../components/Button/Button';
+import TextInputField from '../../components/TextInputField/TextInputField';
 import EyeIcon from '../../components/icons/EyeIcon';
 import EyeSlashIcon from '../../components/icons/EyeSlashIcon';
 import {RootStackParamList} from '../../navigation/RootStack';
+import {setLoading} from '../../redux/slices/LoadingSlice';
+import {UserInfoState, setUserInfo} from '../../redux/slices/UserInfoSlice';
+import {setTransferAmount, setTransferDescription} from '../../redux/slices/TransferSlice';
 import {RootState} from '../../redux/store';
 import Colors from '../../styles/colors';
 import {
@@ -17,7 +24,6 @@ import {
   BalanceText,
   BalanceWrapper,
   Bottom,
-  BottomWrapper,
   Content,
   Field,
   Form,
@@ -29,12 +35,6 @@ import {
   Title,
   Wrapper,
 } from './InsertAmountScreen.styles';
-import TextInputField from '../../components/TextInputField/TextInputField';
-import {ScrollView} from 'react-native';
-import {createNumberMask} from 'react-native-mask-input';
-import {getUserInfo} from '../../api/profile';
-import {UserInfoState, setUserInfo} from '../../redux/slices/UserInfoSlice';
-import {setLoading} from '../../redux/slices/LoadingSlice';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'CreateTransfer'>;
@@ -75,15 +75,18 @@ function InsertAmountScreen({navigation}: Props) {
     (state: RootState) => state.userInfo.fullName,
   );
 
-
   const selectedAccount = useSelector(
     (state: RootState) => state.transfer.selectedAccount,
   );
 
   const [description, setDescription] = useState('');
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState(0);
 
-  const handleContinue = async () => {};
+  const handleContinue = async () => {
+    dispatch(setTransferAmount(amount));
+    dispatch(setTransferDescription(description));
+    navigation.navigate('InsertPassword');
+  };
 
   const dispatch = useDispatch();
 
@@ -94,11 +97,13 @@ function InsertAmountScreen({navigation}: Props) {
       if (userResponse && userResponse.code === 200) {
         const userInfo = userResponse.data as UserInfoState;
         dispatch(setUserInfo(userInfo));
-        dispatch(setLoading(false));
+      } else {
       }
+      dispatch(setLoading(false));
     };
     fetchData();
   }, []);
+
   return (
     <Background>
       <TopView flexSize={1}>
@@ -183,12 +188,16 @@ function InsertAmountScreen({navigation}: Props) {
                   placeholder={''}
                   fontSize={42}
                   fixedPlaceholder="RC"
-                  mask={amountMask}
+                  currency={true}
                   maxLength={14}
                 />
               </Field>
             </Form>
-            <Button onPress={handleContinue} text={'CONTINUAR'} />
+            <Button
+              onPress={handleContinue}
+              text={'CONTINUAR'}
+              disabled={!amount}
+            />
           </ScrollView>
         </Content>
       </Bottom>

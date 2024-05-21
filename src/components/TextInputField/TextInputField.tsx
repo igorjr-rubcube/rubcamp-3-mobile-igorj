@@ -1,7 +1,13 @@
 import React, {useEffect} from 'react';
 import {Mask} from 'react-native-mask-input';
 import Colors from '../../styles/colors';
-import {Field, IconContainer, Input, Label} from './TextInputField.styles';
+import {
+  Currency,
+  Field,
+  IconContainer,
+  Input,
+  Label,
+} from './TextInputField.styles';
 import {Keyboard} from 'react-native';
 
 type TextInputFieldProps = {
@@ -26,6 +32,7 @@ type TextInputFieldProps = {
   error?: boolean;
   fixedPlaceholder?: string;
   type?: string;
+  currency?: boolean;
 };
 
 function TextInputField({
@@ -49,6 +56,7 @@ function TextInputField({
   showInput = true,
   error = false,
   fixedPlaceholder,
+  currency = false,
 }: TextInputFieldProps) {
   return (
     <>
@@ -59,26 +67,51 @@ function TextInputField({
             ? {height: 'auto', alignItems: 'center'}
             : undefined
         }>
-        {fixedPlaceholder && <Label error={error} style={{paddingTop: 10, paddingRight: 10}}>{fixedPlaceholder}</Label>}
-        <Input
-          value={value}
-          onChangeText={onChangeFunction}
-          placeholder={placeholder}
-          secureTextEntry={secureText}
-          mask={mask}
-          inputMode={inputMode}
-          placeholderTextColor={error ? Colors.red : Colors.grey}
-          maxLength={maxLength}
-          editable={disabled ? false : editable}
-          disabled={disabled}
-          onBlur={onBlur}
-          textAlign={textAlign || 'left'}
-          onFocus={onFocus}
-          onPress={onFocus}
-          showSoftInputOnFocus={showInput}
-          error={error}
-          style={{fontSize: fontSize || 18}}
-        />
+        {fixedPlaceholder && (
+          <Label error={error} style={{paddingTop: 10, paddingRight: 10}}>
+            {fixedPlaceholder}
+          </Label>
+        )}
+        {!currency ? (
+          <Input
+            value={value}
+            onChangeText={onChangeFunction}
+            placeholder={placeholder}
+            secureTextEntry={secureText}
+            mask={mask}
+            inputMode={inputMode}
+            placeholderTextColor={error ? Colors.red : Colors.grey}
+            maxLength={maxLength}
+            editable={disabled ? false : editable}
+            disabled={disabled}
+            onBlur={onBlur}
+            textAlign={textAlign || 'left'}
+            onFocus={onFocus}
+            onPress={onFocus}
+            showSoftInputOnFocus={showInput}
+            error={error}
+            style={{fontSize: fontSize || 18}}
+          />
+        ) : (
+          <Currency
+            value={value}
+            onChangeValue={onChangeFunction}
+            placeholder={placeholder}
+            maxLength={maxLength}
+            editable={disabled ? false : editable}
+            disabled={disabled}
+            textAlign={textAlign || 'left'}
+            error={error}
+            style={{fontSize: fontSize || 18}}
+            prefix=''
+            delimiter='.'
+            separator=','
+            precision={2}
+            minValue={0}
+            keyboardType="numeric"
+            maxValue={999999999.99}
+          />
+        )}
         {icon && iconFunction && (
           <IconContainer onPressIn={() => iconFunction(secureTextFunction)}>
             {icon}

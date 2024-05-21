@@ -28,10 +28,11 @@ import EyeSlashIcon from '../../components/icons/EyeSlashIcon';
 import EyeIcon from '../../components/icons/EyeIcon';
 import TextInputField from '../../components/TextInputField/TextInputField';
 import Button from '../../components/Button/Button';
-import {searchAccountsByCpf} from '../../api/account';
+import {getByBranchAndNumber, searchAccountsByCpf} from '../../api/account';
 import DefaultModal from '../../components/DefaultModal/DefaultModal';
 import AlertIcon from '../../components/icons/AlertIcon';
-import { setLoading } from '../../redux/slices/LoadingSlice';
+import {setLoading} from '../../redux/slices/LoadingSlice';
+import {setSelectedAccount} from '../../redux/slices/TransferSlice';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'CreateTransfer'>;
@@ -67,7 +68,7 @@ function CreateTransfer({navigation}: Props) {
     (state: RootState) => state.accounts.accounts,
   );
   const accountFrom = accountsFrom.find(account => account.id === accountId);
-  
+
   const tabs = ['CPF', 'Número da Conta'];
   const [selectedTab, setSelectedTab] = useState(0);
   const [showBalance, setShowBalance] = useState(true);
@@ -76,7 +77,7 @@ function CreateTransfer({navigation}: Props) {
   const [branch, setBranch] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  
+
   const dispatch = useDispatch();
 
   const handleChangeTab = (index: number) => {
@@ -97,7 +98,9 @@ function CreateTransfer({navigation}: Props) {
             (account: any) => account.number !== accountFrom?.number,
           );
           if (filteredAccounts.length === 0) {
-            setModalMessage('Usuário não possui contas disponíveis para transferir.');
+            setModalMessage(
+              'Usuário não possui contas disponíveis para transferir.',
+            );
             setModalVisible(true);
             dispatch(setLoading(false));
             return;
@@ -112,19 +115,50 @@ function CreateTransfer({navigation}: Props) {
           setModalMessage('CPF não encontrado');
           setModalVisible(true);
         }
-        
       }
-    } catch (error) {
-      
+    } catch (error) {}
+  };
+
+  const getAccount = async () => {
+    const response = await getByBranchAndNumber(
+      token,
+      userId,
+      accountId,
+      branch,
+      accountNumber.replace(/\D/g, ''),
+    );
+    if (response) {
+      if (response.code === 200) {
+        const accountTo = response.data;
+        dispatch(setSelectedAccount(accountTo));
+        navigation.navigate('InsertAmount');
+      } else if (response.code === 404) {
+        setModalMessage('Conta não encontrada');
+        setModalVisible(true);
+      }
+    } else {
+      setModalMessage('Erro ao buscar conta');
+      setModalVisible(true);
     }
+    dispatch(setLoading(false));
   };
 
   const handleContinue = () => {
     dispatch(setLoading(true));
     if (selectedTab === 0) {
       searchAccounts();
+    } else {
+      getAccount();
     }
   };
+
+  const buttonDisabled = () => {
+    if (selectedTab === 0) {
+      return cpf.length < 14;
+    } else {
+      return branch.length < 3 || accountNumber.length < 9;
+    }
+  }
 
   return (
     <>
@@ -195,7 +229,7 @@ function CreateTransfer({navigation}: Props) {
                     onChangeFunction={setBranch}
                     label={'Agência'}
                     placeholder={''}
-                    maxLength={4}
+                    maxLength={3}
                   />
                   <TextInputField
                     value={accountNumber}
@@ -208,7 +242,7 @@ function CreateTransfer({navigation}: Props) {
                 </>
               )}
               <BottomWrapper>
-                <Button onPress={handleContinue} text={'CONTINUAR'} />
+                <Button onPress={handleContinue} text={'CONTINUAR'} disabled={buttonDisabled()}/>
               </BottomWrapper>
             </Form>
           </Content>
