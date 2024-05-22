@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/background.png",
+      "sha1": "badae00fb48f154e3f2e2488734e840f60f52c9b"
+    },
+    {
+      "path": "src/assets/rubbankLogoWhite.png",
+      "sha1": "99d13db3a8945ff59d198a6f8862234fb8070999"
+    },
+    {
+      "path": "src/assets/rubbankLogo.png",
+      "sha1": "e2df5627bb8f2c8af39116b82b28b63f04065d4f"
+    }
+  ]
+}

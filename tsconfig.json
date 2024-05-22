@@ -6,5 +6,4 @@
       "@env": ["./types/env.d.ts"]
     }
   }
-
 }

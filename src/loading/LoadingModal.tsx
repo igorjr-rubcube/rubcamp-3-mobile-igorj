@@ -5,7 +5,7 @@ import {RootState} from '../redux/store';
 import Colors from '../styles/colors';
 import {Container, Modal, Screen, Spinner} from './LoadingScreen.styles';
 
-const logo = require('../assets/rubbank-logo.png');
+const logo = require('../assets/rubbankLogo.png');
 
 function LoadingModal() {
   const loading = useSelector((state: RootState) => state.loading.isLoading);

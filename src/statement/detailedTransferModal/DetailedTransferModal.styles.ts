@@ -1,6 +1,13 @@
 import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
 
+export const ShareView = styled.View`
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ModalView = styled.Modal`
   width: 100%;
   height: 100%;

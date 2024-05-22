@@ -4,32 +4,28 @@ import {
   TopView,
 } from '../../components/DefaultScreen/DefaultScreen';
 
+import {RouteProp} from '@react-navigation/native';
+import {useState} from 'react';
 import {createNumberMask} from 'react-native-mask-input';
+import {recoverPassword} from '../../api/password';
 import Button from '../../components/Button/Button';
+import DefaultModal from '../../components/DefaultModal/DefaultModal';
+import TextInputField from '../../components/TextInputField/TextInputField';
+import AlertIcon from '../../components/icons/AlertIcon';
+import InfoIcon from '../../components/icons/InfoIcon';
+import SafePasswordModal from '../../components/safePasswordModal/SafePasswordModal';
 import {RootStackParamList} from '../../navigation/RootStack';
+import Colors from '../../styles/colors';
 import {
-  BalanceWrapper,
   Bottom,
   BottomWrapper,
   Content,
   Form,
-  IconButton,
   Subtitle,
   SubtitleIcon,
   SubtitleWrapper,
   Title,
-  Wrapper,
 } from './RecoverPasswordScreen.styles';
-import {RouteProp} from '@react-navigation/native';
-import {Text} from 'react-native';
-import TextInputField from '../../components/TextInputField/TextInputField';
-import {useState} from 'react';
-import SafePasswordModal from '../../components/safePasswordModal/SafePasswordModal';
-import DefaultModal from '../../components/DefaultModal/DefaultModal';
-import AlertIcon from '../../components/icons/AlertIcon';
-import InfoIcon from '../../components/icons/InfoIcon';
-import {recoverPassword} from '../../api/password';
-import Colors from '../../styles/colors';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'RecoverPassword'>;
@@ -118,7 +114,7 @@ function RecoverPasswordScreen({navigation, route}: Props) {
         title={modalErrorTitle}
         message={modalErrorMessage}
         hasButton={true}
-        buttonLabel={"TENTAR DE NOVO"}
+        buttonLabel={'TENTAR DE NOVO'}
       />
       <Background>
         <TopView flexSize={0.3}>

@@ -24,7 +24,7 @@ import {
   Title,
 } from './LoginScreen.styles';
 
-const logo = require('../assets/rubbank-logo.png');
+const logo = require('../assets/rubbankLogo.png');
 const cpfMask = [
   /\d/,
   /\d/,

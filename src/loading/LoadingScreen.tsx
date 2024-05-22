@@ -6,7 +6,7 @@ import Colors from '../styles/colors';
 import {Container, Logo, Screen} from './LoadingScreen.styles';
 import {Modal} from '../components/DatePicker/DatePickerModal.styles';
 
-const logo = require('../assets/rubbank-logo.png');
+const logo = require('../assets/rubbankLogo.png');
 
 function LoadingScreen() {
   const loading = useSelector((state: RootState) => state.loading.isLoading);

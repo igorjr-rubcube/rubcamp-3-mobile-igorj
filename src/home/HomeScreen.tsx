@@ -44,7 +44,7 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
 
-const logo = require('../assets/rubbank-logo-white.png');
+const logo = require('../assets/rubbankLogoWhite.png');
 
 function HomeScreen({navigation}: Props) {
   const [showBalance, setShowBalance] = useState(true);

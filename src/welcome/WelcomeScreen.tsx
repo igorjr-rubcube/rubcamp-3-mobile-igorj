@@ -15,7 +15,7 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Welcome'>;
 };
 
-const logo = require('../assets/rubbank-logo.png');
+const logo = require('../assets/rubbankLogo.png');
 
 function WelcomeScreen({navigation}: Props) {
   return (
