@@ -1,7 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {createUser} from '../../api/onboarding';
+import {createUser} from '../../axios/api/onboarding';
 import Button from '../../components/Button/Button';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import InfoIcon from '../../components/icons/InfoIcon';

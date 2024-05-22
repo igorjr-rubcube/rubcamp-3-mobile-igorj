@@ -8,7 +8,7 @@ import {
   Subtitle,
   Title,
 } from './RequestEmailRecoverPasswordScreen.styles';
-import {requestEmailRecoverPassword} from '../../api/password';
+import {requestEmailRecoverPassword} from '../../axios/api/password';
 import {setLoading} from '../../redux/slices/LoadingSlice';
 import {useDispatch} from 'react-redux';
 import DefaultModal from '../../components/DefaultModal/DefaultModal';

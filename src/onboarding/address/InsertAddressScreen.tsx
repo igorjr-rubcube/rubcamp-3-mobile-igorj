@@ -1,7 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {validateAddress} from '../../api/onboarding';
+import {validateAddress} from '../../axios/api/onboarding';
 import DefaultModal from '../../components/DefaultModal/DefaultModal';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import TextInputField from '../../components/TextInputField/TextInputField';

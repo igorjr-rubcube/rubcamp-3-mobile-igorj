@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getUserInfo} from '../../api/profile';
+import {getUserInfo} from '../../axios/api/profile';
 import Button from '../../components/Button/Button';
 import {
   Background,

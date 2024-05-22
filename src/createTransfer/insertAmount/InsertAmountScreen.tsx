@@ -8,7 +8,7 @@ import {
 
 import {ScrollView} from 'react-native';
 import {createNumberMask} from 'react-native-mask-input';
-import {getUserInfo} from '../../api/profile';
+import {getUserInfo} from '../../axios/api/profile';
 import Button from '../../components/Button/Button';
 import TextInputField from '../../components/TextInputField/TextInputField';
 import EyeIcon from '../../components/icons/EyeIcon';

@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {changeAppPassword} from '../../api/password';
+import {changeAppPassword} from '../../axios/api/password';
 import Button from '../../components/Button/Button';
 import DefaultModal from '../../components/DefaultModal/DefaultModal';
 import {

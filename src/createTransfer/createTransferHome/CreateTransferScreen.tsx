@@ -28,7 +28,7 @@ import EyeSlashIcon from '../../components/icons/EyeSlashIcon';
 import EyeIcon from '../../components/icons/EyeIcon';
 import TextInputField from '../../components/TextInputField/TextInputField';
 import Button from '../../components/Button/Button';
-import {getByBranchAndNumber, searchAccountsByCpf} from '../../api/account';
+import {getByBranchAndNumber, searchAccountsByCpf} from '../../axios/api/account';
 import DefaultModal from '../../components/DefaultModal/DefaultModal';
 import AlertIcon from '../../components/icons/AlertIcon';
 import {setLoading} from '../../redux/slices/LoadingSlice';

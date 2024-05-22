@@ -1,7 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { validateTransactionalPassword } from '../../api/onboarding';
+import { validateTransactionalPassword } from '../../axios/api/onboarding';
 import Button from '../../components/Button/Button';
 import DefaultModal from '../../components/DefaultModal/DefaultModal';
 import NumericInputField from '../../components/NumericInputField/NumericInputField';

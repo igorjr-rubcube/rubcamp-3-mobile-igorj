@@ -1,5 +1,5 @@
 import {AxiosError, AxiosResponse} from 'axios';
-import api, {DefaultResponse} from '../axios/api';
+import api, {DefaultResponse} from '../api';
 
 interface UserData {
   cpf: string;

@@ -54,6 +54,7 @@ export const ModalTitle = styled.Text`
   font-size: 24px;
   font-weight: bold;
   color: ${Colors.darkblue};
+  margin-top: 24px;
 `;
 
 export const ButtonsContainer = styled.View`
@@ -151,12 +152,12 @@ export const ShareButton = styled.TouchableOpacity`
   background-color: ${Colors.darkblue};
   border-radius: 100px;
   padding: 8px 8px;
-  margin-top: 14px;
+  margin-top: 36px;
   align-items: center;
   justify-content: center;
   position: absolute;
   top: 0px;
-  right: 10px;
+  right: 24px;
 `;
 
 export const IconContainer = styled.View`

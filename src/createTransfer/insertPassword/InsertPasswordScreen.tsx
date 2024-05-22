@@ -8,7 +8,7 @@ import {
 
 import {ScrollView} from 'react-native';
 import {createNumberMask} from 'react-native-mask-input';
-import {getUserInfo} from '../../api/profile';
+import {getUserInfo} from '../../axios/api/profile';
 import Button from '../../components/Button/Button';
 import TextInputField from '../../components/TextInputField/TextInputField';
 import EyeIcon from '../../components/icons/EyeIcon';
@@ -42,7 +42,7 @@ import {
 import NumericInputField from '../../components/NumericInputField/NumericInputField';
 import DefaultModal from '../../components/DefaultModal/DefaultModal';
 import AlertIcon from '../../components/icons/AlertIcon';
-import { createTransfer } from '../../api/transfer';
+import { createTransfer } from '../../axios/api/transfer';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'CreateTransfer'>;

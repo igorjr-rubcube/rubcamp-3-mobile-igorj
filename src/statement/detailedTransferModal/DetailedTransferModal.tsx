@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import Share from 'react-native-share';
 import ViewShot, {captureRef} from 'react-native-view-shot';
 import {useDispatch, useSelector} from 'react-redux';
-import {cancelTransfer, getTransferById} from '../../api/transfer';
+import {cancelTransfer, getTransferById} from '../../axios/api/transfer';
 import ShareIcon from '../../components/icons/ShareIcon';
 import {setLoading} from '../../redux/slices/LoadingSlice';
 import {RootState} from '../../redux/store';

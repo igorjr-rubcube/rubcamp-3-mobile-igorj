@@ -1,5 +1,5 @@
 import {AxiosError, AxiosResponse} from 'axios';
-import api, {DefaultResponse} from '../axios/api';
+import api, {DefaultResponse} from '../api';
 import { AddressState } from '../redux/slices/AddressSlice';
 
 export const getAddress = async (

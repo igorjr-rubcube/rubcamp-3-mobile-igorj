@@ -2,8 +2,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect, useState} from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {getBalance} from '../api/home';
-import {logout} from '../api/login';
+import {getBalance} from '../axios/api/home';
+import {logout} from '../axios/api/login';
 import {
   Background,
   BottomView,

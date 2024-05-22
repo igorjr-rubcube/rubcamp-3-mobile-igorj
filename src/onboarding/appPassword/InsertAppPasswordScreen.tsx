@@ -22,7 +22,7 @@ import {
 import TextInputField from '../../components/TextInputField/TextInputField';
 import {useDispatch} from 'react-redux';
 import {setLoading} from '../../redux/slices/LoadingSlice';
-import {validateAppPassword} from '../../api/onboarding';
+import {validateAppPassword} from '../../axios/api/onboarding';
 import {setPassword} from '../../redux/slices/OnboardingSlice';
 
 type Props = {

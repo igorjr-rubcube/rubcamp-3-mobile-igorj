@@ -2,7 +2,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {Dayjs} from 'dayjs';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {validateUserData} from '../../api/onboarding';
+import {validateUserData} from '../../axios/api/onboarding';
 import Button from '../../components/Button/Button';
 import DatePickerModal from '../../components/DatePicker/DatePickerModal';
 import DefaultModal from '../../components/DefaultModal/DefaultModal';

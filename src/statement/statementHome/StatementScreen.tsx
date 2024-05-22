@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   GetFilteredStatementParams,
   getFilteredStatement,
-} from '../../api/statement';
+} from '../../axios/api/statement';
 import {
   Background,
   TopView,

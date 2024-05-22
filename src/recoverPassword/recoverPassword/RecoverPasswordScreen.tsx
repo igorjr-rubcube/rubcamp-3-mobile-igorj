@@ -7,7 +7,7 @@ import {
 import {RouteProp} from '@react-navigation/native';
 import {useState} from 'react';
 import {createNumberMask} from 'react-native-mask-input';
-import {recoverPassword} from '../../api/password';
+import {recoverPassword} from '../../axios/api/password';
 import Button from '../../components/Button/Button';
 import DefaultModal from '../../components/DefaultModal/DefaultModal';
 import TextInputField from '../../components/TextInputField/TextInputField';

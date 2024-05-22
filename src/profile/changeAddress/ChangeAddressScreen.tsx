@@ -20,7 +20,7 @@ import {
   TopWrapper,
 } from './ChangeAddressScreen.styles';
 import cep, {CEP} from 'cep-promise';
-import {getAddress, updateAddress} from '../../api/address';
+import {getAddress, updateAddress} from '../../axios/api/address';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
 import {setAddress} from '../../redux/slices/AddressSlice';

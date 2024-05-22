@@ -23,7 +23,7 @@ import {RootState} from '../../redux/store';
 import {setLoading} from '../../redux/slices/LoadingSlice';
 import {RootStackParamList} from '../../navigation/RootStack';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {changeTransactionalPassword} from '../../api/password';
+import {changeTransactionalPassword} from '../../axios/api/password';
 import {ScrollView} from 'react-native';
 import SafePasswordModal from '../../components/safePasswordModal/SafePasswordModal';
 

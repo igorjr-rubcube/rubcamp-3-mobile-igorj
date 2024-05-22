@@ -1,7 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {createAccount} from '../../api/onboarding';
+import {createAccount} from '../../axios/api/onboarding';
 import Button from '../../components/Button/Button';
 import NumericInputField from '../../components/NumericInputField/NumericInputField';
 import {RootStackParamList} from '../../navigation/RootStack';
@@ -25,7 +25,7 @@ import {
   TopWrapper,
 } from './CreateNewAccountScreen.styles';
 import {setAccounts} from '../../redux/slices/AccountsSlice';
-import {getAccounts} from '../../api/login';
+import {getAccounts} from '../../axios/api/login';
 import AlertIcon from '../../components/icons/AlertIcon';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import DefaultModal from '../../components/DefaultModal/DefaultModal';

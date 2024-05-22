@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Keyboard} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {getAccounts, getUserId, login} from '../api/login';
+import {getAccounts, getUserId, login} from '../axios/api/login';
 import Button from '../components/Button/Button';
 import DefaultModal from '../components/DefaultModal/DefaultModal';
 import TextInputField from '../components/TextInputField/TextInputField';
