@@ -50,10 +50,10 @@ export const ButtonContainer = styled.View`
   align-items: center;
 `;
 
-export const LinkContainer = styled.TouchableOpacity`
+export const LinkContainer = styled.TouchableOpacity<{align: string}>`
   width: 100%;
   justify-content: center;
-  align-items: center;
+  align-items: ${props => props.align};
 `;
 
 export const Link = styled.Text`

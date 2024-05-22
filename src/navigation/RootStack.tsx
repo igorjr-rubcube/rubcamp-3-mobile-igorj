@@ -24,6 +24,8 @@ import SelectAccountToTransferScreen from '../createTransfer/selectAccount/Selec
 import InsertAmountScreen from '../createTransfer/insertAmount/InsertAmountScreen';
 import {Text} from 'react-native';
 import InsertPasswordScreen from '../createTransfer/insertPassword/InsertPasswordScreen';
+import RecoverPasswordScreen from '../recoverPassword/recoverPassword/RecoverPasswordScreen';
+import RequestEmailRecoverPasswordScreen from '../recoverPassword/requestEmail/RequestEmailRecoverPasswordScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -63,13 +65,36 @@ export type RootStackParamList = {
   InsertAppPassword: undefined;
   InsertTransactionalPassword: undefined;
   AccountType: undefined;
+  RequestEmailRecoverPassword: undefined;
+  RecoverPassword: {
+    token: string;
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+const config = {
+  screens: {
+    RecoverPassword: {
+      path: 'recover-password/:token',
+      parse: {
+        token: (token: string) => token,
+      },
+      stringify: {
+        token: (token: string) => token,
+      },
+    },
+  },
+};
+
+const linking = {
+  prefixes: ['rubbank://open'],
+  config,
+};
+
 function RootStack() {
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator
         screenOptions={{
           orientation: 'portrait',
@@ -91,9 +116,19 @@ function RootStack() {
           component={WelcomeScreen}
         />
         <Stack.Screen
-          options={{headerTitle: ''}}
+          options={{headerTitle: '', headerTintColor: Colors.darkblue}}
           name="Login"
           component={LoginScreen}
+        />
+        <Stack.Screen
+          options={{headerTitle: '', headerTintColor: Colors.darkblue}}
+          name="RequestEmailRecoverPassword"
+          component={RequestEmailRecoverPasswordScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: true, headerTitle: 'Recuperar senha'}}
+          name="RecoverPassword"
+          component={RecoverPasswordScreen}
         />
         <Stack.Group>
           <Stack.Screen

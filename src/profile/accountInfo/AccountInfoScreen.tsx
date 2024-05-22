@@ -1,13 +1,13 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useSelector } from 'react-redux';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useSelector} from 'react-redux';
 import Button from '../../components/Button/Button';
 import {
   Background,
   BottomView,
 } from '../../components/DefaultScreen/DefaultScreen';
 import CopyIcon from '../../components/icons/CopyIcon';
-import { RootStackParamList } from '../../navigation/RootStack';
-import { RootState } from '../../redux/store';
+import {RootStackParamList} from '../../navigation/RootStack';
+import {RootState} from '../../redux/store';
 import Colors from '../../styles/colors';
 import {
   AccountInfoContainer,
@@ -24,6 +24,7 @@ import {
   TopWrapper,
 } from './AccountInfoScreen.styles';
 import Clipboard from '@react-native-clipboard/clipboard';
+import {Share} from 'react-native';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -65,7 +66,25 @@ function AccountInfoScreen({navigation}: Props) {
   const handleCopy = (index: number) => {
     const text = fields[index].value;
     Clipboard.setString(text);
-  }
+  };
+
+  const handleShare = async () => {
+    const text = fields
+      .map(field => `${field.label}: ${field.value}`)
+      .join('\n');
+    try {
+      const result = await Share.share(
+        {
+          message: text,
+        },
+        {
+          dialogTitle: 'Compartilhar dados da conta',
+        },
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Background>
@@ -96,7 +115,7 @@ function AccountInfoScreen({navigation}: Props) {
             </AccountInfoContainer>
           </TopWrapper>
           <Button
-            onPress={undefined}
+            onPress={handleShare}
             text={'COMPARTILHAR DADOS'}
             borderColor={Colors.grey}
             textColor={Colors.grey}

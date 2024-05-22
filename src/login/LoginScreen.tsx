@@ -155,7 +155,9 @@ function LoginScreen({navigation}: Props) {
           }
           iconFunction={() => setPasswordVisible(!passwordVisible)}
         />
-        <Link>Esqueci a sua senha?</Link>
+        <LinkContainer onPress={() => navigation.navigate('RequestEmailRecoverPassword')} align='flex-start'>
+          <Link>Esqueceu a sua senha?</Link>
+        </LinkContainer>
       </Form>
       <ButtonContainer>
         <Button
@@ -165,7 +167,7 @@ function LoginScreen({navigation}: Props) {
         />
       </ButtonContainer>
       {!keyboardShow && (
-        <LinkContainer onPress={() => navigation.navigate('InsertUserData')}>
+        <LinkContainer onPress={() => navigation.navigate('InsertUserData')} align="center">
           <Link>Criar nova conta</Link>
         </LinkContainer>
       )}

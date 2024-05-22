@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
@@ -14,6 +14,7 @@ import RootStack from './src/navigation/RootStack';
 import {store} from './src/redux/store';
 
 function App(): React.JSX.Element {
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);

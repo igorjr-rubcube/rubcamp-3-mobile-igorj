@@ -73,7 +73,7 @@ const amountMask = createNumberMask({
   decimalLimit: 2,
 } as any);
 
-function InsertAmountScreen({navigation}: Props) {
+function InsertPasswordScreen({navigation}: Props) {
   const [showBalance, setShowBalance] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -197,4 +197,4 @@ function InsertAmountScreen({navigation}: Props) {
   );
 }
 
-export default InsertAmountScreen;
+export default InsertPasswordScreen;

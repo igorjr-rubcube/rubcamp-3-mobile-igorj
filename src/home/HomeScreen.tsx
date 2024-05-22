@@ -95,9 +95,6 @@ function HomeScreen({navigation}: Props) {
             <Image source={logo} />
             <RightWrapper>
               <IconButtonTopBar>
-                <NotificationIcon fill={Colors.light} />
-              </IconButtonTopBar>
-              <IconButtonTopBar>
                 <HelpIcon fill={Colors.light} />
               </IconButtonTopBar>
               <IconButtonTopBar onPress={handleLogout}>
