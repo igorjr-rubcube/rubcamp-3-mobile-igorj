@@ -1,25 +1,21 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   Background,
   TopView,
 } from '../../components/DefaultScreen/DefaultScreen';
 
-import {ScrollView} from 'react-native';
 import {createNumberMask} from 'react-native-mask-input';
-import {getUserInfo} from '../../axios/api/profile';
+import {createTransfer} from '../../axios/api/transfer';
 import Button from '../../components/Button/Button';
-import TextInputField from '../../components/TextInputField/TextInputField';
+import DefaultModal from '../../components/DefaultModal/DefaultModal';
+import NumericInputField from '../../components/NumericInputField/NumericInputField';
+import AlertIcon from '../../components/icons/AlertIcon';
 import EyeIcon from '../../components/icons/EyeIcon';
 import EyeSlashIcon from '../../components/icons/EyeSlashIcon';
 import {RootStackParamList} from '../../navigation/RootStack';
 import {setLoading} from '../../redux/slices/LoadingSlice';
-import {UserInfoState, setUserInfo} from '../../redux/slices/UserInfoSlice';
-import {
-  setTransferAmount,
-  setTransferDescription,
-} from '../../redux/slices/TransferSlice';
 import {RootState} from '../../redux/store';
 import Colors from '../../styles/colors';
 import {
@@ -29,20 +25,12 @@ import {
   Bottom,
   BottomWrapper,
   Content,
-  Field,
   Form,
   IconButton,
-  Info,
-  InfoContainer,
-  InfoText,
-  InfoTitle,
   Title,
   Wrapper,
 } from './InsertPasswordScreen.styles';
-import NumericInputField from '../../components/NumericInputField/NumericInputField';
-import DefaultModal from '../../components/DefaultModal/DefaultModal';
-import AlertIcon from '../../components/icons/AlertIcon';
-import { createTransfer } from '../../axios/api/transfer';
+import {setTransferDate} from '../../redux/slices/TransferSlice';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'CreateTransfer'>;
@@ -88,7 +76,10 @@ function InsertPasswordScreen({navigation}: Props) {
   const description = useSelector(
     (state: RootState) => state.transfer.description,
   );
-  const accountId = useSelector((state: RootState) => state.accountId.accountId);
+  const accountId = useSelector(
+    (state: RootState) => state.accountId.accountId,
+  );
+  const transferDate = useSelector((state: RootState) => state.transfer.date);
 
   const [transactionPassword, setTransactionPassword] = useState('');
 
@@ -100,22 +91,41 @@ function InsertPasswordScreen({navigation}: Props) {
       dispatch(setLoading(false));
       return;
     }
-    console.log('description', description);
+    console.log(transferDate);
     
-    const response = await createTransfer(
-      token,
-      userId,
-      accountId,
-      transactionPassword,
-      amount,
-      description,
-      selectedAccount.number,
-      selectedAccount.branch,
-    );
+    let response;
+    let transferMadeOrScheduled = '';
+    if (transferDate == null || transferDate === '') {      
+      transferMadeOrScheduled = 'realizada';
+      response = await createTransfer(
+        token,
+        userId,
+        accountId,
+        transactionPassword,
+        amount,
+        description,
+        selectedAccount.number,
+        selectedAccount.branch,
+      );
+    } else {
+      transferMadeOrScheduled = 'agendada';
+      response = await createTransfer(
+        token,
+        userId,
+        accountId,
+        transactionPassword,
+        amount,
+        description,
+        selectedAccount.number,
+        selectedAccount.branch,
+        transferDate,
+      );
+    }
     if (response) {
-      if (response.code === 200 || response.code === 206) {
+      if (response.code === 200 || response.code === 206 || response.code === 201) {
+        dispatch(setTransferDate(null));
         navigation.navigate('Success', {
-          title: 'Transferência realizada com sucesso',
+          title: `Transferência ${transferMadeOrScheduled} com sucesso`,
           message: '',
           navigateTo: 'Home',
         });
@@ -126,6 +136,8 @@ function InsertPasswordScreen({navigation}: Props) {
       } else {
         setModalMessage('Erro ao realizar transferência');
         setModalVisible(true);
+        console.log(response.data);
+        
       }
       dispatch(setLoading(false));
     }

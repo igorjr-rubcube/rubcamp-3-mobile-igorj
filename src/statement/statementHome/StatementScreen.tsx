@@ -358,11 +358,13 @@ function StatementScreen({navigation}: Props) {
         visible={filterModalVisible}
         setVisible={setFilterModalVisible}
         filterFunction={handleFilter}
+        
       />
       <DetailedTransferModal
         visible={detailedTransferModalVisible}
         setVisible={setDetailedTransferModalVisible}
         transferId={selectedTransfer}
+        updateScreen={handleChangeTab}
       />
       <Background>
         <TopView flexSize={1}>

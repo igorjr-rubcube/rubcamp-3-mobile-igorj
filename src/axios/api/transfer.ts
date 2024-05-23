@@ -74,25 +74,53 @@ export const createTransfer = async (
   description: string,
   toAccountNumber: string,
   toBranch: string,
+  date?: string,
 ): Promise<DefaultResponse | undefined | null> => {
-  const body = description
-    ? {
-        transactionPassword,
-        transfer: {
-          amount,
-          description,
-          toAccountNumber,
-          toBranch,
-        },
-      }
-    : {
-        transactionPassword,
-        transfer: {
-          amount,
-          toAccountNumber,
-          toBranch,
-        },
-      };
+  let body;
+  console.log(date);
+  console.log(description);
+
+  if (date && description) {
+    body = {
+      transactionPassword,
+      transfer: {
+        amount,
+        description,
+        toAccountNumber,
+        toBranch,
+        date,
+      },
+    };
+  } else if (date) {
+    body = {
+      transactionPassword,
+      transfer: {
+        amount,
+        toAccountNumber,
+        toBranch,
+        date,
+      },
+    };
+  } else if (description) {
+    body = {
+      transactionPassword,
+      transfer: {
+        amount,
+        description,
+        toAccountNumber,
+        toBranch,
+      },
+    };
+  } else {
+    body = {
+      transactionPassword,
+      transfer: {
+        amount,
+        toAccountNumber,
+        toBranch,
+      },
+    };
+  }
   return await api
     .post(`/users/${id}/accounts/${idAccount}/transfers/`, body, {
       headers: {

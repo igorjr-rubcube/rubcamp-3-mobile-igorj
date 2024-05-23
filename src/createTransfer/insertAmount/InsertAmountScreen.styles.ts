@@ -74,13 +74,22 @@ export const InfoTitle = styled.Text`
   font-size: 14px;
   color: ${Colors.black};
   margin-bottom: 4px;
-`;  
+`;
 
 export const InfoText = styled.Text`
   font-size: 16px;
   color: ${Colors.grey};
-`; 
+`;
 
 export const Field = styled.View`
   margin-top: 16px;
+`;
+
+export const TransferDateView = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const SwitchTransferDate = styled.Switch`
 `;

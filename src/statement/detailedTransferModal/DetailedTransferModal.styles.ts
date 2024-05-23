@@ -21,13 +21,13 @@ export const ModalBackground = styled.View`
 `;
 
 export const ModalContainer = styled.View`
-  justify-content: space-around;
-  align-items: center;
   background-color: ${Colors.light};
   border-radius: 12px;
   width: 85%;
   height: 90%;
   align-items: center;
+  justify-content: space-around;
+  padding: 2% 0;
 `;
 
 export const CloseButton = styled.TouchableOpacity`
@@ -49,29 +49,29 @@ export const ModalIcon = styled.View`
 `;
 
 export const ModalTitle = styled.Text`
-  align-self: flex-start;
-  padding-left: 24px;
   font-size: 24px;
+  margin-bottom: 16px;
   font-weight: bold;
   color: ${Colors.darkblue};
-  margin-top: 24px;
 `;
 
 export const ButtonsContainer = styled.View`
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  width: 100%;
 `;
 
 export const ConfirmButton = styled.TouchableOpacity`
   background-color: ${Colors.darkblue};
   border-radius: 50px;
-  padding: 16px 32px;
   margin-top: 16px;
-  width: 150px;
   align-items: center;
   justify-content: center;
+  padding: 16px 16px;
+  width: 120px;
 `;
 
 export const ConfirmButtonText = styled.Text`
@@ -86,9 +86,8 @@ export const CancelButton = styled.TouchableOpacity`
   margin-top: 16px;
   align-items: center;
   justify-content: center;
-  padding: 16px 32px;
-  width: 150px;
-  margin-right: 16px;
+  padding: 16px 16px;
+  width: 120px;
 `;
 
 export const CancelButtonText = styled.Text`
@@ -150,14 +149,12 @@ export const FromToValue = styled.Text`
 
 export const ShareButton = styled.TouchableOpacity`
   background-color: ${Colors.darkblue};
-  border-radius: 100px;
-  padding: 8px 8px;
-  margin-top: 36px;
+  border-radius: 50px;
+  margin-top: 16px;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 0px;
-  right: 24px;
+  padding: 16px 16px;
+  width: 50px;
 `;
 
 export const IconContainer = styled.View`
@@ -165,4 +162,11 @@ export const IconContainer = styled.View`
   width: 18px;
   align-items: center;
   justify-content: center;
+`;
+
+export const ViewShotContainer = styled.View`
+  width: 100%;
+  padding: 0 24px;
+  margin: 10% 0;
+  background-color: ${Colors.light};
 `;

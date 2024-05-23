@@ -7,6 +7,21 @@ import {
 } from '../../components/DefaultScreen/DefaultScreen';
 
 import {
+  getByBranchAndNumber,
+  searchAccountsByCpf,
+} from '../../axios/api/account';
+import Button from '../../components/Button/Button';
+import DefaultModal from '../../components/DefaultModal/DefaultModal';
+import TextInputField from '../../components/TextInputField/TextInputField';
+import AlertIcon from '../../components/icons/AlertIcon';
+import EyeIcon from '../../components/icons/EyeIcon';
+import EyeSlashIcon from '../../components/icons/EyeSlashIcon';
+import {RootStackParamList} from '../../navigation/RootStack';
+import {setLoading} from '../../redux/slices/LoadingSlice';
+import {setSelectedAccount} from '../../redux/slices/TransferSlice';
+import {RootState} from '../../redux/store';
+import Colors from '../../styles/colors';
+import {
   Balance,
   BalanceText,
   BalanceWrapper,
@@ -21,18 +36,8 @@ import {
   Title,
   Wrapper,
 } from './CreateTransferScreen.styles';
-import Colors from '../../styles/colors';
-import {RootState} from '../../redux/store';
-import {RootStackParamList} from '../../navigation/RootStack';
-import EyeSlashIcon from '../../components/icons/EyeSlashIcon';
-import EyeIcon from '../../components/icons/EyeIcon';
-import TextInputField from '../../components/TextInputField/TextInputField';
-import Button from '../../components/Button/Button';
-import {getByBranchAndNumber, searchAccountsByCpf} from '../../axios/api/account';
-import DefaultModal from '../../components/DefaultModal/DefaultModal';
-import AlertIcon from '../../components/icons/AlertIcon';
-import {setLoading} from '../../redux/slices/LoadingSlice';
-import {setSelectedAccount} from '../../redux/slices/TransferSlice';
+import { getBalance } from '../../axios/api/home';
+import { setBalance } from '../../redux/slices/BalanceSlice';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'CreateTransfer'>;
@@ -158,7 +163,21 @@ function CreateTransfer({navigation}: Props) {
     } else {
       return branch.length < 3 || accountNumber.length < 9;
     }
-  }
+  };
+
+  const fetchData = async () => {
+    const balanceGet = await getBalance(token, userId, accountId);
+    if (balanceGet) {
+      dispatch(setBalance(balanceGet.data.balance));
+    }
+  };
+
+  useEffect(() => {
+    dispatch(setLoading(true));
+    fetchData().then(() => dispatch(setLoading(false)));
+    return () => {};
+  }, []);
+
 
   return (
     <>
@@ -242,7 +261,11 @@ function CreateTransfer({navigation}: Props) {
                 </>
               )}
               <BottomWrapper>
-                <Button onPress={handleContinue} text={'CONTINUAR'} disabled={buttonDisabled()}/>
+                <Button
+                  onPress={handleContinue}
+                  text={'CONTINUAR'}
+                  disabled={buttonDisabled()}
+                />
               </BottomWrapper>
             </Form>
           </Content>

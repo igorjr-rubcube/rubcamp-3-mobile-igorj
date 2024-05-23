@@ -14,7 +14,6 @@ import EyeIcon from '../components/icons/EyeIcon';
 import EyeSlashIcon from '../components/icons/EyeSlashIcon';
 import HelpIcon from '../components/icons/HelpIcon';
 import LogoutIcon from '../components/icons/LogoutIcon';
-import NotificationIcon from '../components/icons/NotificationIcon';
 import ProfileIcon from '../components/icons/ProfileIcon';
 import ReceiptIcon from '../components/icons/ReceiptIcon';
 import TransferIcon from '../components/icons/TransferIcon';
