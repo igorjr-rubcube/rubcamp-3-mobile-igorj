@@ -163,7 +163,7 @@ function DetailedTransferModal({
               (transferId && transfer.fromAccount && (
                 <ViewShotContainer>
                   <DetailsRow>
-                    <ModalTitle>Comprovante de Transferência:</ModalTitle>
+                    <ModalTitle>Comprovante de transferência:</ModalTitle>
                   </DetailsRow>
                   <DetailsRow>
                     <DetailsTitle>Data:</DetailsTitle>

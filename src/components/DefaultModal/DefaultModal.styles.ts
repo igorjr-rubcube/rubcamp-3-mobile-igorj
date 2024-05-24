@@ -19,7 +19,7 @@ export const ModalContainer = styled.View`
   background-color: ${Colors.light};
   border-radius: 12px;
   width: 80%;
-  height: 35%;
+  height: 45%;
   align-items: center;
 `;
 

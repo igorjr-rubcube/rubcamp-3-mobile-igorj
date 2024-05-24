@@ -50,7 +50,7 @@ type Props = {
 };
 
 function InsertAmountScreen({navigation}: Props) {
-  const [showBalance, setShowBalance] = useState(true);
+  const [showBalance, setShowBalance] = useState(false);
 
   const balance = useSelector((state: RootState) => state.balance.balance);
   const token = useSelector((state: RootState) => state.token.token);
@@ -68,16 +68,17 @@ function InsertAmountScreen({navigation}: Props) {
 
   const handleContinue = async () => {
     if (isDateFieldEnabled) {
+      
       if (transferDateState && transferDateState > new Date()) {
         dispatch(setTransferDate(transferDateState.toString()));
       } else {
         dispatch(setTransferDate(null));
         setModalVisible(true);
+        
         return;
       }
     } else {
       dispatch(setTransferDate(null));
-      return;
     }
     dispatch(setTransferAmount(amount));
     dispatch(setTransferDescription(description));
@@ -86,24 +87,26 @@ function InsertAmountScreen({navigation}: Props) {
 
   const dispatch = useDispatch();
 
+  const fetchData = async () => {
+    const userResponse = await getUserInfo(token, userId);
+    if (userResponse && userResponse.code === 200) {
+      const userInfo = userResponse.data as UserInfoState;
+      dispatch(setUserInfo(userInfo));
+    }
+    dispatch(setLoading(false));
+  };
+
   useEffect(() => {
     dispatch(setLoading(true));
-    const fetchData = async () => {
-      const userResponse = await getUserInfo(token, userId);
-      if (userResponse && userResponse.code === 200) {
-        const userInfo = userResponse.data as UserInfoState;
-        dispatch(setUserInfo(userInfo));
-      }
-      dispatch(setLoading(false));
-    };
     fetchData();
   }, []);
 
-  const enableContinue = () => {
+  const disableContinue = () => {
     if (balance === undefined) {
       return false;
     }
-    return !(amount > 0 && amount <= balance);
+    const isAmountValid = amount > 0 && amount <= balance;
+    return !(isAmountValid || (isDateFieldEnabled && amount > 0));
   };
 
   const [isDateFieldEnabled, setIsDateFieldEnabled] = useState(false);
@@ -245,7 +248,7 @@ function InsertAmountScreen({navigation}: Props) {
               <Button
                 onPress={handleContinue}
                 text={'CONTINUAR'}
-                disabled={enableContinue()}
+                disabled={disableContinue()}
               />
             </ScrollView>
           </Content>

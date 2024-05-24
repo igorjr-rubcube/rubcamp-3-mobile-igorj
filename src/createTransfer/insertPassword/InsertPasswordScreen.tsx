@@ -31,6 +31,7 @@ import {
   Wrapper,
 } from './InsertPasswordScreen.styles';
 import {setTransferDate} from '../../redux/slices/TransferSlice';
+import { setBalance } from '../../redux/slices/BalanceSlice';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'CreateTransfer'>;
@@ -62,7 +63,7 @@ const amountMask = createNumberMask({
 } as any);
 
 function InsertPasswordScreen({navigation}: Props) {
-  const [showBalance, setShowBalance] = useState(true);
+  const [showBalance, setShowBalance] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
@@ -91,7 +92,6 @@ function InsertPasswordScreen({navigation}: Props) {
       dispatch(setLoading(false));
       return;
     }
-    console.log(transferDate);
     
     let response;
     let transferMadeOrScheduled = '';
@@ -124,9 +124,13 @@ function InsertPasswordScreen({navigation}: Props) {
     if (response) {
       if (response.code === 200 || response.code === 206 || response.code === 201) {
         dispatch(setTransferDate(null));
+        if (transferMadeOrScheduled === 'realizada') {
+          const newBalance = parseFloat(balance as any) - amount;
+          dispatch(setBalance(newBalance));
+        }
         navigation.navigate('Success', {
           title: `Transferência ${transferMadeOrScheduled} com sucesso`,
-          message: '',
+          message: 'Comprovante disponível na aba extrato',
           navigateTo: 'Home',
         });
       } else if (response.code === 401) {
@@ -136,8 +140,6 @@ function InsertPasswordScreen({navigation}: Props) {
       } else {
         setModalMessage('Erro ao realizar transferência');
         setModalVisible(true);
-        console.log(response.data);
-        
       }
       dispatch(setLoading(false));
     }

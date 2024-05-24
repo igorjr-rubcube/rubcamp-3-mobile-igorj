@@ -24,7 +24,7 @@ export const ModalContainer = styled.View`
   background-color: ${Colors.light};
   border-radius: 12px;
   width: 85%;
-  height: 90%;
+  height: 92%;
   align-items: center;
   justify-content: space-around;
   padding: 2% 0;
@@ -60,7 +60,7 @@ export const ButtonsContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 12px 24px;
   width: 100%;
 `;
 

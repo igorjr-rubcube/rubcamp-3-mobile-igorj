@@ -76,7 +76,7 @@ function CreateTransfer({navigation}: Props) {
 
   const tabs = ['CPF', 'Número da Conta'];
   const [selectedTab, setSelectedTab] = useState(0);
-  const [showBalance, setShowBalance] = useState(true);
+  const [showBalance, setShowBalance] = useState(false);
   const [cpf, setCpf] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [branch, setBranch] = useState('');

@@ -46,7 +46,7 @@ type Props = {
 const logo = require('../assets/rubbankLogoWhite.png');
 
 function HomeScreen({navigation}: Props) {
-  const [showBalance, setShowBalance] = useState(true);
+  const [showBalance, setShowBalance] = useState(false);
   const token = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.userId.userId);
   const accountId = useSelector(

@@ -114,7 +114,7 @@ function StatementScreen({navigation}: Props) {
   const [detailedTransferModalVisible, setDetailedTransferModalVisible] =
     useState(false);
 
-  const [showBalance, setShowBalance] = useState(true);
+  const [showBalance, setShowBalance] = useState(false);
   const tabs = ['Tudo', 'Entrada', 'Saída', 'Futuro'];
   const [selectedTab, setSelectedTab] = useState(0);
   const periods = [15, 30, 60, 90];
