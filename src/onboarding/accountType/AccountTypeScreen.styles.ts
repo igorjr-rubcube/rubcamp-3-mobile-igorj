@@ -75,9 +75,9 @@ export const FieldWrapper = styled.View`
 export const AccountTypeContainer = styled.View<{
   isPressed: boolean;
 }>`
-  width: 15px;
-  height: 15px;
-  border-radius: 7.5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
   justify-content: center;
   align-items: center;
   background-color: ${props =>

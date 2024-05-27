@@ -29,6 +29,8 @@ import {
   Bottom,
   Content,
   Field,
+  FieldError,
+  FieldLabel,
   Form,
   IconButton,
   Info,
@@ -114,6 +116,11 @@ function InsertAmountScreen({navigation}: Props) {
   const [transferDateState, setTransferDateState] = useState<Date>(new Date());
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  const handleAmount = (text: string) => {
+    setAmount(parseFloat(text));
+
+  }
 
   return (
     <>
@@ -203,12 +210,14 @@ function InsertAmountScreen({navigation}: Props) {
                     onChangeFunction={setDescription}
                     label={'Descrição'}
                     placeholder={''}
+                    maxLength={255}
                   />
+                  <FieldLabel>{description.length}/255</FieldLabel>
                 </Field>
                 <Field>
                   <TextInputField
                     value={amount}
-                    onChangeFunction={setAmount}
+                    onChangeFunction={(text: string) => handleAmount(text)}
                     label={'Valor do pagamento'}
                     placeholder={''}
                     fontSize={42}
@@ -216,6 +225,7 @@ function InsertAmountScreen({navigation}: Props) {
                     currency={true}
                     maxLength={14}
                   />
+                  {balance && amount > balance && <FieldError>O valor deve ser menor que o seu saldo</FieldError>}
                 </Field>
                 <TransferDateView>
                   <InfoText>Tranferência Agendada?</InfoText>

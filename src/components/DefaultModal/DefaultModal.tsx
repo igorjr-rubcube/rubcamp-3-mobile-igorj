@@ -11,7 +11,7 @@ import {
   ModalMessage,
   ModalTitle,
   ModalView,
-} from './DefaultModal.styles';
+} from '../../components/DefaultModal/DefaultModal.styles';
 
 type defaultModalProps = {
   title: string;

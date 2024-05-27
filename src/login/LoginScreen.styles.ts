@@ -61,3 +61,8 @@ export const Link = styled.Text`
   font-weight: bold;
   color: ${Colors.lightpurple};
 `;
+
+export const IconButton = styled.TouchableOpacity`
+  width: 25px;
+  height: 25px;
+`;

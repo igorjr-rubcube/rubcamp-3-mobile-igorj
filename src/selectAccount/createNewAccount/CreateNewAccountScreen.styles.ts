@@ -76,6 +76,7 @@ export const RadioView = styled.View`
   margin-left: 12px;
   align-items: center;
   justify-content: center;
+  align-self: center;
 `;
 
 export const RadioField = styled.View`

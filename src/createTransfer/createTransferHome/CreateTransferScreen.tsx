@@ -173,6 +173,7 @@ function CreateTransfer({navigation}: Props) {
   };
 
   useEffect(() => {
+    setBranch('001');
     dispatch(setLoading(true));
     fetchData().then(() => dispatch(setLoading(false)));
     return () => {};
@@ -249,6 +250,8 @@ function CreateTransfer({navigation}: Props) {
                     label={'Agência'}
                     placeholder={''}
                     maxLength={3}
+                    disabled={true}
+
                   />
                   <TextInputField
                     value={accountNumber}

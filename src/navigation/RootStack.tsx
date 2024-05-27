@@ -1,5 +1,9 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import CreateTransferScreen from '../createTransfer/createTransferHome/CreateTransferScreen';
+import InsertAmountScreen from '../createTransfer/insertAmount/InsertAmountScreen';
+import InsertPasswordScreen from '../createTransfer/insertPassword/InsertPasswordScreen';
+import SelectAccountToTransferScreen from '../createTransfer/selectAccount/SelectAccountToTransferScreen';
 import HomeScreen from '../home/HomeScreen';
 import LoginScreen from '../login/LoginScreen';
 import AccountTypeScreen from '../onboarding/accountType/AccountTypeScreen';
@@ -13,25 +17,22 @@ import ChangeAddressScreen from '../profile/changeAddress/ChangeAddressScreen';
 import ChangeAppPasswordScreen from '../profile/changePassword/ChangeAppPasswordScreen';
 import ChangeTransactionalPasswordScreen from '../profile/changePassword/ChangeTransactionalPasswordScreen';
 import ProfileScreen from '../profile/profileHome/ProfileScreen';
+import RecoverPasswordScreen from '../recoverPassword/recoverPassword/RecoverPasswordScreen';
+import RequestEmailRecoverPasswordScreen from '../recoverPassword/requestEmail/RequestEmailRecoverPasswordScreen';
+import CreateNewAccountScreen from '../selectAccount/createNewAccount/CreateNewAccountScreen';
 import SelectAccountScreen from '../selectAccount/selectAccountScreen/SelectAccountScreen';
 import StatementScreen from '../statement/statementHome/StatementScreen';
 import Colors from '../styles/colors';
 import SuccessScreen from '../success/SuccessScreen';
 import WelcomeScreen from '../welcome/WelcomeScreen';
-import CreateNewAccountScreen from '../selectAccount/createNewAccount/CreateNewAccountScreen';
-import CreateTransferScreen from '../createTransfer/createTransferHome/CreateTransferScreen';
-import SelectAccountToTransferScreen from '../createTransfer/selectAccount/SelectAccountToTransferScreen';
-import InsertAmountScreen from '../createTransfer/insertAmount/InsertAmountScreen';
-import {Text} from 'react-native';
-import InsertPasswordScreen from '../createTransfer/insertPassword/InsertPasswordScreen';
-import RecoverPasswordScreen from '../recoverPassword/recoverPassword/RecoverPasswordScreen';
-import RequestEmailRecoverPasswordScreen from '../recoverPassword/requestEmail/RequestEmailRecoverPasswordScreen';
+import FaqScreen from '../faq/faqHome/FaqScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
   Login: undefined;
   SelectAccount: undefined;
   CreateNewAccount: undefined;
+  Faq: undefined;
   Home: undefined;
   Statement: undefined;
   CreateTransfer: undefined;
@@ -145,6 +146,11 @@ function RootStack() {
             component={CreateNewAccountScreen}
           />
         </Stack.Group>
+        <Stack.Screen
+          options={{headerTitle: 'FAQ', headerTintColor: Colors.darkblue}}
+          name="Faq"
+          component={FaqScreen}
+        />
         <Stack.Screen
           options={{headerShown: false}}
           name="Home"

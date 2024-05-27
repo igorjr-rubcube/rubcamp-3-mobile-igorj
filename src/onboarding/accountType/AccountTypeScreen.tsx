@@ -104,9 +104,6 @@ function AccountTypeScreen({navigation}: Props) {
                   </AccountSelection>
                 </AccountSelectionBorder>
                 <AccountTypeText>CONTA CORRENTE</AccountTypeText>
-                <AccountTypeIconContainer>
-                  <InfoIcon fill={Colors.darkblue} />
-                </AccountTypeIconContainer>
               </FieldWrapper>
               <FieldWrapper>
                 <AccountSelectionBorder>
@@ -118,9 +115,6 @@ function AccountTypeScreen({navigation}: Props) {
                   </AccountSelection>
                 </AccountSelectionBorder>
                 <AccountTypeText>CONTA POUPANÇA</AccountTypeText>
-                <AccountTypeIconContainer>
-                  <InfoIcon fill={Colors.darkblue} />
-                </AccountTypeIconContainer>
               </FieldWrapper>
             </Form>
           </TopWrapper>

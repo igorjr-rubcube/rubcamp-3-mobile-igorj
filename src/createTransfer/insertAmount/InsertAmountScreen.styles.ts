@@ -91,5 +91,20 @@ export const TransferDateView = styled.View`
   align-items: center;
 `;
 
+export const FieldError = styled.Text`
+  font-size: 14px;
+  color: ${Colors.red};
+  margin-bottom: 8px;
+  margin-top: -10px;
+`;
+
+export const FieldLabel = styled.Text`
+  text-align: right;
+  font-size: 14px;
+  color: ${Colors.grey};
+  margin-top: -10px;
+  margin-bottom: -16px;
+`;
+
 export const SwitchTransferDate = styled.Switch`
 `;

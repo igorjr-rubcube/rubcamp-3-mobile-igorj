@@ -16,6 +16,7 @@ import {
   ButtonContainer,
   Container,
   Form,
+  IconButton,
   Link,
   LinkContainer,
   Logo,
@@ -45,6 +46,7 @@ const cpfMask = [
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStack';
 import {setAccounts} from '../redux/slices/AccountsSlice';
+import HelpIcon from '../components/icons/HelpIcon';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Login'>;
@@ -53,6 +55,13 @@ type Props = {
 function LoginScreen({navigation}: Props) {
   const [keyboardShow, setKeyboardShow] = useState(false);
   useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <IconButton onPress={() => navigation.navigate('Faq')}>
+          <HelpIcon fill={Colors.darkblue} />
+        </IconButton>
+      ),
+    });
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
@@ -155,7 +164,9 @@ function LoginScreen({navigation}: Props) {
           }
           iconFunction={() => setPasswordVisible(!passwordVisible)}
         />
-        <LinkContainer onPress={() => navigation.navigate('RequestEmailRecoverPassword')} align='flex-start'>
+        <LinkContainer
+          onPress={() => navigation.navigate('RequestEmailRecoverPassword')}
+          align="flex-start">
           <Link>Esqueceu a sua senha?</Link>
         </LinkContainer>
       </Form>
@@ -167,7 +178,9 @@ function LoginScreen({navigation}: Props) {
         />
       </ButtonContainer>
       {!keyboardShow && (
-        <LinkContainer onPress={() => navigation.navigate('InsertUserData')} align="center">
+        <LinkContainer
+          onPress={() => navigation.navigate('InsertUserData')}
+          align="center">
           <Link>Criar nova conta</Link>
         </LinkContainer>
       )}
