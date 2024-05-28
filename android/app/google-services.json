@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "529348499004",
+    "project_id": "rubbank-igorj",
+    "storage_bucket": "rubbank-igorj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529348499004:android:f6322fd3552bcd5631d539",
+        "android_client_info": {
+          "package_name": "com.rubbank"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2XK-nzIh0B_M5tEeoGAgQ2qCe5PuBGEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
