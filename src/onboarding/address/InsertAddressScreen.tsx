@@ -46,8 +46,7 @@ function InsertAddressScreen({navigation}: Props) {
 
   const [modalInvalidFields, setModalInvalidFields] = useState(false);
 
-  const fieldsEnabled = {
-    cep: true,
+  const fieldsDisabledInitialState = {
     number: false,
     complement: false,
     street: true,
@@ -55,6 +54,36 @@ function InsertAddressScreen({navigation}: Props) {
     city: true,
     state: true,
   };
+
+  const [fieldsEnabled, setFieldsEnabled] = useState(
+    fieldsDisabledInitialState,
+  );
+
+  const enableFields = (address: typeof addressState) => {
+    let newFields = {...fieldsEnabled};
+    if (address.street === '') {
+      newFields.street = false;
+    } else {
+      newFields.street = true;
+    }
+    if (address.neighborhood === '') {
+      newFields.neighborhood = false;
+    } else {
+      newFields.neighborhood = true;
+    }
+    if (address.city === '') {
+      newFields.city = false;
+    } else {
+      newFields.city = true;
+    }
+    if (address.state === '') {
+      newFields.state = false;
+    } else {
+      newFields.state = true;
+    }
+    setFieldsEnabled(newFields);
+  };
+
 
   const isButtonDisabled = () => {
     return (
@@ -100,6 +129,10 @@ function InsertAddressScreen({navigation}: Props) {
     setState(addressState.state);
   }, [addressState]);
 
+  useEffect(() => {
+    enableFields(addressState);
+  }, []);
+
   return (
     <>
       <DefaultModal
@@ -127,7 +160,7 @@ function InsertAddressScreen({navigation}: Props) {
               maxLength={9}
               inputMode={'numeric'}
               mask={cepMask}
-              disabled={fieldsEnabled.cep}
+              disabled={true}
             />
           </Field>
           <Field>
