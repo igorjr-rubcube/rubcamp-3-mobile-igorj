@@ -44,9 +44,9 @@ const cpfMask = [
 ];
 
 import {StackNavigationProp} from '@react-navigation/stack';
+import HelpIcon from '../components/icons/HelpIcon';
 import {RootStackParamList} from '../navigation/RootStack';
 import {setAccounts} from '../redux/slices/AccountsSlice';
-import HelpIcon from '../components/icons/HelpIcon';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Login'>;
@@ -110,7 +110,6 @@ function LoginScreen({navigation}: Props) {
           const accounts = accountsResponse.data;
           dispatch(setAccounts(accounts));
         }
-
         navigation.navigate('SelectAccount');
       } else if (loginResponse.code === 401) {
         let message = `Sua conta pode ser bloqueada. Você tem ${loginResponse.data.triesLeft} tentativas restantes`;

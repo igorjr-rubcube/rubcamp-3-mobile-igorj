@@ -120,6 +120,7 @@ function RootStack() {
           options={{headerTitle: '', headerTintColor: Colors.darkblue}}
           name="Login"
           component={LoginScreen}
+          
         />
         <Stack.Screen
           options={{headerTitle: '', headerTintColor: Colors.darkblue}}

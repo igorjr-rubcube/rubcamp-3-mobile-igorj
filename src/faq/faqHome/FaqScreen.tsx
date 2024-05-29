@@ -6,7 +6,6 @@ import {getFaqs} from '../../axios/api/faq';
 import {RootStackParamList} from '../../navigation/RootStack';
 import {setLoading} from '../../redux/slices/LoadingSlice';
 import FaqModal from '../faqModal/FaqModal';
-import {HighlightedText} from '../faqModal/FaqModal.styles';
 import {FaqCard, FaqTitle, FaqView, Screen} from './FaqScreen.styles';
 
 type Props = {
@@ -29,12 +28,12 @@ function FaqScreen({navigation}: Props) {
   const [modalMessage, setModalMessage] = useState<string | React.JSX.Element>(
     '',
   );
+  const [selectedFaq, setSelectedFaq] = useState({} as Faq);
 
   const dispatch = useDispatch();
 
   const openFaq = (faq: Faq) => {
-    setModalTitle(faq.title);
-    setModalMessage(formatMessage(faq.content));
+    setSelectedFaq(faq);
     setModalVisible(true);
   };
 
@@ -51,32 +50,12 @@ function FaqScreen({navigation}: Props) {
     fetchData().then(() => dispatch(setLoading(false)));
   }, []);
 
-  const formatMessage = (content: string) => {
-    const splitContent = content.split('*');
-    return (
-      <>
-        {splitContent.map((item, index) => {
-          if (index % 2 === 0) {
-            return <>{item}</>;
-          } else {
-            return (
-              <HighlightedText numberOfLines={1} key={index}>
-                {item}
-              </HighlightedText>
-            );
-          }
-        })}
-      </>
-    );
-  };
   return (
     <>
       <FaqModal
-        title={modalTitle}
-        message={modalMessage}
-        visible={modalVisible}
+        faq={selectedFaq}
         setVisible={setModalVisible}
-        buttonLabel="FECHAR"
+        visible={modalVisible}
       />
       <Screen>
         <ScrollView>

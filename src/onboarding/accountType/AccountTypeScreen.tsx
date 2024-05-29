@@ -1,19 +1,17 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {createUser} from '../../axios/api/onboarding';
 import Button from '../../components/Button/Button';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import InfoIcon from '../../components/icons/InfoIcon';
 import {RootStackParamList} from '../../navigation/RootStack';
 import {setLoading} from '../../redux/slices/LoadingSlice';
+import {setAccountData, setInitialTime} from '../../redux/slices/OnboardingSlice';
 import {RootState} from '../../redux/store';
-import Colors from '../../styles/colors';
 import {
   AccountSelection,
   AccountSelectionBorder,
   AccountTypeContainer,
-  AccountTypeIconContainer,
   AccountTypeText,
   ButtonContainer,
   Container,
@@ -23,14 +21,14 @@ import {
   Title,
   TopWrapper,
 } from './AccountTypeScreen.styles';
-import { setAccountData } from '../../redux/slices/OnboardingSlice';
+import {logEventOnboarding} from '../../firebase/analytics';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'AccountType'>;
 };
 
 function AccountTypeScreen({navigation}: Props) {
-  const [accountType, setAccountType] = useState('');
+  const [accountType, setAccountType] = useState('CHECKING');
   const [checkingPressed, setCheckingPressed] = useState(true);
   const [savingPressed, setSavingPressed] = useState(false);
 
@@ -44,7 +42,9 @@ function AccountTypeScreen({navigation}: Props) {
   const accountData = useSelector(
     (state: RootState) => state.onboarding.accountData,
   );
-  
+  const onboardingInitialTime = useSelector(
+    (state: RootState) => state.onboarding.initialTime,
+  );
   const handlePress = (type: string) => {
     if (type === 'CHECKING') {
       setCheckingPressed(true);
@@ -55,9 +55,13 @@ function AccountTypeScreen({navigation}: Props) {
       setCheckingPressed(false);
       setAccountType('SAVING');
     }
-    dispatch(setAccountData({type: accountType, transactionPassword: accountData.transactionPassword}));
+    dispatch(
+      setAccountData({
+        type: accountType,
+        transactionPassword: accountData.transactionPassword,
+      }),
+    );
   };
-
 
   const handleConfirm = async () => {
     accountData.type = accountType;
@@ -71,6 +75,7 @@ function AccountTypeScreen({navigation}: Props) {
     const response = await createUser(body);
     if (response) {
       if (response.code === 201) {
+        logEventOnboarding(response.data.id, body, onboardingInitialTime);
         dispatch(setLoading(false));
         navigation.navigate('Success', {
           title: 'Sua conta digital RubBank foi criada com sucesso!',
@@ -82,47 +87,45 @@ function AccountTypeScreen({navigation}: Props) {
       }
     }
   };
-    
-    
 
   return (
     <Container>
-        <Content>
-          <TopWrapper>
-            <ProgressBar progress={0.86} />
-            <Title>
-              Selecione qual será o tipo de conta que você deseja criar
-            </Title>
-            <Form>
-              <FieldWrapper>
-                <AccountSelectionBorder>
-                  <AccountSelection
-                    activeOpacity={0.8}
-                    onPress={() => handlePress('CHECKING')}>
-                    <AccountTypeContainer
-                      isPressed={checkingPressed}></AccountTypeContainer>
-                  </AccountSelection>
-                </AccountSelectionBorder>
-                <AccountTypeText>CONTA CORRENTE</AccountTypeText>
-              </FieldWrapper>
-              <FieldWrapper>
-                <AccountSelectionBorder>
-                  <AccountSelection
-                    activeOpacity={0.8}
-                    onPress={() => handlePress('SAVING')}>
-                    <AccountTypeContainer
-                      isPressed={savingPressed}></AccountTypeContainer>
-                  </AccountSelection>
-                </AccountSelectionBorder>
-                <AccountTypeText>CONTA POUPANÇA</AccountTypeText>
-              </FieldWrapper>
-            </Form>
-          </TopWrapper>
-          <ButtonContainer>
-            <Button onPress={handleConfirm} text="CRIAR CONTA" />
-          </ButtonContainer>
-        </Content>
-      </Container>
+      <Content>
+        <TopWrapper>
+          <ProgressBar progress={0.86} />
+          <Title>
+            Selecione qual será o tipo de conta que você deseja criar
+          </Title>
+          <Form>
+            <FieldWrapper>
+              <AccountSelectionBorder>
+                <AccountSelection
+                  activeOpacity={0.8}
+                  onPress={() => handlePress('CHECKING')}>
+                  <AccountTypeContainer
+                    isPressed={checkingPressed}></AccountTypeContainer>
+                </AccountSelection>
+              </AccountSelectionBorder>
+              <AccountTypeText>CONTA CORRENTE</AccountTypeText>
+            </FieldWrapper>
+            <FieldWrapper>
+              <AccountSelectionBorder>
+                <AccountSelection
+                  activeOpacity={0.8}
+                  onPress={() => handlePress('SAVING')}>
+                  <AccountTypeContainer
+                    isPressed={savingPressed}></AccountTypeContainer>
+                </AccountSelection>
+              </AccountSelectionBorder>
+              <AccountTypeText>CONTA POUPANÇA</AccountTypeText>
+            </FieldWrapper>
+          </Form>
+        </TopWrapper>
+        <ButtonContainer>
+          <Button onPress={handleConfirm} text="CRIAR CONTA" />
+        </ButtonContainer>
+      </Content>
+    </Container>
   );
 }
 export default AccountTypeScreen;

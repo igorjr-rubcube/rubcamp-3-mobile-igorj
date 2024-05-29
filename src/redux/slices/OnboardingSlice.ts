@@ -28,6 +28,7 @@ interface OnboardingState {
   addressData: AddressData;
   password: string;
   accountData: AccountData;
+  initialTime: string;
 }
 
 const initialState: OnboardingState = {
@@ -52,6 +53,7 @@ const initialState: OnboardingState = {
     transactionPassword: '',
     type: '',
   },
+  initialTime: '',
 };
 
 export const onboardingSlice = createSlice({
@@ -70,9 +72,12 @@ export const onboardingSlice = createSlice({
     setAccountData: (state, action: PayloadAction<AccountData>) => {
       state.accountData = action.payload;
     },
+    setInitialTime: (state, action: PayloadAction<string>) => {
+      state.initialTime = action.payload;
+    }
   },
 });
 
-export const {setUserData, setAddressData, setPassword, setAccountData} = onboardingSlice.actions;
+export const {setUserData, setAddressData, setPassword, setAccountData, setInitialTime} = onboardingSlice.actions;
 
 export default onboardingSlice.reducer;

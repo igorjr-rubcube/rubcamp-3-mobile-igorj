@@ -64,6 +64,7 @@ export const ConfirmButton = styled.TouchableOpacity`
   background-color: ${Colors.darkblue};
   border-radius: 50px;
   padding: 16px 48px;
+  align-items: center;
 `;
 
 export const ConfirmButtonText = styled.Text`
@@ -73,10 +74,17 @@ export const ConfirmButtonText = styled.Text`
 `;
 
 export const ButtonsContainer = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
   margin-top: 24px;
+`;
+
+export const ButtonRow = styled.View`
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 16px;
 `;
 
 export const LikeDislikeView = styled.View`

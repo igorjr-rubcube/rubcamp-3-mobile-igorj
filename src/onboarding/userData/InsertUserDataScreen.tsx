@@ -1,6 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Dayjs} from 'dayjs';
-import {useState} from 'react';
+import dayjs, {Dayjs} from 'dayjs';
+import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {validateUserData} from '../../axios/api/onboarding';
 import Button from '../../components/Button/Button';
@@ -11,7 +11,7 @@ import TextInputField from '../../components/TextInputField/TextInputField';
 import AlertIcon from '../../components/icons/AlertIcon';
 import {RootStackParamList} from '../../navigation/RootStack';
 import {setLoading} from '../../redux/slices/LoadingSlice';
-import {setUserData} from '../../redux/slices/OnboardingSlice';
+import {setInitialTime, setUserData} from '../../redux/slices/OnboardingSlice';
 import Colors from '../../styles/colors';
 import {
   ButtonContainer,
@@ -148,6 +148,7 @@ function InsertUserDataScreen({navigation}: Props) {
         handleError(response.data.message);
       } else if (response.code === 409) {
         handleError(0);
+        setModalVisible(true);
       }
       dispatch(setLoading(false));
     }
@@ -176,7 +177,10 @@ function InsertUserDataScreen({navigation}: Props) {
     }
     setValidationErrors(newValidationErrors);
   };
-
+  
+  useEffect(() => {
+    dispatch(setInitialTime(dayjs().toISOString()));
+  }, []);
   return (
     <>
       <DefaultModal

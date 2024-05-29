@@ -127,7 +127,7 @@ export const validateTransactionalPassword = async (
     });
 };
 
-interface CreateUserData {
+export interface CreateUserData {
   cpf: string;
   fullName: string;
   email: string;
